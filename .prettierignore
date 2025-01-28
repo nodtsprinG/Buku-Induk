@@ -1,0 +1,7 @@
+node_modules
+out
+app/node_modules
+app/coverage
+app/build
+app/.idea/
+app/scripts/workshop-setup.js
