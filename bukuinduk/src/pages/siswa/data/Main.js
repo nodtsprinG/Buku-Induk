@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import Logo from "../../../assets/logosekolah.png"
+import EmailIcon from "../../../assets/EmailIcon.png"
 import axios from "axios";
 import resetAll from "../../../utils/resetAll";
 
@@ -58,7 +60,7 @@ const TambahAkun = () => {
     <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
       <div className="flex flex-row items-center justify-center w-11/12">
         <div className="flex flex-col items-center justify-center w-1/2">
-          <img src="https://cdn.discordapp.com/attachments/847678573040631818/1255910504031846440/logosekolah.png?ex=667ed94d&is=667d87cd&hm=4aa0c62be0f7262701857bb02306a2cea8aed73b5157376b41d200933b379b5e&" className="w-44 aspect-square" />
+          <img src={Logo} className="w-44 aspect-square" />
           <p className="font-header text-white font-bold text-3xl text-center mt-3">
             Buku Induk
           </p>

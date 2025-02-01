@@ -1,4 +1,6 @@
 import HeaderInput from "../../../components/headerInput";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalaman"
 import { useState, useEffect } from "react";
 import {
   TextInput,
@@ -62,6 +64,8 @@ const TempatTinggal = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput title={"Tempat Tinggal"} word={"B"} form={"admin"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
@@ -88,7 +92,7 @@ const TempatTinggal = () => {
                 <label className="py-1">Tinggal Dengan</label>
               </td>
               <td className="w-[63%] h-full">
-                <select value={tinggal} onChange={(e) => setTinggal(e.target.value)} className="w-full bg-white text-black p-2 rounded shadow-md" defaultValue={"default"}>
+                <select value={tinggal} onChange={(e) => setTinggal(e.target.value)} className="w-full bg-[#DEE0E1] text-black p-2 rounded shadow-md" defaultValue={"default"}>
                   <option value={"default"} hidden>Pilih</option>
                   <option value={"ortu"}>Orang Tua</option>
                   <option value={"saudara"}>Saudara</option>

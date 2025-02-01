@@ -1,4 +1,6 @@
 import HeaderInput from "../../../components/headerInput";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalaman";
 import { useState, useEffect } from "react";
 import {
   TextInput,
@@ -60,6 +62,8 @@ const Hobi = () => {
   };
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput title={"Hobi"} word={"H"} form={"admin"}/>
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">

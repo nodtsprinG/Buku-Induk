@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from '../assets/logosekolah.png'
 const Home = () => {
     return (
-        <div className="flex flex-col justify-center items-center bg-homepage bg-no-repeat w-screen h-screen">
+        <div className="flex flex-col justify-center items-center bg-homepage  w-screen h-screen">
             <div className="text-white flex flex-col justify-center items-center ">
                 <img src={Logo} alt="Logo Sekolah" className="w-40 h-40"/>
                 <p className="font-header font-bold text-center text-2xl">Buku Induk Virtual Akses Data dengan Mudah</p>

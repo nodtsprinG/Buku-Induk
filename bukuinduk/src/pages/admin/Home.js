@@ -32,6 +32,8 @@ import DataSiswa from "./data/DataSiswa";
 
 import TambahAkun from "./edit/Main";
 
+import HalamanBelakang from './edit/halaman-belakang'
+
 import { useParams } from "react-router";
 
 
@@ -57,6 +59,7 @@ const AuditSystem = () => {
       <Route exact path="/ibu" element={<Ibu />} />
       <Route exact path="/wali" element={<Wali />} />
       <Route exact path="/hobi" element={<Hobi />} />
+      <Route exact path="/belakang" element={<HalamanBelakang />} />
       <Route
         exact
         path="/perkembangansiswa"
@@ -66,6 +69,11 @@ const AuditSystem = () => {
         exact
         path="/selesaipend"
         element={<KetSelesai />}
+      />
+      <Route
+        exact
+        path="/belakang"
+        element={<HalamanBelakang />}
       />
     </Routes>
   );

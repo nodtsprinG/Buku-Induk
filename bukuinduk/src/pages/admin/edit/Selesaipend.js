@@ -1,4 +1,6 @@
 import HeaderInput from "../../../components/headerInput";
+import Profil from "../../../components/profileCard"
+import InputHalaman from "../../../components/pilihHalaman"
 import { useState, useEffect } from "react";
 import { TextInput, IntegerInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
@@ -72,15 +74,17 @@ const KetSelesai = () => {
     //Check semua ada lalu save
 
     await updateData(params.id).then((message) => {
-      console.log("Notifikasi :",message)
+      console.log("Notifikasi :", message)
       toast.success(message)
     });
     navigate("/admin/dashboard");
   };
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput
-        title={"Keterangan selesai pendidikan"}
+        title={"Selesai Pendidikan"}
         word={"J"}
         form={"admin"}
         lastpage={true}
@@ -117,12 +121,13 @@ const KetSelesai = () => {
                 <label className="py-1">b.Tanggal Mulai Kerja</label>
               </td>
               <td className="w-[63%] h-full">
-                <DatePicker
+                <input
+                  type="date"
                   selected={tanggal}
                   onChange={(date) => setTanggal(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
                   maxDate={new Date()}
                 />
               </td>

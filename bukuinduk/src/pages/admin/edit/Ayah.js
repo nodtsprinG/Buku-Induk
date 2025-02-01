@@ -1,5 +1,7 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalaman";
 import {
   TextInput,
   DateInput,
@@ -118,8 +120,10 @@ const Ayah = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput
-        title={"Keterangan ayah kandung"}
+        title={"Ayah"}
         word={"E"}
         form={"admin"}
       />
@@ -155,13 +159,14 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-                <DatePicker
+                <input
+                  type="date"
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="bg-[#DEE0E1] py-2 px-2  focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>

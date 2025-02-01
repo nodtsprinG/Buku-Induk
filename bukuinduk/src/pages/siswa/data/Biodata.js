@@ -133,7 +133,7 @@ const Biodata = () => {
   };
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen rounded-lg">
       <HeaderInput title={"Biodata"} word={"A"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4">
@@ -146,7 +146,7 @@ const Biodata = () => {
                 <TextInput
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
-                  className="h-full"
+                  className="h-full rounded-[10px]"
                 />
               </td>
             </tr>

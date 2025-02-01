@@ -11,14 +11,14 @@ function createMainWindow() {
     })
 
     const startUrl = url.format({   
-        pathname: path.join(__dirname, "./app/build/index.html"),
+        pathname: path.join(__dirname, "./bukuinduk/build/index.html"),
         protocol: "file" 
     }) 
 
     //Nyalakan kalau perlu
     //mainWindow.webContents.openDevTools()
     
-    //mainWindow.loadURL("http://localhost:3000")
-    mainWindow.loadURL(startUrl)
+mainWindow.loadURL("http://localhost:3000")
+
 }
 app.whenReady().then(createMainWindow)

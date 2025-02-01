@@ -85,7 +85,7 @@ const Kesehatan = () => {
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen">
       <HeaderInput title={"Kesehatan"} word={"C"} form={"siswa"} />
-      <div className="bg-white p-6 flex items-center justify-center">
+      <div className="bg-white p-6 flex items-center justify-center rounded-2xl">
         <table className="w-3/4 font-body border-separate border-spacing-4">
           <tbody>
             <tr>
@@ -96,7 +96,7 @@ const Kesehatan = () => {
                 <select
                   value={goldarah}
                   onChange={(e) => setGoldarah(e.target.value)}
-                  className="w-full bg-white text-black p-2 rounded shadow-md"
+                  className="w-full bg-[#E3E5E6] text-black p-2 rounded"
                   defaultValue={"default"}
                 >
                   <option value="default" hidden>

@@ -6,6 +6,8 @@ import {
   RadioInput,
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
+import InputHalaman from "../../../components/pilihHalaman"
+import Profil from "../../../components/profileCard"
 import { useNavigate, useParams } from "react-router";
 
 //Date issues
@@ -47,7 +49,7 @@ const Biodata = () => {
   const navigate = useNavigate();
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/akun`);
+    navigate(`/admin/datasiswa`);
   };
 
   useEffect(() => {
@@ -135,6 +137,8 @@ const Biodata = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput title={"Biodata"} word={"A"} form={"admin"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4">
@@ -147,7 +151,7 @@ const Biodata = () => {
                 <TextInput
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
-                  className="h-full"
+                  className="h-full rounded-[10px]"
                 />
               </td>
             </tr>
@@ -167,12 +171,19 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1">Jenis Kelamin</label>
               </td>
-              <td className="w-[37%] h-full">
-                <RadioInput
-                  value={jeniskelamin}
-                  onChange={(e) => setJeniskelamin(e.target.value)}
-                  className="h-full"
-                />
+              <td className="w-[63%] h-full">
+                <select
+                  value={status}
+                  className="w-[37%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
+                  defaultValue={"default"}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="default" hidden>
+                    Pilih
+                  </option>
+                  <option value={"lakilaki"}>Laki-laki</option>
+                  <option value={"yatim"}>Perempuan</option>
+                </select>
               </td>
             </tr>
             <tr>
@@ -198,7 +209,7 @@ const Biodata = () => {
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-[10px]"
                   maxDate={new Date()}
                 />
               </td>
@@ -282,7 +293,7 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <select
                   value={status}
-                  className="w-[37%] bg-white text-black p-2 rounded shadow-md"
+                  className="w-[37%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                   onChange={(e) => setStatus(e.target.value)}
                 >

@@ -20,7 +20,7 @@ export const TextInput = ({ onChange, value }) => {
     <input
       value={value}
       onChange={onChange}
-      className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+      className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-[10px]"
       type="text"
     />
   );
@@ -31,7 +31,7 @@ export const IntegerInput = ({ onChange, value }) => {
     <input
       value={value}
       onChange={onChange}
-      className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+      className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-[10px]"
       type="number"
     />
   );
@@ -46,7 +46,7 @@ export const RadioInput = ({ onChange, value }) => {
             value={"laki-laki"}
             onChange={onChange}
             checked={value === "laki-laki"}
-            className="bg-[#DEE0E1] py-1 px-1"
+            className="bg-[#DEE0E1] py-2 px-2 rounded-[10px]"
             type="radio"
             name="gender"
           />
@@ -59,7 +59,7 @@ export const RadioInput = ({ onChange, value }) => {
             value={"perempuan"}
             onChange={onChange}
             checked={value === "perempuan"}
-            className="bg-[#DEE0E1] py-1 px-1"
+            className="bg-[#DEE0E1] py-2 px-2 rounded-[10px]"
             type="radio"
             name="gender"
           />

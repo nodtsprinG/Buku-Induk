@@ -1,5 +1,7 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalaman"
 import {
   TextInput,
   DateInput,
@@ -67,7 +69,7 @@ const Pendidikan = () => {
       setPaketkeahlian(localStorage.getItem("pendidikan-paketkeahlian"));
     if (localStorage.getItem("pendidikan-kelas"))
       setKelas(localStorage.getItem("pendidikan-kelas"));
-    if(localStorage.getItem("pendidikan-sebelumnyalamabelajar")) setLamabelajar(localStorage.getItem("pendidikan-sebelumnyalamabelajar"))
+    if (localStorage.getItem("pendidikan-sebelumnyalamabelajar")) setLamabelajar(localStorage.getItem("pendidikan-sebelumnyalamabelajar"))
   }, []);
 
   const backButton = () => {
@@ -118,6 +120,8 @@ const Pendidikan = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput title={"Pendidikan"} word={"D"} form={"admin"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">

@@ -36,7 +36,7 @@ const Login = () => {
         <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
             <div className="flex flex-row items-center justify-center w-11/12">
                 <div className="flex flex-col items-center justify-center w-1/2">
-                    <img src={Logo} alt="Logo Sekolah" className="w-1/2"/>
+                    <img src={Logo} alt="Logo Sekolah" className="w-44"/>
                     <p className="font-header text-white font-bold text-3xl text-center mt-3">Buku Induk</p>
                 </div>
                 <div className="bg-[#D9D9D9] w-1/2 px-10 py-9 rounded-md border-4 border-[#A4A4A4]">

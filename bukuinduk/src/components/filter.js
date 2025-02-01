@@ -1,27 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CiFilter } from "react-icons/ci";
-import { useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../utils/constan";
-
-const Checkbox = ({ isChecked, label, checkHandler, index }) => {
-  return (
-    <label>
-      <input
-        className="mr-2"
-        type="checkbox"
-        id={`checkbox-${index}`}
-        checked={isChecked}
-        onChange={checkHandler}
-      />
-      {label}
-    </label>
-  );
-};
 
 const FilterComponent = ({ stateAngkatan, stateJurusan }) => {
   const [angkatan, setAngkatan] = useState([]);
   const [jurusan, setJurusan] = useState([]);
+  const [selectedJurusan, setSelectedJurusan] = useState("");
+  const [selectedAngkatan, setSelectedAngkatan] = useState("");
 
   useEffect(() => {
     axios
@@ -31,8 +17,7 @@ const FilterComponent = ({ stateAngkatan, stateJurusan }) => {
         },
       })
       .then((res) => {
-        const data = res.data;
-        setJurusan(data);
+        setJurusan(res.data);
         return axios.get(baseUrl + "/admin/angkatan", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -40,32 +25,14 @@ const FilterComponent = ({ stateAngkatan, stateJurusan }) => {
         });
       })
       .then((res) => {
-        const data = res.data;
-        setAngkatan(data);
-        console.log(angkatan, jurusan);
+        setAngkatan(res.data);
       });
   }, []);
 
-  const updateJurusan = (index) => {
-    setJurusan(
-      jurusan.map((jrs, currentIndex) =>
-        currentIndex === index ? { ...jrs, checked: !jrs.checked } : jrs
-      )
-    );
+  const handleApply = () => {
+    stateJurusan(jurusan.find((jrs) => jrs.nama === selectedJurusan) || {});
+    stateAngkatan(angkatan.find((ank) => ank.tahun === selectedAngkatan) || {});
   };
-  const updateAngkatan = (index) => {
-    setAngkatan(
-      angkatan.map((ank, currentIndex) =>
-        currentIndex === index ? { ...ank, checked: !ank.checked } : ank
-      )
-    );
-  };
-
-  const terapken = () => {
-    stateAngkatan(angkatan)
-    stateJurusan(jurusan)
-  }
-
 
   return (
     <div className="p-6 bg-white rounded-md shadow-lg">
@@ -73,43 +40,45 @@ const FilterComponent = ({ stateAngkatan, stateJurusan }) => {
         <CiFilter />
         <h2 className="text-lg font-semibold">Filter</h2>
       </div>
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-4">
+        {/* Dropdown untuk Jurusan */}
         <div className="flex flex-col">
-          <h3 className="font-semibold mb-2">Jurusan</h3>
-          <div className="flex flex-col">
-            {jurusan.map((jrs, index) => {
-              return (
-                <Checkbox
-                  className="flex items-center"
-                  key={jrs.nama}
-                  isChecked={jrs.checked}
-                  checkHandler={() => updateJurusan(index)}
-                  label={jrs.nama}
-                  index={index}
-                />
-              );
-            })}
-          </div>
+          <label className="font-semibold mb-1">Jurusan</label>
+          <select
+            className="p-2 border rounded-md"
+            value={selectedJurusan}
+            onChange={(e) => setSelectedJurusan(e.target.value)}
+          >
+            <option value="">Pilih Jurusan</option>
+            {jurusan.map((jrs) => (
+              <option key={jrs.nama} value={jrs.nama}>
+                {jrs.nama}
+              </option>
+            ))}
+          </select>
         </div>
+
+        {/* Dropdown untuk Angkatan */}
         <div className="flex flex-col">
-          <h3 className="font-semibold mb-2">Angkatan</h3>
-          <div className="flex flex-col">
-            {angkatan.map((ank, index) => {
-              return (
-                <Checkbox
-                  className="flex items-center"
-                  key={ank.tahun}
-                  isChecked={ank.checked}
-                  checkHandler={() => updateAngkatan(index)}
-                  label={ank.tahun}
-                  index={index}
-                />
-              );
-            })}
-          </div>
+          <label className="font-semibold mb-1">Angkatan</label>
+          <select
+            className="p-2 border rounded-md"
+            value={selectedAngkatan}
+            onChange={(e) => setSelectedAngkatan(e.target.value)}
+          >
+            <option value="">Pilih Angkatan</option>
+            {angkatan.map((ank) => (
+              <option key={ank.tahun} value={ank.tahun}>
+                {ank.tahun}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
-      <button onClick={terapken} className="mt-6 bg-blue-500 text-white p-4 rounded-md">
+      <button
+        onClick={handleApply}
+        className="mt-6 bg-blue-500 text-white p-3 rounded-md w-full hover:bg-blue-600 transition"
+      >
         Terapkan
       </button>
     </div>

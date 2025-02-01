@@ -1,5 +1,7 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalaman"
 import {
   TextInput,
   DateInput,
@@ -59,8 +61,10 @@ const KetPerkembanganSiswa = () => {
   };
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+      <div className="my-10 w-full"><Profil /></div>
+      <div><InputHalaman /></div>
       <HeaderInput
-        title={"Keterangan perkembangan siswa/siswi"}
+        title={"Perkembangan Siswa"}
         word={"I"}
         form={"admin"}
       />

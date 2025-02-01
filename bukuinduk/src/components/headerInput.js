@@ -8,7 +8,6 @@ import {
   isPendidikanFilled,
   isAyahFilled,
   isIbuFilled,
-  isWaliFilled,
   isHobiFilled,
 } from "../utils/check";
 import { MdLastPage } from "react-icons/md";
@@ -56,39 +55,39 @@ const HeaderButton = ({ nama, isActive = false, to }) => {
         )
           return alert("Semua data belum terisi");
         break;
-      case "Keterangan ayah kandung":
+      case "Ayah":
         if (
           !(
             isAkunFilled() &&
             isBiodataFilled() &&
             isTempattinggalFilled() &&
             isKesehatanFilled() &&
-            isPendidikanFilled
+            isPendidikanFilled()
           )
         )
           return alert("Semua data belum terisi");
         break;
-      case "Keterangan ibu kandung":
+      case "Ibu":
         if (
           !(
             isAkunFilled() &&
             isBiodataFilled() &&
             isTempattinggalFilled() &&
             isKesehatanFilled() &&
-            isPendidikanFilled &&
+            isPendidikanFilled() &&
             isAyahFilled()
           )
         )
           return alert("Semua data belum terisi");
         break;
-      case "Keterangan wali":
+      case "Wali":
         if (
           !(
             isAkunFilled() &&
             isBiodataFilled() &&
             isTempattinggalFilled() &&
             isKesehatanFilled() &&
-            isPendidikanFilled &&
+            isPendidikanFilled() &&
             isAyahFilled() &&
             isIbuFilled()
           )
@@ -102,7 +101,7 @@ const HeaderButton = ({ nama, isActive = false, to }) => {
             isBiodataFilled() &&
             isTempattinggalFilled() &&
             isKesehatanFilled() &&
-            isPendidikanFilled &&
+            isPendidikanFilled() &&
             isAyahFilled() &&
             isIbuFilled() &&
             isHobiFilled()
@@ -118,7 +117,7 @@ const HeaderButton = ({ nama, isActive = false, to }) => {
     return (
       <button
         onClick={bukaDanCek}
-        className="px-14 py-2 text-center text-l font-bold font-body mb-5 mx-2 bg-[#849BB0] text-white rounded-md"
+        className="px-2 py-2 text-center text-xl font-bold font-body bg-white text-gray-500"
       >
         {nama}
       </button>
@@ -127,7 +126,7 @@ const HeaderButton = ({ nama, isActive = false, to }) => {
     return (
       <button
         onClick={bukaDanCek}
-        className="px-14 py-2 text-center text-l font-bold font-body mb-5 mx-2 bg-[#0C7FDA] text-white rounded-md"
+        className="px-2 py-2 text-center text-xl font-bold font-body bg-white text-gray-500 border-b-4  border-b-blue-700"
       >
         {nama}
       </button>
@@ -142,16 +141,16 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     { a: "Tempat Tinggal", b: "tempattinggal" },
     { a: "Kesehatan", b: "kesehatan" },
     { a: "Pendidikan", b: "pendidikan" },
-    { a: "Keterangan ayah kandung", b: "ayah" },
-    { a: "Keterangan ibu kandung", b: "ibu" },
-    { a: "Keterangan wali", b: "wali" },
+    { a: "Ayah", b: "ayah" },
+    { a: "Ibu", b: "ibu" },
+    { a: "Wali", b: "wali" },
     { a: "Hobi", b: "hobi" },
     {
-      a: "Keterangan perkembangan siswa/siswi",
+      a: "Perkembangan Siswa",
       b: "perkembangansiswa",
       c: true,
     },
-    { a: "Keterangan selesai pendidikan", b: "selesaipend", c: true },
+    { a: "Selesai Pendidikan", b: "selesaipend", c: true },
   ];
 
   const downloadPdf = async () => {
@@ -174,7 +173,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     link.parentNode.removeChild(link);
     window.URL.revokeObjectURL(url);
   };
-
+  
   return (
     <div className="pt-5">
       <div className="flex flex-row items-center w-full">
@@ -183,7 +182,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
             {word}. {title}
           </p>
         </div>
-        <div className="w-[63%] h-full flex justify-end items-center">
+        <div className="w-[63%] h-full flex justify-end items-center my-10">
           {!isNaN(params.id) ? (
             <button
               onClick={downloadPdf}
@@ -205,7 +204,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
           ) : null}
         </div>
       </div>
-      <div className="flex flex-row flex-wrap w-full overflow-hidden mt-3">
+      <div className="grid sm:grid-cols-2 md:grid-cols-10 border">
         {ButtonList.map((t, i) => {
           if (t.c && form !== "admin") return;
           return (
@@ -218,6 +217,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
               }
               nama={t.a}
               isActive={title === t.a ? true : false}
+              
             />
           );
         })}
