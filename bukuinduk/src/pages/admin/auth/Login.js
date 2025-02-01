@@ -44,9 +44,9 @@ const Login = () => {
                     <p className="font-header font-bold text-3xl mt-2">Masuk</p>
                     <div className="flex flex-col mt-10 pt-10 border-t border-black">
                         <label className="opacity-20">Alamat email</label>
-                        <input onChange={(e) => setEmail(e.currentTarget.value)} className="bg-transparent border-b border-black focus:outline-none pt-2"></input>
+                        <input onChange={(e) => setEmail(e.currentTarget.value)} className="bg-transparent border-b border-black focus:outline-none p-2"></input>
                         <label className="opacity-20 pt-5">Kata sandi</label>
-                        <input onChange={(e) => setPassword(e.currentTarget.value)} className="bg-transparent border-b border-black focus:outline-none pt-2" type="password"></input>
+                        <input onChange={(e) => setPassword(e.currentTarget.value)} className="bg-transparent border-b border-black focus:outline-none p-2" type="password"></input>
                         <div className="flex flex-row pt-10 w-full">
                             <div className="flex flex-row justify-start items-center w-1/2">
                                 <p className="font-body text-sm text-[#0083FB]">Lupa kata sandi?</p>

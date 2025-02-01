@@ -93,17 +93,17 @@ const Dashboard = () => {
       <Navigation />
 
       <div className="w-screen h-screen flex-1 p-6 bg-gray-100 text-black overflow-y-scroll">
-        <h1 className="font-inter text-3xl font-normal leading-5 text-left">
+        <h1 className="font-header text-3xl font-normal leading-5 text-left">
           Dashboard
         </h1>
         <hr className="border-t-2 mt-4 bg-black-600"></hr>
 
         <div className="grid items-center justify-stretch w-full">
-          <table className="m-[15px] ml-120">
+          <table className="m-[15px] ml-120 font-body">
             <thead>
               <tr>
                 <th className="p-0">
-                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-[#0C7FDA] flex flex-col items-start justify-start">
+                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-gradient-to-b from-blue-500 to-blue-800 flex flex-col items-start justify-start">
                     <FaUser size={40} className="ml-[15px] mt-[40px]" />
                     <p className="ml-[15px] mt-[5px] text-left font-bold text-[15px]">
                       Total siswa
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 </th>
 
                 <th className="p-0">
-                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-[#0C7FDA] flex flex-col items-start justify-start">
+                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-gradient-to-b from-blue-500 to-blue-800 flex flex-col items-start justify-start">
                     <FaDatabase size={40} className="ml-[15px] mt-[40px]" />
                     <p className="ml-[15px] mt-[5px] text-left font-bold text-[15px]">
                       Data di Inputkan
@@ -133,7 +133,7 @@ const Dashboard = () => {
                 </th>
 
                 <th className="p-0">
-                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-[#0C7FDA] flex flex-col items-start justify-start">
+                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-gradient-to-b from-blue-500 to-blue-800 flex flex-col items-start justify-start">
                     <FaMale size={40} className="ml-[15px] mt-[40px]" />
                     <p className="ml-[15px] mt-[5px] text-left font-bold text-[15px]">
                       Siswa Laki-Laki
@@ -148,7 +148,7 @@ const Dashboard = () => {
                 </th>
 
                 <th className="p-0">
-                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-[#0C7FDA] flex flex-col items-start justify-start">
+                  <div className="m-[10px] w-[200px] h-[250px] rounded-[10px] text-white bg-gradient-to-b from-blue-500 to-blue-800 flex flex-col items-start justify-start">
                     <FaFemale size={40} className="ml-[15px] mt-[40px]" />
                     <p className="ml-[15px] mt-[5px] text-left font-bold text-[15px]">
                       Siswa Perempuan
@@ -190,7 +190,7 @@ const Dashboard = () => {
                 </svg>
               </span>
             </div>
-            <button className="font-semibold bg-blue-500 rounded-lg w-26 ml-4 p-1 text-white">
+            <button className="font-semibold bg-blue-500 rounded-lg w-26 ml-4 p-2 text-white">
               Lihat Semua
             </button>
           </div>
@@ -225,9 +225,9 @@ const Dashboard = () => {
                             setDeleteId(s.id);
                             setDeleteUsername(s.nama);
                           }}
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 w-1/2 rounded-lg"
+                          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-1/2 rounded-lg"
                         >
-                          Hapus
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -239,23 +239,23 @@ const Dashboard = () => {
         </div>
       </div>
       {deleteId ? (
-        <div className="fixed backdrop-blur-md w-screen h-screen flex justify-center items-center">
+        <div className="fixed backdrop-blur-md w-screen h-screen flex justify-center items-center border border-black text-lg">
           <div className="bg-white w-2/4 p-5 rounded-xl">
-            <div className="w-full f-head f-header font-bold">Hapus Siswa</div>
+            <div className="w-full f-head f-header font-bold">Edit Data Siswa</div>
             <div className="p-3">
-              Apakah anda yakin ingin menghapus Akun milik{" "}
+              Perbarui data akun milik{" "}
               <b>{deleteUsername}</b>?
             </div>
-            <div className="w-full flex flex-row font-header font-bold">
+            <div className="w-full flex flex-row font-header font-bold gap-2">
               <button
                 onClick={() => setDeleteId(null)}
-                className=" w-1/2 text-center py-1 text-red-500"
+                className=" w-1/2 text-center py-1 text-white bg-red-500"
               >
                 Batalkan
               </button>
               <button
                 onClick={() => deleteAkun(deleteId)}
-                className=" w-1/2 text-center py-1 text-white bg-[#0C7FDA]"
+                className=" w-1/2 text-center py-1 text-white bg-blue-500"
               >
                 Konfirmasi
               </button>

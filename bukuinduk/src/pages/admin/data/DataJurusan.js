@@ -173,9 +173,9 @@ const DataJurusan = () => {
                           setDeleteId(s.id);
                           setDeleteName(s.nama);
                         }}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 w-1/2 rounded-lg"
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-1/2 rounded-lg"
                       >
-                        Hapus
+                        Perbarui
                       </button>
                     </td>
                   </tr>
@@ -217,10 +217,10 @@ const DataJurusan = () => {
         <div className="fixed backdrop-blur-md w-screen h-screen flex justify-center items-center">
           <div className="bg-white w-2/4 p-5 rounded-xl">
             <div className="w-full f-head f-header font-bold">
-              Hapus Jurusan
+              Perbarui Data Jurusan
             </div>
             <div className="p-3">
-              Apakah anda yakin ingin menghapus Jurusan <b>{deletedName}</b>?
+              Perbarui data jurusan <b>{deletedName}</b>?
             </div>
             <div className="w-full flex flex-row font-header font-bold">
               <button

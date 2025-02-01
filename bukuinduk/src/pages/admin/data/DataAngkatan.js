@@ -156,9 +156,9 @@ const DataAngkatan = () => {
                           setDeleteId(an.id);
                           setDeleteName(an.tahun);
                         }}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 w-1/2 rounded-lg"
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-1/2 rounded-lg"
                       >
-                        Hapus
+                        Perbarui
                       </button>
                     </td>
                   </tr>
@@ -171,13 +171,13 @@ const DataAngkatan = () => {
       {showDialog && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-4 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Tambah Jurusan</h2>
+            <h2 className="text-lg font-semibold mb-4">Tambah Angkatan</h2>
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Masukkan nama jurusan"
+              placeholder="Masukkan angkatan tahun..."
             />
             <div className="flex justify-end mt-4 gap-2">
               <button
@@ -200,10 +200,10 @@ const DataAngkatan = () => {
         <div className="fixed backdrop-blur-md w-screen h-screen flex justify-center items-center">
           <div className="bg-white w-2/4 p-5 rounded-xl">
             <div className="w-full f-head f-header font-bold">
-              Hapus Jurusan
+              Perbarui data Jurusan
             </div>
             <div className="p-3">
-              Apakah anda yakin ingin menghapus angkatan tahun <b>{deletedName}</b>?
+              Perbarui data angkatan tahun <b>{deletedName}</b>?
             </div>
             <div className="w-full flex flex-row font-header font-bold">
               <button

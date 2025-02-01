@@ -5,14 +5,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'homepage': "url('/src/assets/pexels-codioful-7130469 1.png')"
+      backgroundColor: {
+        'homepage': '#ACABAF', // Menggunakan backgroundColor untuk warna latar belakang
+      },
+      fontFamily: {
+        'body': ['Helvetica', 'Arial', 'sans-serif'],
+        'header': ['Coolvetica', 'Arial', 'sans-serif'] // Pastikan font Coolvetica tersedia
       }
     },
-    fontFamily: {
-      'body': ['Helvetica', 'Arial', 'sans-serif'],
-      'header' : ['Coolvetica', 'Arial', 'sans-serif']
-    }
   },
   plugins: [],
 }
