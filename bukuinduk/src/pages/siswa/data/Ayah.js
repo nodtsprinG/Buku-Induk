@@ -119,7 +119,7 @@ const Ayah = () => {
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <HeaderInput
-        title={"Keterangan ayah kandung"}
+        title={"Ayah"}
         word={"E"}
         form={"siswa"}
       />

@@ -151,7 +151,8 @@ const Ibu = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-                <DatePicker
+              <input
+                  type="date"
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown

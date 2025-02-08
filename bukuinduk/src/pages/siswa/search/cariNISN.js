@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import Logo from "../../../assets/logosekolah.png"
 import EmailIcon from '../../../assets/EmailIcon.png'
+import GoBack from '../../../components/goback'
 const CariNisn = () => {
     const [nisn, setNisn] = useState("")
     const navigate = useNavigate()
@@ -12,6 +13,7 @@ const CariNisn = () => {
 
     return (
         <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
+            <GoBack />
             <div className="flex flex-row items-center justify-center w-11/12">
                 <div className="flex flex-col items-center justify-center w-1/2">
                     <img src={Logo} alt="Logosekolah" className="w-44 aspect-square" />

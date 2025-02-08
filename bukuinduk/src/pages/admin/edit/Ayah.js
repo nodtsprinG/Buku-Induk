@@ -159,14 +159,14 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-                <input
+              <input
                   type="date"
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2  focus:outline-none"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>

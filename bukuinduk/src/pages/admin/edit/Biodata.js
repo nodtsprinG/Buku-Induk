@@ -171,19 +171,12 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1">Jenis Kelamin</label>
               </td>
-              <td className="w-[63%] h-full">
-                <select
-                  value={status}
-                  className="w-[37%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
-                  defaultValue={"default"}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="default" hidden>
-                    Pilih
-                  </option>
-                  <option value={"lakilaki"}>Laki-laki</option>
-                  <option value={"yatim"}>Perempuan</option>
-                </select>
+              <td className="w-[37%] h-full">
+                <RadioInput
+                  value={jeniskelamin}
+                  onChange={(e) => setJeniskelamin(e.target.value)}
+                  className="h-full"
+                />
               </td>
             </tr>
             <tr>
@@ -203,13 +196,14 @@ const Biodata = () => {
                 <label className="py-1">Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-                <DatePicker
+                <input
+                  type="date"
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-[10px]"
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-sm"
                   maxDate={new Date()}
                 />
               </td>

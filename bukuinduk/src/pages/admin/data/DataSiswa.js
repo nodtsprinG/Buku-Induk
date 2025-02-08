@@ -80,10 +80,14 @@ const DataSiswa = () => {
     detailPreparing(id)
     navigate(`/admin/audit/${id}/biodata`)
   }
+  const [showDialog, setShowDialog] = useState(false);
+  const handleButtonClick = () => {
+    setShowDialog(true);
+  };
 
   useEffect(updateSiswa, []);
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen font-body">
       <div className="w-3/8">
         <Navigation />
       </div>
@@ -92,6 +96,9 @@ const DataSiswa = () => {
           <h1 className="font-inter text-3xl font-normal leading-5 ml-2">
             Semua Siswa
           </h1>
+          <button onClick={() => navigate('/siswa/data/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+            Tambah Siswa
+          </button>
         </header>
         <hr className="border-black border-2" />
         <div className="w-full flex gap-4 justify-between mt-6">
@@ -160,10 +167,7 @@ const DataSiswa = () => {
                         Lihat Detail
                       </button>
                       <button
-                        onClick={() => {
-                          setDeleteId(s.id);
-                          setDeleteUsername(s.nama);
-                        }}
+                        onClick={() => detailClick(s.id)}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-1/2 rounded-lg"
                       >
                         Perbarui
@@ -176,33 +180,6 @@ const DataSiswa = () => {
           </table>
         </div>
       </div>
-      {deleteId ? (
-        <div className="fixed backdrop-blur-md w-screen h-screen flex justify-center items-center text-2xl">
-          <div className="bg-white w-2/4 p-5 rounded-xl">
-            <div className="w-full f-head f-header font-bold">Perbarui Data Siswa</div>
-            <div className="p-3">
-              Perbarui data akun milik{" "}
-              <b>{deleteUsername}</b>?
-            </div>
-            <div className="w-full flex flex-row font-header font-bold">
-              <button
-                onClick={() => setDeleteId(null)}
-                className=" w-1/2 text-center py-1 text-red-500"
-              >
-                Batalkan
-              </button>
-              <button
-                onClick={() => deleteAkun(deleteId)}
-                className=" w-1/2 text-center py-1 text-white bg-[#0C7FDA]"
-              >
-                Konfirmasi
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        false
-      )}
     </div>
   );
 };

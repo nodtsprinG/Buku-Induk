@@ -4,6 +4,7 @@ import Logo from "../../../assets/logosekolah.png"
 import EmailIcon from "../../../assets/EmailIcon.png"
 import axios from "axios";
 import resetAll from "../../../utils/resetAll";
+import GoBack from "../../../components/goback";
 
 import { baseUrl } from "../../../utils/constan";
 
@@ -12,7 +13,7 @@ const TambahAkun = () => {
   const [jurusan, setJurusan] = useState([]);
   const [angkatan, setAngkatan] = useState([]);
 
-  const [jurusan_id, setJurusan_id] = useState(0);
+  const [jurusan_nama, setJurusan_nama] = useState(0);
   const [angkatan_id, setAngkatan_id] = useState(0);
   const [nisn, setNisn] = useState("");
 
@@ -37,7 +38,7 @@ const TambahAkun = () => {
     if (localStorage.getItem("akun-nisn"))
       setNisn(localStorage.getItem("akun-nisn"));
     if (localStorage.getItem("akun-jurusanId"))
-      setJurusan_id(localStorage.getItem("akun-jurusanId"));
+      setJurusan_nama(localStorage.getItem("akun-jurusanNama"));
     if (localStorage.getItem("akun-angkatanId"))
       setAngkatan_id(localStorage.getItem("akun-angkatanId"));
   }, []);
@@ -45,10 +46,10 @@ const TambahAkun = () => {
   useEffect(fetchData, []);
 
   const daftar = () => {
-    console.log(nisn, jurusan_id, angkatan_id);
-    if (jurusan_id && !isNaN(angkatan_id) & !isNaN(nisn)) {
+    console.log(nisn, jurusan_nama, angkatan_id);
+    if (jurusan_nama && !isNaN(angkatan_id) & !isNaN(nisn)) {
       localStorage.setItem("akun-nisn", nisn);
-      localStorage.setItem("akun-jurusanId", jurusan_id);
+      localStorage.setItem("akun-jurusanId", jurusan_nama);
       localStorage.setItem("akun-angkatanId", angkatan_id);
       navigate(`/siswa/data/${params.action}/biodata`);
     } else {
@@ -58,6 +59,7 @@ const TambahAkun = () => {
 
   return (
     <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
+      <GoBack />
       <div className="flex flex-row items-center justify-center w-11/12">
         <div className="flex flex-col items-center justify-center w-1/2">
           <img src={Logo} className="w-44 aspect-square" />
@@ -76,8 +78,8 @@ const TambahAkun = () => {
             ></input>
             <label className="opacity-20 pt-5">Jurusan</label>
             <select
-              value={jurusan_id}
-              onChange={(e) => setJurusan_id(e.target.value)}
+              value={jurusan_nama}
+              onChange={(e) => setJurusan_nama(e.target.value)}
               className="bg-transparent border-b border-black focus:outline-none pt-2"
               defaultValue={"default"}
             >

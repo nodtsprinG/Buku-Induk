@@ -31,7 +31,7 @@ const uploadAll = async () => {
     const data = {
       siswa: {
         nisn: localStorage.getItem("akun-nisn"),
-        jurusan_id: localStorage.getItem("akun-jurusanId"),
+        jurusan_nama: localStorage.getItem("akun-jurusanNama"),
         angkatan_id: localStorage.getItem("akun-angkatanId"),
       },
       data_diri: {

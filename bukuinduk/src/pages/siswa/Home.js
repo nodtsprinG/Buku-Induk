@@ -14,6 +14,7 @@ import Pendidikan from "./data/Pendidikan";
 import TempatTinggal from "./data/Tempattinggal";
 import Wali from "./data/Wali";
 import TambahAkun from "./data/Main";
+import GoBack from "../../components/goback"
 
 import resetAll from "../../utils/resetAll";
 
@@ -26,6 +27,7 @@ const HomeSiswa = () => {
 
   return (
     <div className="flex flex-col justify-center items-center bg-homepage bg-no-repeat w-screen h-screen">
+      <GoBack />
       <div className="text-white">
         <p className="font-header font-bold text-center text-2xl">
           "Buku Induk Virtual Akses Data dengan Mudah"

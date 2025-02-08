@@ -83,7 +83,7 @@ const HomeAdmin = () => {
   const navigate = useNavigate();
   const check = () => {
     if (localStorage.getItem("token")) {
-      navigate("/admin/dashboard");
+      navigate("/admin/auth/login");
     } else {
       navigate("/admin/auth/login");
     }

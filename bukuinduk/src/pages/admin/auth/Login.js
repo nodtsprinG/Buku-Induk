@@ -1,10 +1,9 @@
-import { Navigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios"
 import Logo from "../../../assets/logosekolah.png"
 import { baseUrl } from "../../../utils/constan";
-
+import GoBack from "../../../components/goback"
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -54,7 +53,7 @@ const Login = () => {
                             <div className="flex flex-row justify-end items-center w-1/2">
                                 <button onClick={verify} className="font-header font-bold bg-[#0083FB] p-2 text-l text-white rounded-md">Masuk</button>
                             </div>
-                            
+                            <GoBack />
                         </div>
                     </div>
                     
