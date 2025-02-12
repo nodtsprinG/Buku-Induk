@@ -1,4 +1,5 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable array-callback-return */
+/* eslint-disable default-case */
 import { FaDownload } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router";
 import {
@@ -145,24 +146,16 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     { a: "Ayah", b: "ayah" },
     { a: "Ibu", b: "ibu" },
     { a: "Wali", b: "wali" },
-    { a: "Hobi", b: "hobi" },
-    {
-      a: "Perkembangan Siswa",
-      b: "perkembangansiswa",
-      c: true,
-    },
-    { a: "Selesai Pendidikan", b: "selesaipend", c: true },
   ];
 
   const downloadPdf = async () => {
-    console.log(baseUrl, params.id)
     const response = await axios.get(`${baseUrl}/admin/export-pdf/${params.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       responseType: 'blob', // Untuk menerima data dalam format blob (binary large object)
     });
-    console.log(localStorage.getItem("token"))
+
     // Buat URL dari blob yang diterima
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');

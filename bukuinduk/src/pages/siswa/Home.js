@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import CariNisn from "./search/cariNISN";
 import DataSiswa from "./search/dataSiswa";
+import Login from "./search/LoginSiswa"
 
 // ========================== import halaman audit
 import Ayah from "./data/Ayah";
@@ -40,13 +41,13 @@ const HomeSiswa = () => {
             onClick={preparingAddData}
             className="block font-body font-bold bg-[#D9D9D9] text-center w-[715px] py-3 rounded-md text-black my-1 text-sm"
           >
-            Masukan data NISN
+            Daftar
           </button>
           <Link
-            to={"/siswa/cari"}
+            to={"/siswa/login"}
             className="block font-body font-bold bg-[#0C7FDA] text-center w-[715px] py-3 rounded-md text-white my-1 text-sm"
           >
-            Cari NISN
+            Masuk
           </Link>
         </div>
       </div>
@@ -78,6 +79,7 @@ const SiswaRouting = () => {
       {/* Halaman Cari */}
       <Route exact path="/cari" element={<CariNisn />} />
       <Route exact path="/result/:nisn" element={<DataSiswa />} />
+      <Route exact path="/login" element={<Login />} />
       {/* Masukkan data NISN */}
       <Route exact path="/data/:action/*" element={<AddData />} />
     </Routes>

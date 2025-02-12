@@ -22,7 +22,7 @@ const Navigation = () => {
 
 
   const Logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     return navigate("/admin/auth/login")
   };
 

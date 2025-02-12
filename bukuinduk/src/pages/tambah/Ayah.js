@@ -1,7 +1,5 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
-import InputHalaman from "../../../components/pilihHalaman";
 import {
   TextInput,
   DateInput,
@@ -71,7 +69,7 @@ const Ayah = () => {
   }, []);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/pendidikan`);
+    navigate(`/siswa/data/${params.action}/pendidikan`);
   };
 
   const nextButton = () => {
@@ -112,7 +110,7 @@ const Ayah = () => {
         localStorage.setItem("ayah-status", status);
       }
 
-      navigate(`/admin/audit/${params.id}/ibu`);
+      navigate(`/siswa/data/${params.action}/ibu`);
     } else {
       alert("Semua data belum terisi");
     }
@@ -120,12 +118,10 @@ const Ayah = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
-      <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
       <HeaderInput
         title={"Ayah"}
         word={"E"}
-        form={"admin"}
+        form={"siswa"}
       />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
@@ -159,13 +155,13 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
+                <DatePicker
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>
@@ -250,7 +246,7 @@ const Ayah = () => {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
+                  className="w-full bg-white text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                 >
                   <option value="default">Pilih</option>

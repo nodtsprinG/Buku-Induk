@@ -6,8 +6,6 @@ import {
   RadioInput,
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import InputHalaman from "../../../components/pilihHalaman"
-import Profil from "../../../components/profileCard"
 import { useNavigate, useParams } from "react-router";
 
 //Date issues
@@ -37,7 +35,7 @@ const Biodata = () => {
   const [panggilan, setPanggilan] = useState("");
   const [jeniskelamin, setJeniskelamin] = useState("");
   const [tempatlahir, setTempatlahir] = useState("");
-  const [tanggallahir, setTanggallahir] = useState(Date());
+  const [tanggallahir, setTanggallahir] = useState(new Date());
   const [agama, setAgama] = useState("");
   const [kewarganegaraan, setKewarganegaraan] = useState("");
   const [anakke, setAnakke] = useState(0);
@@ -49,37 +47,37 @@ const Biodata = () => {
   const navigate = useNavigate();
 
   const backButton = () => {
-    navigate(`/admin/datasiswa`);
+    navigate(`/siswa/data/${params.action}/akun`);
   };
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("biodata-nama"))
-      setNama(localStorage.getItem("biodata-nama"));
-    if (localStorage.getItem("biodata-panggilan"))
-      setPanggilan(localStorage.getItem("biodata-panggilan"));
-    if (localStorage.getItem("biodata-jeniskelamin"))
-      setJeniskelamin(localStorage.getItem("biodata-jeniskelamin"));
-    if (localStorage.getItem("biodata-tempatlahir"))
-      setTempatlahir(localStorage.getItem("biodata-tempatlahir"));
-    if (localStorage.getItem("biodata-tanggallahir"))
-      setTanggallahir(localStorage.getItem("biodata-tanggallahir"));
-    if (localStorage.getItem("biodata-agama"))
-      setAgama(localStorage.getItem("biodata-agama"));
-    if (localStorage.getItem("biodata-kewarganegaraan"))
-      setKewarganegaraan(localStorage.getItem("biodata-kewarganegaraan"));
-    if (localStorage.getItem("biodata-anakke"))
-      setAnakke(localStorage.getItem("biodata-anakke"));
-    if (localStorage.getItem("biodata-kandung"))
-      setKandung(localStorage.getItem("biodata-kandung"));
-    if (localStorage.getItem("biodata-angkat"))
-      setAngkat(localStorage.getItem("biodata-angkat"));
-    if (localStorage.getItem("biodata-tiri"))
-      setTiri(localStorage.getItem("biodata-tiri"));
-    if (localStorage.getItem("biodata-status"))
-      setStatus(localStorage.getItem("biodata-status"));
-    if (localStorage.getItem("biodata-bahasa"))
-      setBahasa(localStorage.getItem("biodata-bahasa"));
+    // console.log("Di cek dulu...");
+    // if (localStorage.getItem("biodata-nama"))
+    //   setNama(localStorage.getItem("biodata-nama"));
+    // if (localStorage.getItem("biodata-panggilan"))
+    //   setPanggilan(localStorage.getItem("biodata-panggilan"));
+    // if (localStorage.getItem("biodata-jeniskelamin"))
+    //   setJeniskelamin(localStorage.getItem("biodata-jeniskelamin"));
+    // if (localStorage.getItem("biodata-tempatlahir"))
+    //   setTempatlahir(localStorage.getItem("biodata-tempatlahir"));
+    // if (localStorage.getItem("biodata-tanggallahir"))
+    //   setTanggallahir(localStorage.getItem("biodata-tanggallahir"));
+    // if (localStorage.getItem("biodata-agama"))
+    //   setAgama(localStorage.getItem("biodata-agama"));
+    // if (localStorage.getItem("biodata-kewarganegaraan"))
+    //   setKewarganegaraan(localStorage.getItem("biodata-kewarganegaraan"));
+    // if (localStorage.getItem("biodata-anakke"))
+    //   setAnakke(localStorage.getItem("biodata-anakke"));
+    // if (localStorage.getItem("biodata-kandung"))
+    //   setKandung(localStorage.getItem("biodata-kandung"));
+    // if (localStorage.getItem("biodata-angkat"))
+    //   setAngkat(localStorage.getItem("biodata-angkat"));
+    // if (localStorage.getItem("biodata-tiri"))
+    //   setTiri(localStorage.getItem("biodata-tiri"));
+    // if (localStorage.getItem("biodata-status"))
+    //   setStatus(localStorage.getItem("biodata-status"));
+    // if (localStorage.getItem("biodata-bahasa"))
+    //   setBahasa(localStorage.getItem("biodata-bahasa"));
   }, []);
 
   const nextButton = () => {
@@ -107,10 +105,13 @@ const Biodata = () => {
       agama &&
       kewarganegaraan &&
       anakke &&
+      kandung &&
+      angkat &&
+      tiri &&
       status &&
       bahasa
     ) {
-      if (true) {
+      if (params.action === "upload") {
         localStorage.setItem("biodata-nama", nama);
         localStorage.setItem("biodata-panggilan", panggilan);
         localStorage.setItem("biodata-jeniskelamin", jeniskelamin);
@@ -119,24 +120,21 @@ const Biodata = () => {
         localStorage.setItem("biodata-agama", agama);
         localStorage.setItem("biodata-kewarganegaraan", kewarganegaraan);
         localStorage.setItem("biodata-anakke", anakke);
-        localStorage.setItem("biodata-kandung", kandung || "");
-        localStorage.setItem("biodata-angkat", angkat || "");
-        localStorage.setItem("biodata-tiri", tiri || "");
+        localStorage.setItem("biodata-kandung", kandung);
+        localStorage.setItem("biodata-angkat", angkat);
+        localStorage.setItem("biodata-tiri", tiri);
         localStorage.setItem("biodata-status", status);
         localStorage.setItem("biodata-bahasa", bahasa);
       }
-
-      navigate(`/admin/audit/${params.id}/tempattinggal`);
+      navigate(`/siswa/data/${params.action}/tempattinggal`);
     } else {
       alert("Semua data belum terisi");
     }
   };
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen">
-      <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
-      <HeaderInput title={"Biodata"} word={"A"} form={"admin"} />
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen rounded-lg">
+      <HeaderInput title={"Biodata"} word={"A"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4">
           <tbody>
@@ -192,14 +190,14 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1">Tanggal Lahir</label>
               </td>
-              <td className="w-[37%] h-full rounded-lg">
+              <td className="w-[37%] h-full">
                 <DatePicker
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>
@@ -258,8 +256,12 @@ const Biodata = () => {
               </td>
               <td className="w-[37%] h-full">
                 <IntegerInput
-                  value={tiri}
-                  onChange={(e) => setTiri(e.target.value)}
+                  value={tiri ?? ""}
+                  nullable
+                  onChange={(e) => {
+                    const newValue = e.target.value === "" ? null : parseInt(e.target.value, 10);
+                    setTiri(newValue);
+                  }}
                   className="h-full"
                 />
               </td>
@@ -270,8 +272,12 @@ const Biodata = () => {
               </td>
               <td className="w-[37%] h-full">
                 <IntegerInput
-                  value={angkat}
-                  onChange={(e) => setAngkat(e.target.value)}
+                  value={angkat ?? ""}
+                  nullable
+                  onChange={(e) => {
+                    const newValue = e.target.value === "" ? null : parseInt(e.target.value, 10);
+                    setAngkat(newValue);
+                  }}
                   className="h-full"
                 />
               </td>
@@ -283,7 +289,7 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <select
                   value={status}
-                  className="w-[37%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
+                  className="w-[37%] bg-white text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                   onChange={(e) => setStatus(e.target.value)}
                 >

@@ -96,7 +96,7 @@ const Kesehatan = () => {
                 <select
                   value={goldarah}
                   onChange={(e) => setGoldarah(e.target.value)}
-                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded outline-none shadow-md"
+                  className="w-full bg-[#E3E5E6] text-black p-2 rounded"
                   defaultValue={"default"}
                 >
                   <option value="default" hidden>

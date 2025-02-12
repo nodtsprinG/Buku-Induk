@@ -1,16 +1,13 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
-import InputHalaman from "../../../components/pilihHalaman";
 import {
   TextInput,
   DateInput,
   IntegerInput,
   RadioInput,
-} from "../../../components/inputComponent";
-import Nextbefore from "../../../components/nextbefore";
+} from "../../components/inputComponent";
 import { useNavigate, useParams } from "react-router";
-
+import Nextbefore from "../../components/nextbefore";
 //Date issues
 
 import DatePicker from "react-datepicker";
@@ -21,7 +18,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 /* 
 
 =====================================================================================================
-                    D A T A _ A Y A H _ K A N D U N G _ S I S W A
+                    D A T A _ W A L I _ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
 
 [#] Note : Mengikuti desain
@@ -30,9 +27,9 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 */
 
-const Ayah = () => {
+const Wali = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const params = useParams()
 
   const [tanggallahir, setTanggallahir] = useState(new Date());
   const [nama, setNama] = useState("");
@@ -43,35 +40,31 @@ const Ayah = () => {
   const [pekerjaan, setPekerjaan] = useState("");
   const [pengeluaran, setPengeluaran] = useState("");
   const [alamatdantelpon, setAlamatdantelpon] = useState("");
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     console.log("Di cek dulu...");
-    console.log()
-    if (localStorage.getItem("ayah-nama"))
-      setNama(localStorage.getItem("ayah-nama"));
-    if (localStorage.getItem("ayah-tempatlahir"))
-      setTempatlahir(localStorage.getItem("ayah-tempatlahir"));
-    if (localStorage.getItem("ayah-tanggallahir"))
-      setTanggallahir(localStorage.getItem("ayah-tanggallahir"));
-    if (localStorage.getItem("ayah-agama"))
-      setAgama(localStorage.getItem("ayah-agama"));
-    if (localStorage.getItem("ayah-kewarganegaraan"))
-      setKewarganegaraan(localStorage.getItem("ayah-kewarganegaraan"));
-    if (localStorage.getItem("ayah-pendidikan"))
-      setPendidikan(localStorage.getItem("ayah-pendidikan"));
-    if (localStorage.getItem("ayah-pekerjaan"))
-      setPekerjaan(localStorage.getItem("ayah-pekerjaan"));
-    if (localStorage.getItem("ayah-pengeluaran"))
-      setPengeluaran(localStorage.getItem("ayah-pengeluaran"));
-    if (localStorage.getItem("ayah-alamatdantelpon"))
-      setAlamatdantelpon(localStorage.getItem("ayah-alamatdantelpon"));
-    if (localStorage.getItem("ayah-status"))
-      setStatus(localStorage.getItem("ayah-status"));
+    if (localStorage.getItem("wali-nama") !== "null")
+      setNama(localStorage.getItem("wali-nama"));
+    if (localStorage.getItem("wali-tempatlahir") !== "null")
+      setTempatlahir(localStorage.getItem("wali-tempatlahir"));
+    if (localStorage.getItem("wali-tanggallahir") !== "null")
+      setTanggallahir(localStorage.getItem("wali-tanggallahir"));
+    if (localStorage.getItem("wali-agama") !== "null")
+      setAgama(localStorage.getItem("wali-agama"));
+    if (localStorage.getItem("wali-kewarganegaraan") !== "null")
+      setKewarganegaraan(localStorage.getItem("wali-kewarganegaraan"));
+    if (localStorage.getItem("wali-pendidikan") !== "null")
+      setPendidikan(localStorage.getItem("wali-pendidikan"));
+    if (localStorage.getItem("wali-pekerjaan") !== "null")
+      setPekerjaan(localStorage.getItem("wali-pekerjaan"));
+    if (localStorage.getItem("wali-pengeluaran") !== "null")
+      setPengeluaran(localStorage.getItem("wali-pengeluaran"));
+    if (localStorage.getItem("wali-alamatdantelpon") !== "null")
+      setAlamatdantelpon(localStorage.getItem("wali-alamatdantelpon"));
   }, []);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/pendidikan`);
+    navigate(`/siswa/data/${params.action}/ibu`);
   };
 
   const nextButton = () => {
@@ -84,49 +77,23 @@ const Ayah = () => {
       pendidikan,
       pekerjaan,
       pengeluaran,
-      alamatdantelpon,
-      status
+      alamatdantelpon
     );
-    if (
-      nama &&
-      tempatlahir &&
-      tanggallahir &&
-      agama &&
-      kewarganegaraan &&
-      pendidikan &&
-      pekerjaan &&
-      pengeluaran &&
-      alamatdantelpon &&
-      status
-    ) {
-      if (params.action === "upload") {
-        localStorage.setItem("ayah-nama", nama);
-        localStorage.setItem("ayah-tempatlahir", tempatlahir);
-        localStorage.setItem("ayah-tanggallahir", tanggallahir);
-        localStorage.setItem("ayah-agama", nama);
-        localStorage.setItem("ayah-kewarganegaraan", kewarganegaraan);
-        localStorage.setItem("ayah-pendidikan", pendidikan);
-        localStorage.setItem("ayah-pekerjaan", pekerjaan);
-        localStorage.setItem("ayah-pengeluaran", pengeluaran);
-        localStorage.setItem("ayah-alamatdantelpon", alamatdantelpon);
-        localStorage.setItem("ayah-status", status);
-      }
-
-      navigate(`/admin/audit/${params.id}/ibu`);
-    } else {
-      alert("Semua data belum terisi");
-    }
+      localStorage.setItem("wali-nama", nama ? nama : null);
+      localStorage.setItem("wali-tempatlahir", tempatlahir ? tempatlahir : null);
+      localStorage.setItem("wali-tanggallahir", tanggallahir ? tanggallahir : null);
+      localStorage.setItem("wali-agama", agama ? agama : null);
+      localStorage.setItem("wali-kewarganegaraan", kewarganegaraan ? kewarganegaraan : null);
+      localStorage.setItem("wali-pendidikan", pendidikan ? pendidikan : null);
+      localStorage.setItem("wali-pekerjaan", pekerjaan ? pekerjaan : null);
+      localStorage.setItem("wali-pengeluaran", pengeluaran ? pengeluaran : null);
+      localStorage.setItem("wali-alamatdantelpon", alamatdantelpon ? alamatdantelpon : null);
+      navigate(`/siswa/data/${params.action}/hobi`);
   };
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
-      <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
-      <HeaderInput
-        title={"Ayah"}
-        word={"E"}
-        form={"admin"}
-      />
+      <HeaderInput title={"Wali"} word={"G"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -159,13 +126,13 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
+                <DatePicker
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>
@@ -242,23 +209,6 @@ const Ayah = () => {
                 />
               </td>
             </tr>
-            <tr>
-              <td className="w-[63%] h-full">
-                <label className="py-1">Masih Hidup/ Meninggal Dunia</label>
-              </td>
-              <td className="w-[37%] h-full">
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
-                  defaultValue={"default"}
-                >
-                  <option value="default">Pilih</option>
-                  <option value={"masih hidup"}>Masih Hidup</option>
-                  <option value={"meninggal"}>Meninggal Dunia</option>
-                </select>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -267,4 +217,4 @@ const Ayah = () => {
     </div>
   );
 };
-export default Ayah;
+export default Wali;

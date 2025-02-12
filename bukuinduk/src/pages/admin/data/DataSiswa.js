@@ -11,8 +11,6 @@ import detailPreparing from "../../../utils/detailPreparing";
 const DataSiswa = () => {
   const navigate = useNavigate()
   const [siswa, setSiswa] = useState([]);
-  const [deleteId, setDeleteId] = useState(null);
-  const [deleteUsername, setDeleteUsername] = useState(null);
 
   const [searchkey, setSearchkey] = useState("");
   const [filtered, setFiltered] = useState([]);
@@ -34,47 +32,32 @@ const DataSiswa = () => {
       });
   };
 
-  const deleteAkun = (id) => {
-    return axios
-      .delete(baseUrl + "/admin/akun/" + id, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then(() => {
-        setDeleteId(null);
-        updateSiswa();
-      })
-      .catch((err) => {});
-  };
 
   useEffect(() => {
     let data = siswa;
-
+  
     if (searchkey) {
-      data = data.filter((x) =>
-        x.nama.toLowerCase().includes(searchkey.toLowerCase())
+      data = data.filter((s) =>
+        s.nama.toLowerCase().includes(searchkey.toLowerCase())
       );
     }
-
-    const fa = angkatans.filter((x) => x?.checked === true).map((x) => x.tahun);
-
-    if (fa.length > 0) {
-      data = data.filter((x) => fa.includes(x.angkatan));
+  
+    if (angkatans.length > 0) {
+      const selectedAngkatans = angkatans.filter((x) => x.checked).map((x) => x.tahun);
+      if (selectedAngkatans.length > 0) {
+        data = data.filter((s) => selectedAngkatans.includes(s.angkatan));
+      }
     }
-
-    console.log("Data hasil :", data, "Filter :", fa )
-
-    const fj = jurusans.filter((x) => x?.checked === true).map((x) => x.nama);
-
-    if (fj.length > 0) {
-      data = data.filter((x) => fj.includes(x.jurusan));
+  
+    if (jurusans.length > 0) {
+      const selectedJurusans = jurusans.filter((x) => x.checked).map((x) => x.nama);
+      if (selectedJurusans.length > 0) {
+        data = data.filter((s) => selectedJurusans.includes(s.jurusan));
+      }
     }
-
-    console.log("Data hasil :", data, "Filter :", fj )
-
+  
     setFiltered(data);
-  }, [siswa, searchkey, angkatans, jurusans]);
+  }, [siswa, searchkey, angkatans, jurusans]);  
 
   const detailClick = (id) => {
     detailPreparing(id)
@@ -96,7 +79,7 @@ const DataSiswa = () => {
           <h1 className="font-inter text-3xl font-normal leading-5 ml-2">
             Semua Siswa
           </h1>
-          <button onClick={() => navigate('/siswa/data/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+          <button onClick={() => navigate('/tambah/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
             Tambah Siswa
           </button>
         </header>

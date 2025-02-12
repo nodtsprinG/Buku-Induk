@@ -1,10 +1,7 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
-import InputHalaman from "../../../components/pilihHalaman";
 import {
   TextInput,
-  DateInput,
   IntegerInput,
   RadioInput,
 } from "../../../components/inputComponent";
@@ -21,7 +18,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 /* 
 
 =====================================================================================================
-                    D A T A _ A Y A H _ K A N D U N G _ S I S W A
+                    D A T A _ I B U _ K A N D U N G _ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
 
 [#] Note : Mengikuti desain
@@ -30,9 +27,9 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 */
 
-const Ayah = () => {
+const Ibu = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const params = useParams()
 
   const [tanggallahir, setTanggallahir] = useState(new Date());
   const [nama, setNama] = useState("");
@@ -47,31 +44,30 @@ const Ayah = () => {
 
   useEffect(() => {
     console.log("Di cek dulu...");
-    console.log()
-    if (localStorage.getItem("ayah-nama"))
-      setNama(localStorage.getItem("ayah-nama"));
-    if (localStorage.getItem("ayah-tempatlahir"))
-      setTempatlahir(localStorage.getItem("ayah-tempatlahir"));
-    if (localStorage.getItem("ayah-tanggallahir"))
-      setTanggallahir(localStorage.getItem("ayah-tanggallahir"));
-    if (localStorage.getItem("ayah-agama"))
-      setAgama(localStorage.getItem("ayah-agama"));
-    if (localStorage.getItem("ayah-kewarganegaraan"))
-      setKewarganegaraan(localStorage.getItem("ayah-kewarganegaraan"));
-    if (localStorage.getItem("ayah-pendidikan"))
-      setPendidikan(localStorage.getItem("ayah-pendidikan"));
-    if (localStorage.getItem("ayah-pekerjaan"))
-      setPekerjaan(localStorage.getItem("ayah-pekerjaan"));
-    if (localStorage.getItem("ayah-pengeluaran"))
-      setPengeluaran(localStorage.getItem("ayah-pengeluaran"));
-    if (localStorage.getItem("ayah-alamatdantelpon"))
-      setAlamatdantelpon(localStorage.getItem("ayah-alamatdantelpon"));
-    if (localStorage.getItem("ayah-status"))
-      setStatus(localStorage.getItem("ayah-status"));
+    if (localStorage.getItem("ibu-nama"))
+      setNama(localStorage.getItem("ibu-nama"));
+    if (localStorage.getItem("ibu-tempatlahir"))
+      setTempatlahir(localStorage.getItem("ibu-tempatlahir"));
+    if (localStorage.getItem("ibu-tanggallahir"))
+      setTanggallahir(localStorage.getItem("ibu-tanggallahir"));
+    if (localStorage.getItem("ibu-agama"))
+      setAgama(localStorage.getItem("ibu-agama"));
+    if (localStorage.getItem("ibu-kewarganegaraan"))
+      setKewarganegaraan(localStorage.getItem("ibu-kewarganegaraan"));
+    if (localStorage.getItem("ibu-pendidikan"))
+      setPendidikan(localStorage.getItem("ibu-pendidikan"));
+    if (localStorage.getItem("ibu-pekerjaan"))
+      setPekerjaan(localStorage.getItem("ibu-pekerjaan"));
+    if (localStorage.getItem("ibu-pengeluaran"))
+      setPengeluaran(localStorage.getItem("ibu-pengeluaran"));
+    if (localStorage.getItem("ibu-alamatdantelpon"))
+      setAlamatdantelpon(localStorage.getItem("ibu-alamatdantelpon"));
+    if (localStorage.getItem("ibu-status"))
+      setStatus(localStorage.getItem("ibu-status"));
   }, []);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/pendidikan`);
+    navigate(`/siswa/data/${params.action}/ayah`);
   };
 
   const nextButton = () => {
@@ -99,20 +95,18 @@ const Ayah = () => {
       alamatdantelpon &&
       status
     ) {
-      if (params.action === "upload") {
-        localStorage.setItem("ayah-nama", nama);
-        localStorage.setItem("ayah-tempatlahir", tempatlahir);
-        localStorage.setItem("ayah-tanggallahir", tanggallahir);
-        localStorage.setItem("ayah-agama", nama);
-        localStorage.setItem("ayah-kewarganegaraan", kewarganegaraan);
-        localStorage.setItem("ayah-pendidikan", pendidikan);
-        localStorage.setItem("ayah-pekerjaan", pekerjaan);
-        localStorage.setItem("ayah-pengeluaran", pengeluaran);
-        localStorage.setItem("ayah-alamatdantelpon", alamatdantelpon);
-        localStorage.setItem("ayah-status", status);
-      }
+      localStorage.setItem("ibu-nama", nama);
+      localStorage.setItem("ibu-tempatlahir", tempatlahir);
+      localStorage.setItem("ibu-tanggallahir", tanggallahir);
+      localStorage.setItem("ibu-agama", nama);
+      localStorage.setItem("ibu-kewarganegaraan", kewarganegaraan);
+      localStorage.setItem("ibu-pendidikan", pendidikan);
+      localStorage.setItem("ibu-pekerjaan", pekerjaan);
+      localStorage.setItem("ibu-pengeluaran", pengeluaran);
+      localStorage.setItem("ibu-alamatdantelpon", alamatdantelpon);
+      localStorage.setItem("ibu-status", status);
 
-      navigate(`/admin/audit/${params.id}/ibu`);
+      navigate(`/siswa/data/${params.action}/wali`);
     } else {
       alert("Semua data belum terisi");
     }
@@ -120,13 +114,7 @@ const Ayah = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
-      <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
-      <HeaderInput
-        title={"Ayah"}
-        word={"E"}
-        form={"admin"}
-      />
+      <HeaderInput title={"Ibu"} word={"F"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -159,13 +147,13 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
+                <DatePicker
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>
@@ -250,7 +238,7 @@ const Ayah = () => {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
+                  className="w-full bg-white text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                 >
                   <option value="default">Pilih</option>
@@ -267,4 +255,4 @@ const Ayah = () => {
     </div>
   );
 };
-export default Ayah;
+export default Ibu;

@@ -117,12 +117,11 @@ const KetSelesai = () => {
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
+              <td className="w-[63%] h-full">
                 <label className="py-1">b.Tanggal Mulai Kerja</label>
               </td>
-              <td className="w-[63%] h-full">
-                <input
-                  type="date"
+              <td className="w-[37%] h-full">
+                <DatePicker
                   selected={tanggal}
                   onChange={(date) => setTanggal(date)}
                   scrollableMonthYearDropdown

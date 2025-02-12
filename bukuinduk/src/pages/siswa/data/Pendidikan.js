@@ -255,14 +255,14 @@ const Pendidikan = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1 ">e. Tanggal</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[37%] h-full">
                 <DatePicker
                   selected={tanggal}
                   onChange={(date) => setTanggal(date)}
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="w-full bg-[#DEE0E1] py-2 px-2 focus:outline-none rounded-lg"
                   maxDate={new Date()}
                 />
               </td>

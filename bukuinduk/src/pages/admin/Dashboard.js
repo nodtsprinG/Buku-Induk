@@ -62,20 +62,6 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
-  const deleteAkun = (id) => {
-    return axios
-      .delete(baseUrl + "/admin/akun/" + id, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then(() => {
-        setDeleteId(null);
-        updateSiswa();
-      })
-      .catch((err) => {});
-  };
-
   useEffect(() => {
     let data = siswa;
     if (searchkey) {
@@ -253,12 +239,12 @@ const Dashboard = () => {
               >
                 Batalkan
               </button>
-              <button
-                onClick={() => deleteAkun(deleteId)}
+              {/* <button
+                onClick={}
                 className=" w-1/2 text-center py-1 text-white bg-blue-500"
               >
                 Konfirmasi
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

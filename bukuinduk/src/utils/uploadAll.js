@@ -17,14 +17,14 @@ import { baseUrl } from "./constan";
 const uploadAll = async () => {
   if (
     (isAkunFilled(),
-    isAyahFilled(),
-    isBiodataFilled(),
-    isHobiFilled(),
-    isIbuFilled(),
-    isKesehatanFilled(),
-    isPendidikanFilled(),
-    isTempattinggalFilled(),
-    isWaliFilled())
+      isAyahFilled(),
+      isBiodataFilled(),
+      isHobiFilled(),
+      isIbuFilled(),
+      isKesehatanFilled(),
+      isPendidikanFilled(),
+      isTempattinggalFilled(),
+      isWaliFilled())
   ) {
 
 
@@ -132,9 +132,14 @@ const uploadAll = async () => {
     return axios
       .post(baseUrl + "/siswa/data-diri", data)
       .then((res) => {
-        var dt = res.data
-        return dt.message
+        const dt = res.data;
+        console.log("Response:", dt);
+        return dt.message;
       })
+      .catch((error) => {
+        console.error("Error posting data:", error.response ? error.response.data : error.message);
+        throw error;  // Bisa melempar error lagi jika ingin ditangani di tempat lain
+      });
   }
 };
 

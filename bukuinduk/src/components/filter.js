@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { CiFilter } from "react-icons/ci";
 import axios from "axios";
@@ -27,11 +28,23 @@ const FilterComponent = ({ stateAngkatan, stateJurusan }) => {
       .then((res) => {
         setAngkatan(res.data);
       });
+    console.log("Filtered Jurusan:", jurusan);
+    console.log("Filtered Angkatan:", angkatan);
   }, []);
 
   const handleApply = () => {
-    stateJurusan(jurusan.find((jrs) => jrs.nama === selectedJurusan) || {});
-    stateAngkatan(angkatan.find((ank) => ank.tahun === selectedAngkatan) || {});
+    const filteredJurusan = jurusan.map((jrs) => ({
+      nama: jrs.nama,
+      checked: jrs.nama === selectedJurusan,
+    }));
+
+    const filteredAngkatan = angkatan.map((ank) => ({
+      tahun: ank.tahun,
+      checked: ank.tahun === selectedAngkatan,
+    }));
+
+    stateJurusan(filteredJurusan);
+    stateAngkatan(filteredAngkatan);
   };
 
   return (

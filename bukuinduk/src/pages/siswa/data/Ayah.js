@@ -161,7 +161,7 @@ const Ayah = () => {
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
                   maxDate={new Date()}
                 />
               </td>
@@ -246,7 +246,7 @@ const Ayah = () => {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full bg-white text-black p-2 rounded shadow-md"
+                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded-lg outline-none shadow-md"
                   defaultValue={"default"}
                 >
                   <option value="default">Pilih</option>

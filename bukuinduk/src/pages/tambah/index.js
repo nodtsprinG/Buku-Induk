@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import Logo from "../../../assets/logosekolah.png"
-import EmailIcon from "../../../assets/EmailIcon.png"
+import Logo from "../../assets/logosekolah.png"
+// import EmailIcon from "../../../assets/EmailIcon.png"
 import axios from "axios";
-import resetAll from "../../../utils/resetAll";
-import GoBack from "../../../components/goback";
+// import resetAll from "../../utils/resetAll";
+import GoBack from "../../components/goback";
 
-import { baseUrl } from "../../../utils/constan";
+import { baseUrl } from "../../utils/constan";
 
 const TambahAkun = () => {
   const params = useParams();
@@ -35,12 +35,12 @@ const TambahAkun = () => {
 
   useEffect(() => {
     console.log("Di cek dulu...");
-    if (localStorage.getItem("akun-nisn"))
-      setNisn(localStorage.getItem("akun-nisn"));
-    if (localStorage.getItem("akun-jurusanId"))
-      setJurusanId(localStorage.getItem("akun-jurusanId"));
-    if (localStorage.getItem("akun-angkatanId"))
-      setAngkatan_id(localStorage.getItem("akun-angkatanId"));
+    // if (localStorage.getItem("akun-nisn"))
+    //   setNisn(localStorage.getItem("akun-nisn"));
+    // if (localStorage.getItem("akun-jurusanId"))
+    //   setJurusanId(localStorage.getItem("akun-jurusanId"));
+    // if (localStorage.getItem("akun-angkatanId"))
+    //   setAngkatan_id(localStorage.getItem("akun-angkatanId"));
   }, []);
 
   useEffect(fetchData, []);
@@ -59,10 +59,10 @@ const TambahAkun = () => {
 
   return (
     <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
-      <GoBack />
+      <GoBack to="/admin/datasiswa"/>
       <div className="flex flex-row items-center justify-center w-11/12">
         <div className="flex flex-col items-center justify-center w-1/2">
-          <img src={Logo} className="w-44 aspect-square" />
+          <img src={Logo} alt="logosekolah" className="w-44 aspect-square" />
           <p className="font-header text-white font-bold text-3xl text-center mt-3">
             Buku Induk
           </p>

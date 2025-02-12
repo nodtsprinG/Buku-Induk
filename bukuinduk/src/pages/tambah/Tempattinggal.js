@@ -87,8 +87,8 @@ const TempatTinggal = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1">Tinggal Dengan</label>
               </td>
-              <td className="w-[37%] h-full">
-                <select value={tinggal} onChange={(e) => setTinggal(e.target.value)} className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded outline-none shadow-md" defaultValue={"default"}>
+              <td className="w-[63%] h-full">
+                <select value={tinggal} onChange={(e) => setTinggal(e.target.value)} className="w-full bg-white text-black p-2 rounded shadow-md" defaultValue={"default"}>
                   <option value={"default"} hidden>Pilih</option>
                   <option value={"ortu"}>Orang Tua</option>
                   <option value={"saudara"}>Saudara</option>
@@ -100,7 +100,7 @@ const TempatTinggal = () => {
             <tr>
               <td className="w-[63%] h-full">
                 <label className="py-1">
-                  Jarak Tempat Tinggal ke sekolah (Dalam Kilometer)
+                  Jarak Tempat Tinggal ke sekolah (*km)
                 </label>
               </td>
               <td className="w-[63%] h-full">

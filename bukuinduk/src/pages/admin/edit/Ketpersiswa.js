@@ -10,6 +10,7 @@ import {
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { useNavigate, useParams } from "react-router";
+import DatePicker from "react-datepicker";
 /* 
 
 =====================================================================================================
@@ -84,14 +85,18 @@ const KetPerkembanganSiswa = () => {
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
+              <td className="w-[63%] h-full">
                 <label className="py-1">Meninggalkan Sekolah</label>
               </td>
-              <td className="w-[63%] h-full">
-                <TextInput
+              <td className="w-[37%] h-full">
+                <DatePicker
                   value={meninggalkansekolah}
                   onChange={(e) => setMeninggalkansekolah(e.target.value)}
-                  className="h-full"
+                  scrollableMonthYearDropdown
+                  showYearDropdown
+                  dateFormat={"dd-MM-yyyy"}
+                  className="w-full bg-[#DEE0E1] py-2 px-2 focus:outline-none rounded-lg"
+                  maxDate={new Date()}
                 />
               </td>
             </tr>

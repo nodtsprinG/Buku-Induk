@@ -35,13 +35,13 @@ const Biodata = () => {
   const [panggilan, setPanggilan] = useState("");
   const [jeniskelamin, setJeniskelamin] = useState("");
   const [tempatlahir, setTempatlahir] = useState("");
-  const [tanggallahir, setTanggallahir] = useState(new Date());
+  const [tanggallahir, setTanggallahir] = useState("");
   const [agama, setAgama] = useState("");
   const [kewarganegaraan, setKewarganegaraan] = useState("");
-  const [anakke, setAnakke] = useState(0);
-  const [kandung, setKandung] = useState(0);
-  const [angkat, setAngkat] = useState(0);
-  const [tiri, setTiri] = useState(0);
+  const [anakke, setAnakke] = useState("");
+  const [kandung, setKandung] = useState("");
+  const [angkat, setAngkat] = useState("");
+  const [tiri, setTiri] = useState("");
   const [status, setStatus] = useState("");
   const [bahasa, setBahasa] = useState("");
   const navigate = useNavigate();
@@ -105,10 +105,6 @@ const Biodata = () => {
       agama &&
       kewarganegaraan &&
       anakke &&
-      kandung &&
-      angkat &&
-      tiri &&
-      status &&
       bahasa
     ) {
       if (params.action === "upload") {
@@ -120,9 +116,9 @@ const Biodata = () => {
         localStorage.setItem("biodata-agama", agama);
         localStorage.setItem("biodata-kewarganegaraan", kewarganegaraan);
         localStorage.setItem("biodata-anakke", anakke);
-        localStorage.setItem("biodata-kandung", kandung);
-        localStorage.setItem("biodata-angkat", angkat);
-        localStorage.setItem("biodata-tiri", tiri);
+        localStorage.setItem("biodata-kandung", kandung || "");
+        localStorage.setItem("biodata-angkat", angkat || "");
+        localStorage.setItem("biodata-tiri", tiri || "");
         localStorage.setItem("biodata-status", status);
         localStorage.setItem("biodata-bahasa", bahasa);
       }
@@ -146,7 +142,7 @@ const Biodata = () => {
                 <TextInput
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
-                  className="h-full rounded-[10px]"
+                  className="h-full"
                 />
               </td>
             </tr>
@@ -197,7 +193,7 @@ const Biodata = () => {
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
                   maxDate={new Date()}
                 />
               </td>
@@ -244,8 +240,12 @@ const Biodata = () => {
               </td>
               <td className="w-[37%] h-full">
                 <IntegerInput
-                  value={kandung}
-                  onChange={(e) => setKandung(e.target.value)}
+                  value={kandung ?? ""}
+                  nullable
+                  onChange={(e) => {
+                    const newValue = e.target.value === "" ? null : parseInt(e.target.value, 10);
+                    setKandung(newValue);
+                  }}
                   className="h-full"
                 />
               </td>
@@ -256,8 +256,12 @@ const Biodata = () => {
               </td>
               <td className="w-[37%] h-full">
                 <IntegerInput
-                  value={tiri}
-                  onChange={(e) => setTiri(e.target.value)}
+                  value={tiri ?? ""}
+                  nullable
+                  onChange={(e) => {
+                    const newValue = e.target.value === "" ? null : parseInt(e.target.value, 10);
+                    setTiri(newValue);
+                  }}
                   className="h-full"
                 />
               </td>
@@ -268,8 +272,12 @@ const Biodata = () => {
               </td>
               <td className="w-[37%] h-full">
                 <IntegerInput
-                  value={angkat}
-                  onChange={(e) => setAngkat(e.target.value)}
+                  value={angkat ?? ""}
+                  nullable
+                  onChange={(e) => {
+                    const newValue = e.target.value === "" ? null : parseInt(e.target.value, 10);
+                    setAngkat(newValue);
+                  }}
                   className="h-full"
                 />
               </td>
@@ -281,7 +289,7 @@ const Biodata = () => {
               <td className="w-[63%] h-full">
                 <select
                   value={status}
-                  className="w-[37%] bg-white text-black p-2 rounded shadow-md"
+                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded outline-none shadow-md"
                   defaultValue={"default"}
                   onChange={(e) => setStatus(e.target.value)}
                 >

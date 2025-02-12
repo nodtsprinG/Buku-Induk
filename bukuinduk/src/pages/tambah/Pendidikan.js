@@ -1,7 +1,5 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
-import InputHalaman from "../../../components/pilihHalaman"
 import {
   TextInput,
   DateInput,
@@ -69,11 +67,11 @@ const Pendidikan = () => {
       setPaketkeahlian(localStorage.getItem("pendidikan-paketkeahlian"));
     if (localStorage.getItem("pendidikan-kelas"))
       setKelas(localStorage.getItem("pendidikan-kelas"));
-    if (localStorage.getItem("pendidikan-sebelumnyalamabelajar")) setLamabelajar(localStorage.getItem("pendidikan-sebelumnyalamabelajar"))
+    if(localStorage.getItem("pendidikan-sebelumnyalamabelajar")) setLamabelajar(localStorage.getItem("pendidikan-sebelumnyalamabelajar"))
   }, []);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/kesehatan`);
+    navigate(`/siswa/data/${params.action}/kesehatan`);
   };
 
   const nextButton = () => {
@@ -112,7 +110,7 @@ const Pendidikan = () => {
       localStorage.setItem("pendidikan-paketkeahlian", paketkeahlian);
       localStorage.setItem("pendidikan-kelas", kelas);
       localStorage.setItem("pendidikan-sebelumnyalamabelajar", lamabelajar)
-      navigate(`/admin/audit/${params.id}/ayah`);
+      navigate(`/siswa/data/${params.action}/ayah`);
     } else {
       alert("Semua data belum terisi");
     }
@@ -120,9 +118,7 @@ const Pendidikan = () => {
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
-      <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
-      <HeaderInput title={"Pendidikan"} word={"D"} form={"admin"} />
+      <HeaderInput title={"Pendidikan"} word={"D"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -266,7 +262,7 @@ const Pendidikan = () => {
                   scrollableMonthYearDropdown
                   showYearDropdown
                   dateFormat={"dd-MM-yyyy"}
-                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                  className="bg-[#DEE0E1] py-1 px-1 w-full focus:outline-none"
                   maxDate={new Date()}
                 />
               </td>
