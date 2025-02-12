@@ -7,6 +7,7 @@ import Filter from "../../../components/filter";
 import { baseUrl } from "../../../utils/constan";
 import FilterComponent from "../../../components/filter";
 import detailPreparing from "../../../utils/detailPreparing";
+import fileDownload from "js-file-download"
 
 const DataSiswa = () => {
   const navigate = useNavigate()
@@ -35,29 +36,29 @@ const DataSiswa = () => {
 
   useEffect(() => {
     let data = siswa;
-  
+
     if (searchkey) {
       data = data.filter((s) =>
         s.nama.toLowerCase().includes(searchkey.toLowerCase())
       );
     }
-  
+
     if (angkatans.length > 0) {
       const selectedAngkatans = angkatans.filter((x) => x.checked).map((x) => x.tahun);
       if (selectedAngkatans.length > 0) {
         data = data.filter((s) => selectedAngkatans.includes(s.angkatan));
       }
     }
-  
+
     if (jurusans.length > 0) {
       const selectedJurusans = jurusans.filter((x) => x.checked).map((x) => x.nama);
       if (selectedJurusans.length > 0) {
         data = data.filter((s) => selectedJurusans.includes(s.jurusan));
       }
     }
-  
+
     setFiltered(data);
-  }, [siswa, searchkey, angkatans, jurusans]);  
+  }, [siswa, searchkey, angkatans, jurusans]);
 
   const detailClick = (id) => {
     detailPreparing(id)
@@ -68,6 +69,70 @@ const DataSiswa = () => {
     setShowDialog(true);
   };
 
+  const exportData = () => {
+    axios.get(`${baseUrl}/admin/export-excel`, {
+      responseType: 'blob', // Important: indicates that the response should be treated as a Blob
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    })
+      .then((response) => {
+        fileDownload(response.data, 'data-siswa.xlsx');
+      })
+      .catch((error) => {
+        console.error('Download error:', error);
+      });
+  }
+
+  const exportDataPDF = () => {
+    axios
+      .get(
+        `${baseUrl}/admin/export-pdf`,
+        {
+          responseType: "blob", // Important: indicates that the response should be treated as a Blob
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
+        }
+      )
+      .then((response) => {
+        fileDownload(response.data, "download.pdf");
+      })
+      .catch((error) => {
+        console.error("Download error:", error);
+      });
+  };
+
+  const [file, setFile] = useState(null);
+
+  const importhandleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!file) {
+      alert('Please select a file');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post(`${baseUrl}/import-excel`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert(`File uploaded successfully: ${response.data}`);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload file.');
+    }
+  };
+
   useEffect(updateSiswa, []);
   return (
     <div className="flex h-screen font-body">
@@ -75,13 +140,42 @@ const DataSiswa = () => {
         <Navigation />
       </div>
       <div className="w-5/8 h-screen flex-1 p-6 bg-white text-black overflow-y-scroll">
-        <header className="flex justify-between items-center gap-8 mb-4">
+        <header className="flex justify-between items-center gap-2 mb-4">
           <h1 className="font-inter text-3xl font-normal leading-5 ml-2">
             Semua Siswa
           </h1>
-          <button onClick={() => navigate('/tambah/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+
+          <div className="grid grid-cols-4">
+            <button onClick={() => navigate('/tambah/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
             Tambah Siswa
           </button>
+            <button onClick={() => { exportData() }} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
+              Unduh Excel
+            </button>
+            <button onClick={() => { exportDataPDF() }} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
+              Unduh PDF
+            </button>
+            <form onSubmit={handleSubmit} className="bg-white mt-4 flex flex-col items-center w-[50%] h-fit">
+              <div className="flex flex-col items-center">
+                <label className="block text-gray-700 text-sm font-bold mb-2 p2">
+                  Pilih File
+                </label>
+                <input
+                  type="file"
+                  onChange={(e) => { importhandleFileChange(e) }}
+                  className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-lg transition-all duration-300 ease-in-out"
+              >
+                Masukkan Data
+              </button>
+            </form>
+          </div>
+
         </header>
         <hr className="border-black border-2" />
         <div className="w-full flex gap-4 justify-between mt-6">
@@ -117,6 +211,8 @@ const DataSiswa = () => {
             <CiFilter className="mr-1" />
             Filter
           </button>
+
+
         </div>
 
         {filters ? <FilterComponent

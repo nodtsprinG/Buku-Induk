@@ -1,8 +1,8 @@
-import { MdHomeFilled } from "react-icons/md";
+import { MdHomeFilled, MdStrikethroughS } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { VscGraph } from "react-icons/vsc";
-import { FaChevronDown } from "react-icons/fa";
-import { PiStudent } from "react-icons/pi";
+import { VscGraph, VscOrganization } from "react-icons/vsc";
+import { FaBookReader, FaChevronDown } from "react-icons/fa";
+import { PiAcorn, PiAddressBook, PiStudent, PiTextSuperscriptDuotone } from "react-icons/pi";
 
 
 import { Link } from "react-router-dom";
@@ -48,6 +48,18 @@ const Navigation = () => {
           </li>
           <li>
             <Link
+              to="/admin/mapel"
+              href="#"
+              className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-lg"
+            >
+              <FaBookReader />
+              <span className="font-inter text-sm font-medium leading-[20px] tracking-tight text-left p-2 rounded shadow">
+                Mata Pelajaran
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/admin/datasiswa"
               href="#"
               className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-lg"
@@ -76,7 +88,7 @@ const Navigation = () => {
               href="#"
               className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-lg"
             >
-              <MdHomeFilled />
+              <VscOrganization />
               <span className="font-inter text-sm font-medium leading-[20px] tracking-tight text-left p-2 rounded shadow">
                 Data Jurusan
               </span>

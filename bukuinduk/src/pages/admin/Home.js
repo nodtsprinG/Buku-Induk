@@ -29,6 +29,7 @@ import Dashboard from "./Dashboard";
 import DataJurusan from "./data/DataJurusan";
 import DataAngkatan from "./data/DataAngkatan";
 import DataSiswa from "./data/DataSiswa";
+import DataMapel from "./data/DataMapel"
 
 import TambahAkun from "./edit/Main";
 
@@ -124,6 +125,7 @@ const AdminRouting = () => {
       <Route exact path="/datajurusan" element={<DataJurusan />} />
       <Route exact path="/datasiswa" element={<DataSiswa />} />
       <Route exact path="/dataangkatan" element={<DataAngkatan />} />
+      <Route exact path="/mapel" element={<DataMapel />} />
     </Routes>
   );
 };
