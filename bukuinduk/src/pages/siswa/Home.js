@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 import CariNisn from "./search/cariNISN";
 import DataSiswa from "./search/dataSiswa";
-import Login from "./search/LoginSiswa"
+import Login from "./search/LoginSiswa";
+import Lihat from "./lihat-data/Biodata"
 
 // ========================== import halaman audit
 import Ayah from "./data/Ayah";
@@ -19,6 +20,8 @@ import GoBack from "../../components/goback"
 
 import resetAll from "../../utils/resetAll";
 
+import Logo from "../../assets/logosekolah.png"
+
 const HomeSiswa = () => {
   const navigate = useNavigate();
   const preparingAddData = () => {
@@ -26,11 +29,13 @@ const HomeSiswa = () => {
     navigate("/siswa/data/upload/akun");
   };
 
+
+
   return (
     <div className="flex flex-col justify-center items-center bg-homepage bg-no-repeat w-screen h-screen">
-      <GoBack />
+      <img src={Logo} alt="Logo Sekolah" className="w-40 h-40"/>
       <div className="text-white">
-        <p className="font-header font-bold text-center text-2xl">
+        <p className="font-header font-bold text-center text-2xl mt-5">
           "Buku Induk Virtual Akses Data dengan Mudah"
         </p>
         <p className="font-header font-bold text-center text-4xl">
@@ -49,6 +54,7 @@ const HomeSiswa = () => {
           >
             Masuk
           </Link>
+          <GoBack to={"/"} className="block font-body font-bold bg-gray-900 text-center w-[715px] py-3 rounded-md text-white my-1 text-sm" />
         </div>
       </div>
     </div>
@@ -82,6 +88,7 @@ const SiswaRouting = () => {
       <Route exact path="/login" element={<Login />} />
       {/* Masukkan data NISN */}
       <Route exact path="/data/:action/*" element={<AddData />} />
+      <Route exact path="/lihat-data/*" element={<Lihat />} />
     </Routes>
   );
 };

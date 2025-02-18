@@ -37,6 +37,8 @@ import HalamanBelakang from './edit/halaman-belakang'
 
 import { useParams } from "react-router";
 
+import Logo from "../../assets/logosekolah.png"
+
 
 //Audit system
 const AuditSystem = () => {
@@ -91,6 +93,7 @@ const HomeAdmin = () => {
   };
   return (
     <div className="flex flex-col justify-center items-center bg-homepage bg-no-repeat w-screen h-screen">
+      <img src={Logo} alt="Logo Sekolah" className="w-40 h-40"/>
       <div className="text-white">
         <p className="font-header font-bold text-center text-2xl">
           "Buku Induk Virtual Akses Data dengan Mudah"

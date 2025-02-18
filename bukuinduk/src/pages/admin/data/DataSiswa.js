@@ -126,10 +126,10 @@ const DataSiswa = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alert(`File uploaded successfully: ${response.data}`);
+      alert(`File berhasil diunggah: ${response.data}`);
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Failed to upload file.');
+      alert('File gagal diunggah');
     }
   };
 
@@ -140,42 +140,37 @@ const DataSiswa = () => {
         <Navigation />
       </div>
       <div className="w-5/8 h-screen flex-1 p-6 bg-white text-black overflow-y-scroll">
-        <header className="flex justify-between items-center gap-2 mb-4">
-          <h1 className="font-inter text-3xl font-normal leading-5 ml-2">
-            Semua Siswa
-          </h1>
-
-          <div className="grid grid-cols-4">
-            <button onClick={() => navigate('/tambah/upload/akun')} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
-            Tambah Siswa
-          </button>
-            <button onClick={() => { exportData() }} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
+        <h1 className="font-inter text-3xl font-normal leading-5 ml-2 whitespace-nowrap">
+          Data Siswa
+        </h1>
+        <header className="flex flex-auto gap-2 mb-5">
+          <div className="w-full mt-8 flex justify-end space-x-4">
+            <button onClick={() => navigate('/tambah/upload/akun')} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm w-full">
+              Tambah Siswa
+            </button>
+            <button onClick={() => { exportData() }} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-sm w-full">
               Unduh Excel
             </button>
-            <button onClick={() => { exportDataPDF() }} className="border border-black bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-[50%] h-fit">
+            <button onClick={() => { exportDataPDF() }} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-sm w-full">
               Unduh PDF
             </button>
-            <form onSubmit={handleSubmit} className="bg-white mt-4 flex flex-col items-center w-[50%] h-fit">
-              <div className="flex flex-col items-center">
-                <label className="block text-gray-700 text-sm font-bold mb-2 p2">
-                  Pilih File
-                </label>
-                <input
-                  type="file"
-                  onChange={(e) => { importhandleFileChange(e) }}
-                  className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-lg transition-all duration-300 ease-in-out"
-              >
-                Masukkan Data
-              </button>
-            </form>
           </div>
+          <form onSubmit={handleSubmit} className="bg-white mt-4 grid grid-cols-2 items-center gap-2">
+            <div className="w-full mt-3 py-2 px-4">
+              <input
+                type="file"
+                onChange={(e) => importhandleFileChange(e)}
+                className="w-full text-sm text-gray-700 file:rounded-sm file:border-0 file:py-2 file:px-4 file:text-sm file:bg-gray-300 file:text-black"
+              />
+            </div>
 
+            <button
+              type="submit"
+              className="w-full mt-3 bg-blue-500 text-white font-medium py-2 px-4 rounded-sm"
+            >
+              Ekspor Excel
+            </button>
+          </form>
         </header>
         <hr className="border-black border-2" />
         <div className="w-full flex gap-4 justify-between mt-6">
@@ -185,7 +180,7 @@ const DataSiswa = () => {
               type="search"
               placeholder="Search"
               name="search"
-              className="input-field p-2 border w-full border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pl-10"
+              className="input-field p-2 border w-full border-gray-400 rounded-lg hover:border-black pl-10"
             />
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
@@ -206,7 +201,7 @@ const DataSiswa = () => {
             onClick={() => {
               setFilters(!filters);
             }}
-            className="font-semibold bg-white rounded-lg p-2 text-black border-solid border-2 border-black flex items-center gap-2 justify-center"
+            className="text-black bg-white rounded-lg p-2 border-solid border border-gray-400 flex hover:border-black items-center focus:border-black gap-2 justify-center"
           >
             <CiFilter className="mr-1" />
             Filter
@@ -247,7 +242,7 @@ const DataSiswa = () => {
                       </button>
                       <button
                         onClick={() => detailClick(s.id)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 w-1/2 rounded-lg"
+                        className="bg-green-900 text-white font-bold py-2 w-1/2 rounded-lg"
                       >
                         Perbarui
                       </button>

@@ -42,7 +42,7 @@ const Navigation = () => {
             >
               <MdHomeFilled />
               <span className="font-inter text-sm font-medium leading-[20px] tracking-tight text-left p-2 rounded shadow">
-                Dashboard
+                Beranda
               </span>
             </Link>
           </li>

@@ -7,7 +7,8 @@ function createMainWindow() {
         title: "Buku Induk",
         width: 1000,
         height: 600,
-        webPreferences: {webSecurity: false}
+        webPreferences: {webSecurity: false},
+        icon: path.join(__dirname, '/assets/iconsekolah.ico')
     })
 
     const startUrl = url.format({   

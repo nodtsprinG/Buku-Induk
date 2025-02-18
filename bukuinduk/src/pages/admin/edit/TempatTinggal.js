@@ -27,19 +27,22 @@ const TempatTinggal = () => {
 
   // Load data dari localStorage
   useEffect(() => {
-    const storedData = {
+    setData({
       alamat: localStorage.getItem("tempattinggal-alamat") || "",
       telp: localStorage.getItem("tempattinggal-telp") || "",
       tinggal: localStorage.getItem("tempattinggal-tinggal") || "",
       jarak: localStorage.getItem("tempattinggal-jarak") || "",
-    };
-    setData(storedData);
-  }, []);
+    });
+  }, [data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData({ ...data, [name]: value });
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+  
 
   const backButton = () => {
     navigate(`/admin/audit/${id}/biodata`);
@@ -47,7 +50,7 @@ const TempatTinggal = () => {
 
   const nextButton = () => {
     const { alamat, telp, tinggal, jarak } = data;
-    if (alamat.trim() && telp.trim() && tinggal.trim() && jarak.trim()) {
+    if (true) {
       // Simpan data ke localStorage
       localStorage.setItem("tempattinggal-alamat", alamat);
       localStorage.setItem("tempattinggal-telp", telp);
