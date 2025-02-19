@@ -48,7 +48,7 @@ const Login = () => {
                         <input onChange={(e) => setPassword(e.currentTarget.value)} className="bg-transparent border-b border-black focus:outline-none p-2" type="password"></input>
                         <div className="flex flex-row pt-10 w-full">
                             <div className="flex flex-row justify-start items-center w-1/2">
-                                <GoBack className="font-header font-bold bg-[#0083FB] px-4 py-2 text-l text-white rounded-sm" />
+                                <GoBack to={'/'} className="font-header font-bold bg-[#0083FB] px-4 py-2 text-l text-white rounded-sm" />
                             </div>
                             <div className="flex flex-row justify-end items-center w-1/2">
                                 <button onClick={verify} className="font-header font-bold bg-[#0083FB] px-4 py-2 text-l text-white rounded-sm">Masuk</button>

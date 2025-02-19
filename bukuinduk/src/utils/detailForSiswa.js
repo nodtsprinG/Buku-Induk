@@ -2,9 +2,9 @@ import axios from "axios";
 import resetAll from "./resetAll";
 
 
-const detailPreparing = (nisn) => {
+const detailPreparing = (id) => {
   axios
-    .get(`http://localhost:8080/data-diri/${nisn}`, {
+    .get(`http://localhost:8080/data-diri/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

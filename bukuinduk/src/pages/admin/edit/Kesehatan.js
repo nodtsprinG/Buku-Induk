@@ -61,12 +61,12 @@ const Kesehatan = () => {
 
   const nextButton = () => {
     console.log(
-      goldarah == "lainnya"
+      goldarah === "lainnya"
         ? goldarahlain
         : goldarah, penyakit, jasmani, tinggi, berat
     );
     if (
-      goldarah == "lainnya"
+      goldarah === "lainnya"
         ? goldarahlain
         : goldarah && tinggi && berat
     ) {

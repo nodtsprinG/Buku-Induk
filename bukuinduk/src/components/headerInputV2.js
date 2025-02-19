@@ -1,7 +1,7 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable default-case */
 import { FaDownload } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import { baseUrl } from "../utils/constan";
 import {
   isAkunFilled,
   isBiodataFilled,
@@ -12,210 +12,90 @@ import {
   isIbuFilled,
   isHobiFilled,
 } from "../utils/check";
-import { MdLastPage } from "react-icons/md";
-import { baseUrl } from "../utils/constan";
-import axios from "axios";
-import { createElement } from "react";
-
-
-/* 
-
-=====================================================================================================
-                    H E A D E R _ I N P U T _ C O M P O N E N T 
-  >> Developed By. Ananda Eka <<
-
-[#] Note : Mengikuti desain
-
-=====================================================================================================
-
-*/
 
 const HeaderButton = ({ nama, isActive = false, to }) => {
   const navigate = useNavigate();
 
-  const bukaDanCek = () => {
-    switch (nama) {
-      case "Biodata":
-        if (!isAkunFilled()) return alert("Semua data belum terisi");
-        break;
-      case "Tempat Tinggal":
-        if (!(isAkunFilled() && isBiodataFilled()))
-          return alert("Semua data belum terisi");
-        break;
-      case "Kesehatan":
-        if (!(isAkunFilled() && isBiodataFilled() && isTempattinggalFilled()))
-          return alert("Semua data belum terisi");
-        break;
-      case "Pendidikan":
-        if (
-          !(
-            isAkunFilled() &&
-            isBiodataFilled() &&
-            isTempattinggalFilled() &&
-            isKesehatanFilled()
-          )
-        )
-          return alert("Semua data belum terisi");
-        break;
-      case "Ayah":
-        if (
-          !(
-            isAkunFilled() &&
-            isBiodataFilled() &&
-            isTempattinggalFilled() &&
-            isKesehatanFilled() &&
-            isPendidikanFilled()
-          )
-        )
-          return alert("Semua data belum terisi");
-        break;
-      case "Ibu":
-        if (
-          !(
-            isAkunFilled() &&
-            isBiodataFilled() &&
-            isTempattinggalFilled() &&
-            isKesehatanFilled() &&
-            isPendidikanFilled() &&
-            isAyahFilled()
-          )
-        )
-          return alert("Semua data belum terisi");
-        break;
-      case "Wali":
-        if (
-          !(
-            isAkunFilled() &&
-            isBiodataFilled() &&
-            isTempattinggalFilled() &&
-            isKesehatanFilled() &&
-            isPendidikanFilled() &&
-            isAyahFilled() &&
-            isIbuFilled()
-          )
-        )
-          return alert("Semua data belum terisi");
-        break;
-      case "Hobi":
-        if (
-          !(
-            isAkunFilled() &&
-            isBiodataFilled() &&
-            isTempattinggalFilled() &&
-            isKesehatanFilled() &&
-            isPendidikanFilled() &&
-            isAyahFilled() &&
-            isIbuFilled() &&
-            isHobiFilled()
-          )
-        )
-          return alert("Semua data belum terisi");
-        break;
+  const checkAndNavigate = () => {
+    const validationMap = {
+      "Biodata": () => isAkunFilled(),
+      "Tempat Tinggal": () => isAkunFilled() && isBiodataFilled(),
+      "Kesehatan": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled(),
+      "Pendidikan": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled() && isKesehatanFilled(),
+      "Ayah": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled() && isKesehatanFilled() && isPendidikanFilled(),
+      "Ibu": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled() && isKesehatanFilled() && isPendidikanFilled() && isAyahFilled(),
+      "Wali": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled() && isKesehatanFilled() && isPendidikanFilled() && isAyahFilled() && isIbuFilled(),
+      "Hobi": () => isAkunFilled() && isBiodataFilled() && isTempattinggalFilled() && isKesehatanFilled() && isPendidikanFilled() && isAyahFilled() && isIbuFilled() && isHobiFilled(),
+    };
+    
+    if (!validationMap[nama]()) {
+      return alert("Semua data belum terisi");
     }
     navigate(to);
   };
 
-  if (!isActive) {
-    return (
-      <button
-        onClick={bukaDanCek}
-        className="px-2 py-2 text-center text-xl font-bold font-body bg-white text-gray-500"
-      >
-        {nama}
-      </button>
-    );
-  } else {
-    return (
-      <button
-        onClick={bukaDanCek}
-        className="px-2 py-2 text-center text-xl font-bold font-body bg-white text-gray-500 border-b-4  border-b-blue-700"
-      >
-        {nama}
-      </button>
-    );
-  }
+  return (
+    <button
+      onClick={checkAndNavigate}
+      className={`px-2 py-2 text-xl font-bold ${isActive ? "border-b-4 border-b-blue-700" : "text-gray-500"}`}
+    >
+      {nama}
+    </button>
+  );
 };
 
 const HeaderInput = ({ title, word, form, lastpage }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const ButtonList = [
-    { a: "Biodata", b: "biodata" },
-    { a: "Tempat Tinggal", b: "tempattinggal" },
-    { a: "Kesehatan", b: "kesehatan" },
-    { a: "Pendidikan", b: "pendidikan" },
-    { a: "Ayah", b: "ayah" },
-    { a: "Ibu", b: "ibu" },
-    { a: "Wali", b: "wali" },
+    "Biodata", "Tempat Tinggal", "Kesehatan", "Pendidikan", "Ayah", "Ibu", "Wali", "Hobi"
   ];
 
   const downloadPdf = async () => {
-    const response = await axios.get(`${baseUrl}/admin/export-pdf/${params.id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      responseType: 'blob', // Untuk menerima data dalam format blob (binary large object)
-    });
-
-    // Buat URL dari blob yang diterima
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'file.pdf'); // Nama file yang diunduh
-    document.body.appendChild(link);
-    link.click();
-
-    // Hapus URL dan elemen link setelah selesai
-    link.parentNode.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    try {
+      const response = await axios.get(`${baseUrl}/admin/export-pdf/${params.id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      alert("Gagal mengunduh PDF");
+    }
   };
-  
+
   return (
     <div className="pt-5">
-      <div className="flex flex-row items-center w-full">
-        <div className="w-[63%] h-full">
-          <p className="font-header font-bold text-xl">
-            {word}. {title}
-          </p>
-        </div>
-        <div className="w-[63%] h-full flex justify-end items-center my-10">
-          {!isNaN(params.id) ? (
-            <button
-              onClick={downloadPdf}
-              className="flex flex-row justify-center items-center px-5 py-2 mr-6 text-center text-m font-bold font-body rounded-md"
-            >
+      <div className="flex justify-between items-center w-full">
+        <p className="font-bold text-xl">{word}. {title}</p>
+        <div className="flex space-x-4">
+          {!isNaN(params.id) && (
+            <button onClick={downloadPdf} className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md">
               <FaDownload className="mr-2" /> Download
             </button>
-          ) : null}
-          {!isNaN(params.id) ? (
-            <div className="flex flex-row justify-center items-center px-5 py-2 mr-6 text-center text-m font-bold font-body rounded-md">
-              <FaDownload className="mr-2" />
-              Print
-            </div>
-          ) : null}
-          {params.action === "upload" && lastpage ? (
-            <div className="px-5 py-2 text-center text-m font-bold font-body bg-[#0C7FDA] text-white rounded-md">
+          )}
+          {params.action === "upload" && lastpage && (
+            <button className="px-5 py-2 bg-green-500 text-white rounded-md">
               Simpan
-            </div>
-          ) : null}
+            </button>
+          )}
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-10 border">
-        {ButtonList.map((t, i) => {
-          if (t.c && form !== "admin") return;
-          return (
-            <HeaderButton
-              key={i}
-              to={
-                form == "admin"
-                  ? `/${form}/audit/${params.id}/${t.b}`
-                  : `/${form}/data/${params.action}/${t.b}`
-              }
-              nama={t.a}
-              isActive={title === t.a ? true : false}
-              
-            />
-          );
-        })}
+      <div className="grid grid-cols-2 md:grid-cols-8 border">
+        {ButtonList.map((nama, i) => (
+          <HeaderButton
+            key={i}
+            to={`/${form}/data/${params.action}/${nama.toLowerCase().replace(/ /g, "")}`}
+            nama={nama}
+            isActive={title === nama}
+          />
+        ))}
       </div>
     </div>
   );

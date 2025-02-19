@@ -30,7 +30,7 @@ const Login = () => {
       if (response.data.isMatch) {
         const siswaId = response.data.id;
         // Jika data cocok, arahkan ke halaman /siswa/lihat-data
-        navigate(`/siswa/lihat-data/`);
+        navigate(`/siswa/lihat-data/${id}/biodata`);
         localStorage.setItem("akun-nisn", nisn)
         localStorage.setItem("akun-id", siswaId)
         localStorage.setItem("biodata-tanggal-lahir", tanggal_lahir)
@@ -52,7 +52,7 @@ const Login = () => {
           <p className="font-header text-white font-bold text-3xl text-center mt-3">Buku Induk</p>
         </div>
         <div className="bg-[#D9D9D9] w-1/2 px-10 py-9 rounded-md border-4 border-[#A4A4A4]">
-          <p className="font-body opacity-30 text-sm">Langkah 1 dari 2</p>
+          {/* <p className="font-body opacity-30 text-sm">Langkah 1 dari 2</p> */}
           <p className="font-header font-bold text-3xl mt-2">Masuk</p>
           <div className="flex flex-col mt-10 pt-10 border-t border-black">
             <label className="opacity-20">NISN</label>

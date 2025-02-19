@@ -14,49 +14,61 @@ import Nextbefore from "../../../components/nextbefore";
 =====================================================================================================
 */
 
+
+
 const TempatTinggal = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [alamat, setAlamat] = useState("");
+  const [telp, setTelp] = useState("");
+  const [tinggal, setTinggal] = useState("");
+  const [jarak, setJarak] = useState("");
 
-  const [data, setData] = useState({
-    alamat: "",
-    telp: "",
-    tinggal: "",
-    jarak: "",
-  });
+  // const [data, setData] = useState({
+  //   alamat: "",
+  //   telp: "",
+  //   tinggal: "",
+  //   jarak: "",
+  // });
 
   // Load data dari localStorage
-  useEffect(() => {
-    setData({
-      alamat: localStorage.getItem("tempattinggal-alamat") || "",
-      telp: localStorage.getItem("tempattinggal-telp") || "",
-      tinggal: localStorage.getItem("tempattinggal-tinggal") || "",
-      jarak: localStorage.getItem("tempattinggal-jarak") || "",
-    });
-  }, [data]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  
+  useEffect((id) => {
+    if (localStorage.getItem("tempattinggal-alamat"))
+      setAlamat(localStorage.getItem("tempattinggal-alamat"))
+    if (localStorage.getItem("tempattinggal-telp"))
+      setTelp(localStorage.getItem("tempattinggal-telp"))
+    if (localStorage.getItem("tempattinggal-tinggal"))
+      setTinggal(localStorage.getItem("tempattinggal-tinggal"))
+    if (localStorage.getItem("tempattinggal-jarak"))
+      setJarak(localStorage.getItem("tempattinggal-jarak"))
+  }, []);
 
   const backButton = () => {
     navigate(`/admin/audit/${id}/biodata`);
   };
 
   const nextButton = () => {
-    const { alamat, telp, tinggal, jarak } = data;
-    if (true) {
-      // Simpan data ke localStorage
-      localStorage.setItem("tempattinggal-alamat", alamat);
-      localStorage.setItem("tempattinggal-telp", telp);
-      localStorage.setItem("tempattinggal-tinggal", tinggal);
-      localStorage.setItem("tempattinggal-jarak", jarak);
-      navigate(`/admin/audit/${id}/kesehatan`);
+    console.log(
+      alamat,
+      telp,
+      tinggal,
+      jarak,
+    );
+    if (
+      alamat &&
+      telp &&
+      tinggal &&
+      jarak
+    ) {
+      if (params.action === "upload") {
+        localStorage.setItem("tempattinggal-alamat", alamat);
+        localStorage.setItem("tempattinggal-telp", telp);
+        localStorage.setItem("tempattinggal-tinggal", tinggal);
+        localStorage.setItem("tempattinggal-jarak", jarak);
+      }
+
+      navigate(`/admin/audit/${params.id}/kesehatan`);
     } else {
       alert("Semua data belum terisi");
     }
@@ -82,8 +94,8 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="alamat"
-                  value={data.alamat}
-                  onChange={handleChange}
+                  value={alamat}
+                  onChange={(e) => setAlamat(e.target.value)}
                 />
               </td>
             </tr>
@@ -94,8 +106,8 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="telp"
-                  value={data.telp}
-                  onChange={handleChange}
+                  value={telp}
+                  onChange={(e) => setTelp(e.target.value)}
                 />
               </td>
             </tr>
@@ -106,8 +118,8 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <select
                   name="tinggal"
-                  value={data.tinggal}
-                  onChange={handleChange}
+                  value={tinggal}
+                  onChange={(e) => setTinggal(e.target.value)}
                   className="w-full bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                 >
                   <option value="" hidden>Pilih</option>
@@ -125,8 +137,8 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="jarak"
-                  value={data.jarak}
-                  onChange={handleChange}
+                  value={jarak}
+                  onChange={(e) => setJarak(e.target.value)}
                 />
               </td>
             </tr>
