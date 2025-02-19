@@ -3,17 +3,20 @@ import axios from "axios";
 import InputHalaman from "../../../components/pilihHalaman";
 import Profil from "../../../components/profileCard";
 import { baseUrl } from "../../../utils/constan";
+import { useParams } from "react-router";
 
 const ERaport = () => {
   const [activeSemester, setActiveSemester] = useState(1);
   const [mapelList, setMapelList] = useState([]);  // Menyimpan daftar mapel dari API
-  const [nilaiList, setNilaiList] = useState([
-    { mapel: "", nilai: "", keterangan: "" }
-  ]); // Menyimpan daftar nilai yang bisa ditambahkan
+  const [nilaiList, setNilaiList] = useState([]); // Menyimpan daftar nilai yang bisa ditambahkan
 
   useEffect(() => {
     fetchMapel();
-  }, []);
+    fetchNilai()
+    console.log(nilaiList)
+  }, [activeSemester]);
+
+  const params = useParams()
 
   const fetchMapel = async () => {
     try {
@@ -28,8 +31,49 @@ const ERaport = () => {
     }
   };
 
+  const fetchNilai = async () => {
+    try {
+      const response = await axios.get(baseUrl + `/admin/nilai/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      
+      if(response.data[`Semester ${activeSemester}`].length != 0){
+        setNilaiList(response.data[`Semester ${activeSemester}`].map((val, index) => {
+          return {
+            sia : {
+              sakit : val.SIA.sakit ?? 0,
+              izin : val.SIA.izin ?? 0,
+              alpha : val.SIA.alpha ?? 0
+            },
+            mapel : {
+              id : val.mapel_id,
+              nama : val.mapel.nama
+            },
+            nilai : val.r,
+            keterangan : val.keterangan,
+          }
+        }));
+      }else {
+        setNilaiList([])
+      }
+    } catch (error) {
+      console.error("Error fetching mapel:", error);
+    }
+  }
+
+  const deleteNilai = (index) => {
+    const newNilaiList = [...nilaiList];
+    newNilaiList.splice(index, 1); // Remove item at the given index
+    setNilaiList(newNilaiList);
+  };
+  
+
   const handleAddRow = () => {
     setNilaiList([...nilaiList, { mapel: "", nilai: "", keterangan: "" }]);
+    console.log(nilaiList)
   };
 
   const handleInputChange = (index, field, value) => {
@@ -38,15 +82,48 @@ const ERaport = () => {
     setNilaiList(newNilaiList);
   };
 
+
+  const handleSIAChange = (field, value) => {
+
+    setNilaiList((prevList) => {
+      if (prevList.length === 0) return prevList; // Ensure there's at least one item
+      const updatedList = [...prevList];
+      updatedList[0] = {
+        ...updatedList[0],
+        sia: {
+          ...updatedList[0].sia,
+          [field]: parseInt(value),
+        },
+      };
+      return updatedList;
+    });
+  };
+  
   const handleSave = async () => {
     try {
-      const response = await axios.post(baseUrl + "/admin/nilai", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      const data = nilaiList.map((val) => ({
+        mapel_id: val.mapel.id,
+        r: val.nilai,
+        keterangan: val.keterangan,
+      }));
+  
+      const sia = nilaiList.length > 0 ? nilaiList[0].sia : { sakit: 0, izin: 0, alpha: 0 };
+  
+      const response = await axios.post(
+        baseUrl + "/admin/nilai",
+        {
+          semester: activeSemester,
+          user_id: params.id,
+          sia,
+          data,
         },
-        semester: activeSemester,
-        nilaiList,
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+  
       alert("Data berhasil disimpan!");
       console.log("Response:", response.data);
     } catch (error) {
@@ -54,6 +131,7 @@ const ERaport = () => {
       alert("Terjadi kesalahan saat menyimpan data.");
     }
   };
+  
 
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
@@ -83,6 +161,7 @@ const ERaport = () => {
                 <td className="border p-2">MATA PELAJARAN</td>
                 <td className="border p-2">NILAI</td>
                 <td className="border p-2">KETERANGAN</td>
+                <td className="border p-2">ACTION</td>
               </tr>
             </thead>
             <tbody>
@@ -91,12 +170,21 @@ const ERaport = () => {
                   <td className="border p-2">
                     <select
                       className="w-full p-1 outline-none"
-                      value={item.mapel}
-                      onChange={(e) => handleInputChange(index, "mapel", e.target.value)}
+                      defaultValue={item.mapel.id}
+                      onChange={(e) => {
+                        const selectedId = e.target.value;
+                        const selectedMapel = mapelList.find((mapel) => mapel.id == selectedId);
+                        console.log(selectedMapel, mapelList)
+                        
+                        handleInputChange(index, "mapel", {
+                          id: selectedId,
+                          nama: selectedMapel ? selectedMapel.nama : ""
+                        });
+                      }}
                     >
                       <option value="">Pilih Mapel</option>
                       {mapelList.map((mapel) => (
-                        <option key={mapel.id} value={mapel.nama}>{mapel.nama}</option>
+                        <option key={mapel.id} value={mapel.id}>{mapel.nama}</option>
                       ))}
                     </select>
                   </td>
@@ -117,6 +205,9 @@ const ERaport = () => {
                       onChange={(e) => handleInputChange(index, "keterangan", e.target.value)}
                     />
                   </td>
+                  <td className="border p-2 flex items-center ">
+                    <button onClick={(e) => {deleteNilai(index)}} className="bg-red-700 p-2 text-white">Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -125,6 +216,63 @@ const ERaport = () => {
             Tambah Nilai
           </button>
         </div>
+
+        <div>
+        {
+          nilaiList[0]?.sia && (
+            <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200 p-2 font-header font-normal text-[24px] text-center">
+                <td className="border p-2">FIELD</td>
+                <td className="border p-2">HARI</td>
+              </tr>
+            </thead>
+            <tbody>
+             <tr className="border p-2">
+                <td className="border p-2">Sakit</td>
+                <td className="border p-2">
+                    <input
+                      type="number"
+                      className="w-full p-1 outline-none"
+                      placeholder="Nilai"
+                      value={nilaiList[0]?.sia?.sakit}
+                      onChange={(e) => handleSIAChange("sakit", e.target.value)}
+                    />
+                  </td>
+             </tr>
+             <tr className="border p-2">
+                <td className="border p-2">Izin</td>
+                <td className="border p-2">
+                    <input
+                      type="number"
+                      className="w-full p-1 outline-none"
+                      placeholder="Nilai"
+                      value={nilaiList[0]?.sia?.izin}
+                      onChange={(e) => handleSIAChange("izin", e.target.value)}
+                    />
+                  </td>
+             </tr>
+             <tr className="border p-2">
+                <td className="border p-2">Alpha</td>
+                <td className="border p-2">
+                    <input
+                      type="number"
+                      className="w-full p-1 outline-none"
+                      placeholder="Nilai"
+                      value={nilaiList[0]?.sia?.alpha}
+                      onChange={(e) => handleSIAChange("alpha", e.target.value)}
+                    />
+                  </td>
+             </tr>
+            </tbody>
+          </table>
+          )
+        }
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+
       </div>
     </div>
   );
