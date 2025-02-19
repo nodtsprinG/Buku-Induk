@@ -27,12 +27,14 @@ const Login = () => {
         tanggal_lahir,
       });
       detailPreparing(id)
+      console.log(response)
       if (response.data.isMatch) {
         const siswaId = response.data.id;
         // Jika data cocok, arahkan ke halaman /siswa/lihat-data
         navigate(`/siswa/lihat-data/`);
         localStorage.setItem("akun-nisn", nisn)
         localStorage.setItem("akun-id", siswaId)
+        localStorage.setItem("token", response.data.token)
         localStorage.setItem("biodata-tanggal-lahir", tanggal_lahir)
       } else {
         // Jika data tidak cocok, arahkan ke halaman /siswa/data/upload/akun

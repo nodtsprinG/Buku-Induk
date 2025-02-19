@@ -21,10 +21,15 @@ const Biodata = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `siswa/data-diri/${siswaId}`);
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("token")}`
+          }
+        });
 
         setSiswa(response.data);
       } catch (err) {
+        console.log(err)
         setError("Gagal mengambil data siswa", err);
       } finally {
         setLoading(false);
@@ -43,7 +48,7 @@ const Biodata = () => {
       {siswa ? (
         <div className="mt-4 border p-4 rounded">
           <p><strong>Nama:</strong> {siswa.data_diri.nama}</p>
-          <p><strong>NISN:</strong> {siswa.user.nisn}</p>
+          <p><strong>NISN:</strong> {siswa.nisn}</p>
           <p><strong>Jurusan:</strong> {siswa.jurusan.nama}</p>
           <p><strong>Angkatan:</strong> {siswa.angkatan.tahun}</p>
         </div>
