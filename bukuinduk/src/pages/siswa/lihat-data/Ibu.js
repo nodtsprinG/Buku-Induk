@@ -1,14 +1,12 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard"
-import InputHalaman from "../../../components/pilihHalaman"
-import {
-  TextInput,
-  IntegerInput,
-  RadioInput,
-} from "../../../components/inputComponent";
+import Profil from "../../../components/lihatprofil";
+import InputHalaman from "../../../components/pilihHalaman";
+import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { baseUrl } from "../../../utils/constan";
 
 //Date issues
 
@@ -30,95 +28,57 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 */
 
 const Ibu = () => {
-  const navigate = useNavigate();
-  const params = useParams()
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
 
-  const [tanggallahir, setTanggallahir] = useState(new Date());
-  const [nama, setNama] = useState("");
-  const [tempatlahir, setTempatlahir] = useState("");
-  const [agama, setAgama] = useState("");
-  const [kewarganegaraan, setKewarganegaraan] = useState("");
-  const [pendidikan, setPendidikan] = useState("");
-  const [pekerjaan, setPekerjaan] = useState("");
-  const [pengeluaran, setPengeluaran] = useState("");
-  const [alamatdantelpon, setAlamatdantelpon] = useState("");
-  const [status, setStatus] = useState("");
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("ibu-nama"))
-      setNama(localStorage.getItem("ibu-nama"));
-    if (localStorage.getItem("ibu-tempatlahir"))
-      setTempatlahir(localStorage.getItem("ibu-tempatlahir"));
-    if (localStorage.getItem("ibu-tanggallahir"))
-      setTanggallahir(localStorage.getItem("ibu-tanggallahir"));
-    if (localStorage.getItem("ibu-agama"))
-      setAgama(localStorage.getItem("ibu-agama"));
-    if (localStorage.getItem("ibu-kewarganegaraan"))
-      setKewarganegaraan(localStorage.getItem("ibu-kewarganegaraan"));
-    if (localStorage.getItem("ibu-pendidikan"))
-      setPendidikan(localStorage.getItem("ibu-pendidikan"));
-    if (localStorage.getItem("ibu-pekerjaan"))
-      setPekerjaan(localStorage.getItem("ibu-pekerjaan"));
-    if (localStorage.getItem("ibu-pengeluaran"))
-      setPengeluaran(localStorage.getItem("ibu-pengeluaran"));
-    if (localStorage.getItem("ibu-alamatdantelpon"))
-      setAlamatdantelpon(localStorage.getItem("ibu-alamatdantelpon"));
-    if (localStorage.getItem("ibu-status"))
-      setStatus(localStorage.getItem("ibu-status"));
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
+
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/ayah`);
-  };
-
+    navigate("/siswa/lihat-data/ayah")
+  }
   const nextButton = () => {
-    console.log(
-      nama,
-      tempatlahir,
-      tanggallahir,
-      agama,
-      kewarganegaraan,
-      pendidikan,
-      pekerjaan,
-      pengeluaran,
-      alamatdantelpon,
-      status
-    );
-    if (
-      nama &&
-      tempatlahir &&
-      tanggallahir &&
-      agama &&
-      kewarganegaraan &&
-      pendidikan &&
-      pekerjaan &&
-      pengeluaran &&
-      alamatdantelpon &&
-      status
-    ) {
-      localStorage.setItem("ibu-nama", nama);
-      localStorage.setItem("ibu-tempatlahir", tempatlahir);
-      localStorage.setItem("ibu-tanggallahir", tanggallahir);
-      localStorage.setItem("ibu-agama", nama);
-      localStorage.setItem("ibu-kewarganegaraan", kewarganegaraan);
-      localStorage.setItem("ibu-pendidikan", pendidikan);
-      localStorage.setItem("ibu-pekerjaan", pekerjaan);
-      localStorage.setItem("ibu-pengeluaran", pengeluaran);
-      localStorage.setItem("ibu-alamatdantelpon", alamatdantelpon);
-      localStorage.setItem("ibu-status", status);
+    navigate("/siswa/lihat-data/wali")
+  }
 
-      navigate(`/admin/audit/${params.id}/wali`);
-    } else {
-      alert("Semua data belum terisi");
-    }
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Ibu"} word={"F"} form={"admin"} />
+      <HeaderInput title={"Ibu"} word={"F"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -128,8 +88,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={nama}
-                  onChange={(e) => setNama(e.target.value)}
+                  value={siswa.ibu_kandung?.nama || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -140,8 +99,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={tempatlahir}
-                  onChange={(e) => setTempatlahir(e.target.value)}
+                  value={siswa.ibu_kandung?.tempat_lahir || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -151,14 +109,10 @@ const Ibu = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
-                  selected={tanggallahir}
-                  onChange={(date) => setTanggallahir(date)}
-                  scrollableMonthYearDropdown
-                  showYearDropdown
+                <DatePicker
+                  selected={siswa.ibu_kandung?.tanggal_lahir || new Date()}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
-                  maxDate={new Date()}
                 />
               </td>
             </tr>
@@ -168,8 +122,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={agama}
-                  onChange={(e) => setAgama(e.target.value)}
+                  value={siswa.ibu_kandung?.agama || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -180,8 +133,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={kewarganegaraan}
-                  onChange={(e) => setKewarganegaraan(e.target.value)}
+                  value={siswa.ibu_kandung?.kewarganegaraan || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -192,8 +144,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pendidikan}
-                  onChange={(e) => setPendidikan(e.target.value)}
+                  value={siswa.ibu_kandung?.pendidikan || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -204,8 +155,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pekerjaan}
-                  onChange={(e) => setPekerjaan(e.target.value)}
+                  value={siswa.ibu_kandung?.pekerjaan || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -216,8 +166,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pengeluaran}
-                  onChange={(e) => setPengeluaran(e.target.value)}
+                  value={siswa.ibu_kandung?.pengeluaran_per_bulan || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -228,8 +177,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={alamatdantelpon}
-                  onChange={(e) => setAlamatdantelpon(e.target.value)}
+                  value={siswa.ibu_kandung?.alamat_dan_no_telepon || "Tidak ada data"}
                   className="h-full"
                 />
               </td>
@@ -239,16 +187,12 @@ const Ibu = () => {
                 <label className="py-1">Masih Hidup/ Meninggal Dunia</label>
               </td>
               <td className="w-[37%] h-full">
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                <TextInput
+                  value={siswa.ibu_kandung?.status || "Tidak ada data"}
                   className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                 >
-                  <option value="default">Pilih</option>
-                  <option value={"masih hidup"}>Masih Hidup</option>
-                  <option value={"meninggal"}>Meninggal Dunia</option>
-                </select>
+                </TextInput>
               </td>
             </tr>
           </tbody>

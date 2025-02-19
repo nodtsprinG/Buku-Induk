@@ -1,4 +1,4 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
 import {
   TextInput,
@@ -117,13 +117,13 @@ const Pendidikan = () => {
   };
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <HeaderInput title={"Pendidikan"} word={"D"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
             <tr>
-              <td>1. Keterangan Sebelumnya</td>
+              <td className="font-bold">1. Keterangan Sebelumnya</td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
@@ -174,7 +174,7 @@ const Pendidikan = () => {
               </td>
             </tr>
             <tr>
-              <td>2. Pindahan</td>
+              <td className="font-bold">2. Pindahan</td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
@@ -201,7 +201,7 @@ const Pendidikan = () => {
               </td>
             </tr>
             <tr>
-              <td>3. Diterima Disekolah Ini</td>
+              <td className="font-bold">3. Diterima Disekolah Ini</td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">

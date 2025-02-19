@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { FaFemale, FaMale, FaDatabase, FaUser, FaBars } from "react-icons/fa";
 import Navigation from "../../components/nav";
 import { baseUrl } from "../../utils/constan";
+import GenderCharts from "../../components/GenderCharts";
 import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
@@ -78,6 +78,7 @@ const Dashboard = () => {
           {/* Siswa Perempuan */}
           <StatCard icon={<FaFemale size={40} />} title="Siswa Perempuan" value={dashboard.count_perempuan} />
         </div>
+        <GenderCharts maleCount={dashboard.count_laki} femaleCount={dashboard.count_perempuan} />
       </div>
 
       <Toaster />

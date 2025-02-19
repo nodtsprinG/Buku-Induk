@@ -31,7 +31,7 @@ const Login = () => {
       if (response.data.isMatch) {
         const siswaId = response.data.id;
         // Jika data cocok, arahkan ke halaman /siswa/lihat-data
-        navigate(`/siswa/lihat-data/${id}/biodata`);
+        navigate(`/siswa/lihat-data/biodata`);
         localStorage.setItem("akun-nisn", nisn)
         localStorage.setItem("akun-id", siswaId)
         localStorage.setItem("token", response.data.token)

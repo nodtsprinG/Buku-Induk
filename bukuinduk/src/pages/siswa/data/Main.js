@@ -58,11 +58,10 @@ const TambahAkun = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen">
-      <GoBack />
+    <div className="flex items-center justify-center bg-homepage bg-no-repeat w-screen h-screen text-[24px]">
       <div className="flex flex-row items-center justify-center w-11/12">
         <div className="flex flex-col items-center justify-center w-1/2">
-          <img src={Logo} className="w-44 aspect-square" />
+          <img src={Logo} alt="logo" className="w-44 aspect-square" />
           <p className="font-header text-white font-bold text-3xl text-center mt-3">
             Buku Induk
           </p>
@@ -74,13 +73,13 @@ const TambahAkun = () => {
             <input
               value={nisn}
               onChange={(e) => setNisn(e.target.value)}
-              className="bg-transparent border-b border-black focus:outline-none pt-2"
+              className="bg-transparent border-b border-black focus:outline-none p-2"
             ></input>
             <label className="opacity-20 pt-5">Jurusan</label>
             <select
               value={jurusanId}
               onChange={(e) => setJurusanId(e.target.value)}
-              className="bg-transparent border-b border-black focus:outline-none pt-2"
+              className="bg-transparent border-b border-black focus:outline-none p-2"
               defaultValue={"default"}
             >
               <option value={"default"} hidden>
@@ -94,7 +93,7 @@ const TambahAkun = () => {
             <select
               value={angkatan_id}
               onChange={(e) => setAngkatan_id(e.target.value)}
-              className="bg-transparent border-b border-black focus:outline-none pt-2"
+              className="bg-transparent border-b border-black focus:outline-none p-2"
               defaultValue={"default"}
             >
               <option value={"default"} hidden>
@@ -105,7 +104,10 @@ const TambahAkun = () => {
               })}
             </select>
             <div className="flex flex-row pt-10 w-full">
-              <div className="flex flex-row justify-center items-center">
+              <div className="flex flex-row justify-start items-center w-1/2">
+                <GoBack to={"/siswa"} className="font-header font-bold bg-[#0083FB] px-4 py-2 text-l text-white rounded-md" />
+              </div>
+              <div className="flex flex-row justify-end items-center w-1/2">
                 <button
                   onClick={daftar}
                   className="font-header font-bold bg-[#0083FB] p-2 text-l text-white rounded-md"

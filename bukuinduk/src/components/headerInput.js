@@ -149,7 +149,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     {
       a: "Perkembangan Siswa",
       b: "perkembangansiswa",
-      c: true,
+      c: true
     },
     { a: "Selesai Pendidikan", b: "selesaipend", c: true },
   ];
@@ -176,6 +176,8 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     window.URL.revokeObjectURL(url);
   };
   
+  const totalCols = ButtonList.some((t) => t.b === "perkembangansiswa" || t.b === "selesaipend") ? "grid-cols-10" : "grid-cols-10";
+
   return (
     <div className="pt-5">
       <div className="flex flex-row items-center w-full">
@@ -206,9 +208,9 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
           ) : null}
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-10 border">
+      <div className={`grid md:${totalCols} border`}>
         {ButtonList.map((t, i) => {
-          if (t.c && form !== "admin") return;
+          if (t.c && form !== "admin") return null;
           return (
             <HeaderButton
               key={i}

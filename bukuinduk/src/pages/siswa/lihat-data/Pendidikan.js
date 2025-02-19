@@ -1,14 +1,15 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
+import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalaman"
 import {
   TextInput,
-  DateInput,
   IntegerInput,
-  RadioInput,
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
+import axios from "axios";
+import { baseUrl } from "../../../utils/constan";
+import toast from "react-hot-toast";
 
 //Date issues
 
@@ -16,7 +17,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css//
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 /* 
 
@@ -31,98 +32,57 @@ import { useNavigate, useParams } from "react-router";
 */
 
 const Pendidikan = () => {
-  const navigate = useNavigate();
-  const params = useParams()
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
 
-  const [tanggal, setTanggal] = useState(new Date());
-
-  const [tamatan, setTamatan] = useState("");
-  const [nomorijazah, setNomorijazah] = useState("");
-  const [skhun, setSkhun] = useState("");
-  const [darisekolah, setDarisekolah] = useState("");
-  const [alasan, setAlasan] = useState("");
-  const [bidangkeahlian, setBidangkeahlian] = useState("");
-  const [programkeahlian, setProgramkeahlian] = useState("");
-  const [paketkeahlian, setPaketkeahlian] = useState("");
-  const [kelas, setKelas] = useState(0);
-  const [lamabelajar, setLamabelajar] = useState("")
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("pendidikan-tanggal"))
-      setTanggal(localStorage.getItem("pendidikan-tanggal"));
-    if (localStorage.getItem("pendidikan-tamatan"))
-      setTamatan(localStorage.getItem("pendidikan-tamatan"));
-    if (localStorage.getItem("pendidikan-nomorijazah"))
-      setNomorijazah(localStorage.getItem("pendidikan-nomorijazah"));
-    if (localStorage.getItem("pendidikan-skhun"))
-      setSkhun(localStorage.getItem("pendidikan-skhun"));
-    if (localStorage.getItem("pendidikan-darisekolah") !== "null")
-      setDarisekolah(localStorage.getItem("pendidikan-darisekolah"));
-    if (localStorage.getItem("pendidikan-alasan") !== "null")
-      setAlasan(localStorage.getItem("pendidikan-alasan"));
-    if (localStorage.getItem("pendidikan-bidangkeahlian"))
-      setBidangkeahlian(localStorage.getItem("pendidikan-bidangkeahlian"));
-    if (localStorage.getItem("pendidikan-programkeahlian"))
-      setProgramkeahlian(localStorage.getItem("pendidikan-programkeahlian"));
-    if (localStorage.getItem("pendidikan-paketkeahlian"))
-      setPaketkeahlian(localStorage.getItem("pendidikan-paketkeahlian"));
-    if (localStorage.getItem("pendidikan-kelas"))
-      setKelas(localStorage.getItem("pendidikan-kelas"));
-    if (localStorage.getItem("pendidikan-sebelumnyalamabelajar")) setLamabelajar(localStorage.getItem("pendidikan-sebelumnyalamabelajar"))
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
+
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/kesehatan`);
-  };
-
+    navigate("/siswa/lihat-data/kesehatan")
+  }
   const nextButton = () => {
-    console.log(
-      tanggal,
-      tamatan,
-      lamabelajar,
-      nomorijazah,
-      skhun,
-      darisekolah,
-      alasan,
-      bidangkeahlian,
-      programkeahlian,
-      paketkeahlian,
-      kelas
-    );
-    if (
-      tanggal &&
-      tamatan &&
-      lamabelajar &&
-      nomorijazah &&
-      skhun &&
-      bidangkeahlian &&
-      programkeahlian &&
-      paketkeahlian &&
-      kelas
-    ) {
-      localStorage.setItem("pendidikan-tanggal", tanggal);
-      localStorage.setItem("pendidikan-tamatan", tamatan);
-      localStorage.setItem("pendidikan-nomorijazah", nomorijazah);
-      localStorage.setItem("pendidikan-skhun", skhun);
-      localStorage.setItem("pendidikan-darisekolah", darisekolah ? darisekolah : null);
-      localStorage.setItem("pendidikan-alasan", alasan ? alasan : null);
-      localStorage.setItem("pendidikan-bidangkeahlian", bidangkeahlian);
-      localStorage.setItem("pendidikan-programkeahlian", programkeahlian);
-      localStorage.setItem("pendidikan-paketkeahlian", paketkeahlian);
-      localStorage.setItem("pendidikan-kelas", kelas);
-      localStorage.setItem("pendidikan-sebelumnyalamabelajar", lamabelajar)
-      navigate(`/admin/audit/${params.id}/ayah`);
-    } else {
-      alert("Semua data belum terisi");
-    }
-  };
+    navigate("/siswa/lihat-data/ayah")
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Pendidikan"} word={"D"} form={"admin"} />
+      <HeaderInput title={"Pendidikan"} word={"D"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -135,8 +95,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={tamatan}
-                  onChange={(e) => setTamatan(e.target.value)}
+                  value={siswa.pendidikan.sebelumnya_tamatan_dari}
                   className="h-full"
                 />
               </td>
@@ -147,32 +106,30 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={lamabelajar}
-                  onChange={(e) => setLamabelajar(e.target.value)}
+                  value={siswa.pendidikan.sebelumnya_lama_belajar}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">c. Nomor Ijazah</label>
+                <label className="py-1 ">c. Tanggal dan Nomor Ijazah</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={nomorijazah}
-                  onChange={(e) => setNomorijazah(e.target.value)}
+                  value={siswa.pendidikan.sebelumnya_tanggal_dan_ijazah}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">d. Nomor SKHUN</label>
+                <label className="py-1 ">d. Tanggal dan Nomor SKHUN</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={skhun}
-                  onChange={(e) => setSkhun(e.target.value)}
+                  name="skhun"
+                  value={siswa.pendidikan.sebelumnya_tanggal_skhun_dan_}
                   className="h-full"
                 />
               </td>
@@ -186,8 +143,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={darisekolah}
-                  onChange={(e) => setDarisekolah(e.target.value)}
+                  value={siswa.pendidikan.pindahan_dari_sekolah}
                   className="h-full"
                 />
               </td>
@@ -198,8 +154,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={alasan}
-                  onChange={(e) => setAlasan(e.target.value)}
+                  value={siswa.pendidikan.pindahan_alasan}
                   className="h-full"
                 />
               </td>
@@ -213,8 +168,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <IntegerInput
-                  value={kelas}
-                  onChange={(e) => setKelas(e.target.value)}
+                  value={siswa.pendidikan.diterima_di_kelas}
                   className="h-full"
                 />
               </td>
@@ -225,8 +179,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={bidangkeahlian}
-                  onChange={(e) => setBidangkeahlian(e.target.value)}
+                  value={siswa.pendidikan.diterima_di_bidang_keahlian}
                   className="h-full"
                 />
               </td>
@@ -237,8 +190,7 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={programkeahlian}
-                  onChange={(e) => setProgramkeahlian(e.target.value)}
+                  value={siswa.pendidikan.diterima_di_program_keahlian}
                   className="h-full"
                 />
               </td>
@@ -249,25 +201,20 @@ const Pendidikan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={paketkeahlian}
-                  onChange={(e) => setPaketkeahlian(e.target.value)}
+                  value={siswa.pendidikan.diterima_di_paket_keahlian}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">e. Tanggal</label>
+                <label className="py-1 ">e. Tanggal Diterima</label>
               </td>
               <td className="w-[63%] h-full">
                 <DatePicker
-                  selected={tanggal}
-                  onChange={(date) => setTanggal(date)}
-                  scrollableMonthYearDropdown
-                  showYearDropdown
+                  selected={siswa.pendidikan.diterima_tanggal}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
-                  maxDate={new Date()}
                 />
               </td>
             </tr>

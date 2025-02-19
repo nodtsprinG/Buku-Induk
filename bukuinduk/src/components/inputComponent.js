@@ -40,13 +40,13 @@ export const IntegerInput = ({ onChange, value }) => {
 
 export const RadioInput = ({ onChange, value }) => {
   return (
-    <div className="flex w-full space-x-4">
+    <div className="flex w-full space-x-4 text-[24px]">
       <div className="flex items-center">
         <input
           value={"laki-laki"}
           onChange={onChange}
           checked={value === "laki-laki"}
-          className="bg-[#DEE0E1] py-2 px-2 rounded-lg"
+          className="bg-[#DEE0E1] py-2 px-2 rounded-lg transform scale-150"
           type="radio"
           name="gender"
         />
@@ -57,7 +57,7 @@ export const RadioInput = ({ onChange, value }) => {
           value={"perempuan"}
           onChange={onChange}
           checked={value === "perempuan"}
-          className="bg-[#DEE0E1] py-2 px-2 rounded-lg"
+          className="bg-[#DEE0E1] py-2 px-2 rounded-lg transform scale-150"
           type="radio"
           name="gender"
         />

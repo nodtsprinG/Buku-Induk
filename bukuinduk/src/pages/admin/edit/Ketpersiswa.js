@@ -27,41 +27,44 @@ const KetPerkembanganSiswa = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [beasiswa, setBeasiswa] = useState("");
-  const [meninggalkansekolah, setMeninggalkansekolah] = useState("");
+  const [meninggalkanTanggal, setMeninggalkanTanggal] = useState("");
+  const [meninggalkanAlasan, setMeninggalkanAlasan] = useState("");
   const [akhirpendidikan, setAkhirpendidikan] = useState("");
+  const [nomorIjazah, setNomorIjazah] = useState("");
+  const [nomorSKHUN, setNomorSKHUN] = useState("");
 
   const backButton = () => {
     navigate(`/admin/audit/${params.id}/perkembangansiswa`);
   };
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("perkembangan-beasiswa") !== "null")
-      setBeasiswa(localStorage.getItem("perkembangan-beasiswa"));
-    if (localStorage.getItem("perkembangan-meninggalkansekolah") !== "null")
-      setMeninggalkansekolah(
-        localStorage.getItem("perkembangan-meninggalkansekolah")
-      );
-    if (localStorage.getItem("perkembangan-akhirpendidikan") !== "null")
-      setAkhirpendidikan(localStorage.getItem("perkembangan-akhirpendidikan"));
+    console.log("Memuat data dari localStorage...");
+    setBeasiswa(localStorage.getItem("perkembangan-beasiswa") || "");
+    setMeninggalkanTanggal(
+      localStorage.getItem("perkembangan-meninggalkan-tanggal")
+        ? new Date(localStorage.getItem("perkembangan-meninggalkan-tanggal"))
+        : null
+    );
+    setMeninggalkanAlasan(localStorage.getItem("perkembangan-meninggalkan-alasan") || "");
+    setAkhirpendidikan(localStorage.getItem("perkembangan-akhirpendidikan") || "");
+    setNomorIjazah(localStorage.getItem("perkembangan-nomor-ijazah") || "");
+    setNomorSKHUN(localStorage.getItem("perkembangan-nomor-skhun") || "");
   }, []);
 
   const nextButton = () => {
-    console.log(beasiswa, meninggalkansekolah, akhirpendidikan);
-    localStorage.setItem("perkembangan-beasiswa", beasiswa ? beasiswa : null);
-    localStorage.setItem(
-      "perkembangan-meninggalkansekolah",
-      meninggalkansekolah ? meninggalkansekolah : null
-    );
-    localStorage.setItem(
-      "perkembangan-akhirpendidikan",
-      akhirpendidikan ? akhirpendidikan : null
-    );
+    console.log(beasiswa, meninggalkanTanggal, meninggalkanAlasan, akhirpendidikan, nomorIjazah, nomorSKHUN);
+
+    localStorage.setItem("perkembangan-beasiswa", beasiswa);
+    localStorage.setItem("perkembangan-meninggalkan-tanggal", meninggalkanTanggal ? meninggalkanTanggal.toISOString() : "");
+    localStorage.setItem("perkembangan-meninggalkan-alasan", meninggalkanAlasan);
+    localStorage.setItem("perkembangan-akhirpendidikan", akhirpendidikan);
+    localStorage.setItem("perkembangan-nomor-ijazah", nomorIjazah);
+    localStorage.setItem("perkembangan-nomor-skhun", nomorSKHUN);
 
     navigate(`/admin/audit/${params.id}/selesaipend`);
   };
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
       <HeaderInput
@@ -84,25 +87,33 @@ const KetPerkembanganSiswa = () => {
                 />
               </td>
             </tr>
+            <label className="py-1 font-bold">Meninggalkan Sekolah</label>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1">Meninggalkan Sekolah</label>
+                <label className="py-1">a. Tanggal</label>
               </td>
               <td className="w-[37%] h-full">
                 <DatePicker
-                  value={meninggalkansekolah}
-                  onChange={(e) => setMeninggalkansekolah(e.target.value)}
-                  scrollableMonthYearDropdown
-                  showYearDropdown
-                  dateFormat={"dd-MM-yyyy"}
-                  className="w-full bg-[#DEE0E1] py-2 px-2 focus:outline-none rounded-lg"
+                  selected={meninggalkanTanggal}
+                  onChange={(date) => setMeninggalkanTanggal(date)}
+                  dateFormat="dd-MM-yyyy"
+                  className="w-full bg-gray-200 py-2 px-2 focus:outline-none rounded-lg"
                   maxDate={new Date()}
                 />
               </td>
             </tr>
             <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1">b. Alasan</label>
+              </td>
+              <td className="w-[37%] h-full">
+                <TextInput value={meninggalkanAlasan} onChange={(e) => setMeninggalkanAlasan(e.target.value)} />
+              </td>
+            </tr>
+            <label className="py-1 font-bold">Akhir Pendidikan</label>
+            <tr>
               <td className="w=1/2 h-full">
-                <label className="py-1">Akhir Pendidikan</label>
+                <label className="py-1">a. Tamat belajar/lulus</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
@@ -110,6 +121,22 @@ const KetPerkembanganSiswa = () => {
                   onChange={(e) => setAkhirpendidikan(e.target.value)}
                   className="h-full"
                 />
+              </td>
+            </tr>
+            <tr>
+              <td className="w=1/2 h-full">
+                <label className="py-1">b. Nomor/Tanggal Ijazah</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput value={nomorIjazah} onChange={(e) => setNomorIjazah(e.target.value)} />
+              </td>
+            </tr>
+            <tr>
+              <td className="w=1/2 h-full">
+                <label className="py-1">c. Nomor/Tanggal SKHUN</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput value={nomorSKHUN} onChange={(e) => setNomorSKHUN(e.target.value)} />
               </td>
             </tr>
           </tbody>

@@ -1,4 +1,4 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
 import {
   TextInput,
@@ -117,7 +117,7 @@ const Ayah = () => {
   };
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <HeaderInput
         title={"Ayah"}
         word={"E"}

@@ -100,22 +100,13 @@ const uploadAll = async () => {
         diterima_tanggal: localStorage.getItem("pendidikan-tanggal"),
         sebelumnya_tamatan_dari: localStorage.getItem("pendidikan-tamatan"),
         sebelumnya_lama_belajar: localStorage.getItem("pendidikan-sebelumnyalamabelajar"),
-        sebelumnya_tanggal_dan_ijazah: localStorage.getItem(
-          "pendidikan-nomorijazah"
-        ),
+        sebelumnya_tanggal_dan_ijazah: localStorage.getItem("pendidikan-nomorijazah"),
         sebelumnya_tanggal_skhun_dan_: localStorage.getItem("pendidikan-skhun"),
         pindahan_dari_sekolah: localStorage.getItem("pendidikan-darisekolah"),
         pindahan_alasan: localStorage.getItem("pendidikan-alasan"),
-        sebelumnya_lama_belajar: localStorage.getItem("pendidikan-sebelumnyalamabelajar"),
-        diterima_di_bidang_keahlian: localStorage.getItem(
-          "pendidikan-bidangkeahlian"
-        ),
-        diterima_di_program_keahlian: localStorage.getItem(
-          "pendidikan-programkeahlian"
-        ),
-        diterima_di_paket_keahlian: localStorage.getItem(
-          "pendidikan-paketkeahlian"
-        ),
+        diterima_di_bidang_keahlian: localStorage.getItem("pendidikan-bidangkeahlian"),
+        diterima_di_program_keahlian: localStorage.getItem("pendidikan-programkeahlian"),
+        diterima_di_paket_keahlian: localStorage.getItem("pendidikan-paketkeahlian"),
         diterima_di_kelas: localStorage.getItem("pendidikan-kelas"),
       },
       kesehatan: {

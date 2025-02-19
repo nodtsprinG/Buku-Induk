@@ -1,6 +1,6 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard"
+import Profil from "../../../components/lihatprofil"
 import InputHalaman from "../../../components/pilihHalaman"
 import {
   TextInput,
@@ -9,6 +9,9 @@ import {
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { baseUrl } from "../../../utils/constan";
 /* 
 
 =====================================================================================================
@@ -22,73 +25,57 @@ import { useNavigate, useParams } from "react-router";
 */
 
 const Kesehatan = () => {
-  const navigate = useNavigate();
-  const params = useParams()
-  const [goldarah, setGoldarah] = useState("");
-  const [goldarahlain, setGoldarahlain] = useState("");
-  const [penyakit, setPenyakit] = useState("");
-  const [jasmani, setJasmani] = useState("");
-  const [tinggi, setTinggi] = useState("");
-  const [berat, setBerat] = useState("");
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
+
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("kesehatan-goldarah")) {
-      const storedGoldarah = localStorage.getItem("kesehatan-goldarah");
-      let darah = ["A", "B", "O", "AB"];
-      if (!darah.includes(storedGoldarah)) {
-        setGoldarah("lainnya");
-        setGoldarahlain(localStorage.getItem("kesehatan-goldarahlain"));
-      } else if (storedGoldarah === "tidak diketahui") {
-        setGoldarah("tidak diketahui");
-      } else {
-        setGoldarah(storedGoldarah);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
+
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
       }
-    }
-    if (localStorage.getItem("kesehatan-penyakit") !== "null")
-      setPenyakit(localStorage.getItem("kesehatan-penyakit"));
-    if (localStorage.getItem("kesehatan-jasmani") !== "null")
-      setJasmani(localStorage.getItem("kesehatan-jasmani"));
-    if (localStorage.getItem("kesehatan-tinggi"))
-      setTinggi(localStorage.getItem("kesehatan-tinggi"));
-    if (localStorage.getItem("kesehatan-berat"))
-      setBerat(localStorage.getItem("kesehatan-berat"));
-  }, []);
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/tempattinggal`);
-  };
-
+    navigate("/siswa/lihat-data/tempattinggal")
+  }
   const nextButton = () => {
-    console.log(
-      goldarah == "lainnya"
-        ? goldarahlain
-        : goldarah, penyakit, jasmani, tinggi, berat
-    );
-    if (
-      goldarah == "lainnya"
-        ? goldarahlain
-        : goldarah && tinggi && berat
-    ) {
-      localStorage.setItem(
-        "kesehatan-goldarah",
-        goldarah == "lainnya" ? goldarahlain : goldarah
-      );
-      localStorage.setItem("kesehatan-penyakit", penyakit ? penyakit : null);
-      localStorage.setItem("kesehatan-jasmani", jasmani ? jasmani : null);
-      localStorage.setItem("kesehatan-tinggi", tinggi);
-      localStorage.setItem("kesehatan-berat", berat);
-      navigate(`/admin/audit/${params.id}/pendidikan`);
-    } else {
-      alert("Semua data belum terisi");
-    }
-  };
+    navigate("/siswa/lihat-data/pendidikan")
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Kesehatan"} word={"C"} form={"admin"} />
+      <HeaderInput title={"Kesehatan"} word={"C"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4">
           <tbody>
@@ -97,46 +84,20 @@ const Kesehatan = () => {
                 <label className="py-1">Golongan Darah</label>
               </td>
               <td className="w-[63%] h-full">
-                <select
-                  value={goldarah}
-                  onChange={(e) => setGoldarah(e.target.value)}
+                <TextInput
+                  value={siswa.kesehatan.gol_darah}
                   className="w-full bg-[#E3E5E6] text-black p-2 rounded"
-                  defaultValue={"default"}
                 >
-                  <option value="default" hidden>
-                    Pilih
-                  </option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="AB">AB</option>
-                  <option value="O">O</option>
-                  <option value="lainnya">Lainnya</option>
-                  <option value="tidak diketahui">Tidak Diketahui</option>
-                </select>
+                </TextInput>
               </td>
             </tr>
-            {goldarah === "lainnya" ? (
-              <tr>
-                <td className="w-[63%] h-full">
-                  <label className="py-1">Lainnya</label>
-                </td>
-                <td className="w-[63%] h-full">
-                  <TextInput
-                    value={goldarahlain}
-                    onChange={(e) => setGoldarahlain(e.target.value)}
-                    className="h-full"
-                  />
-                </td>
-              </tr>
-            ) : null}
             <tr>
               <td className="w-[63%] h-full">
                 <label className="py-1 ">Penyakit Yang Pernah Diderita</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={penyakit}
-                  onChange={(e) => setPenyakit(e.target.value)}
+                  value={siswa.kesehatan.penyakit_pernah_diderita}
                   className="h-full"
                 />
               </td>
@@ -147,8 +108,7 @@ const Kesehatan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={jasmani}
-                  onChange={(e) => setJasmani(e.target.value)}
+                  value={siswa.kesehatan.kelainan_jasmani}
                   className="h-full"
                 />
               </td>
@@ -159,8 +119,7 @@ const Kesehatan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={tinggi}
-                  onChange={(e) => setTinggi(e.target.value)}
+                  value={siswa.kesehatan.tinggi}
                   className="h-full"
                 />
               </td>
@@ -171,8 +130,7 @@ const Kesehatan = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={berat}
-                  onChange={(e) => setBerat(e.target.value)}
+                  value={siswa.kesehatan.berat_badan}
                   className="h-full"
                 />
               </td>

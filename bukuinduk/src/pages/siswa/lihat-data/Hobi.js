@@ -1,18 +1,17 @@
-import HeaderInput from "../../../components/headerInput";
-import Profil from "../../../components/profileCard";
-import InputHalaman from "../../../components/pilihHalaman";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import {
-  TextInput,
-  DateInput,
-  IntegerInput,
-  RadioInput,
-} from "../../../components/inputComponent";
-import NextBefore from "../../../components/nextbefore";
+import Profil from "../../../components/lihatprofil";
+import InputHalaman from "../../../components/pilihHalaman";
+import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { baseUrl } from "../../../utils/constan";
 
-import uploadAll from "../../../utils/uploadAll";
+//Date issues
+import "react-datepicker/dist/react-datepicker.css";
+// CSS Modules, react-datepicker-cssmodules.css//
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 /* 
 
@@ -27,44 +26,56 @@ import uploadAll from "../../../utils/uploadAll";
 */
 
 const Hobi = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const [olahraga, setOlahraga] = useState("");
-  const [kesenian, setKesenian] = useState("");
-  const [organisasi, setOrganisasi] = useState("");
-  const [lainlain, setLainlain] = useState("");
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
+
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    if (localStorage.getItem("hobi-kesenian") !== "null")
-      setKesenian(localStorage.getItem("hobi-kesenian"));
-    if (localStorage.getItem("hobi-olahraga") !== "null")
-      setOlahraga(localStorage.getItem("hobi-olahraga"));
-    if (localStorage.getItem("hobi-organisasi") !== "null")
-      setOrganisasi(localStorage.getItem("hobi-organisasi"));
-    if (localStorage.getItem("hobi-lainlain") !== "null")
-      setLainlain(localStorage.getItem("hobi-lainlain"));
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
+
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/wali`);
-  };
-  
+    navigate("/siswa/lihat-data/wali")
+  }
   const nextButton = () => {
-    console.log(kesenian, olahraga, organisasi, lainlain);
-      if (params.action === "upload") {
-        localStorage.setItem("hobi-kesenian", kesenian ? kesenian : null);
-        localStorage.setItem("hobi-olahraga", olahraga ? olahraga : null);
-        localStorage.setItem("hobi-organisasi", organisasi ? organisasi : null);
-        localStorage.setItem("hobi-lainlain", lainlain ? lainlain : null);
-      }
-      navigate(`/admin/audit/${params.id}/perkembangansiswa`);
-  };
+    navigate("/siswa/lihat-data/perkembangan")
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Hobi"} word={"H"} form={"admin"}/>
+      <HeaderInput title={"Hobi"} word={"H"} form={"siswa"}/>
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -74,8 +85,7 @@ const Hobi = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={kesenian}
-                  onChange={(e) => setKesenian(e.target.value)}
+                  value={siswa.hobi_siswa?.kesenian}
                   className="h-full"
                 />
               </td>
@@ -86,8 +96,7 @@ const Hobi = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={olahraga}
-                  onChange={(e) => setOlahraga(e.target.value)}
+                  value={siswa.hobi_siswa?.olahraga}
                   className="h-full"
                 />
               </td>
@@ -98,8 +107,7 @@ const Hobi = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={organisasi}
-                  onChange={(e) => setOrganisasi(e.target.value)}
+                  value={siswa.hobi_siswa?.organisasi}
                   className="h-full"
                 />
               </td>
@@ -110,8 +118,7 @@ const Hobi = () => {
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={lainlain}
-                  onChange={(e) => setLainlain(e.target.value)}
+                  value={siswa.hobi_siswa?.lain_lain || "Tidak ada"}
                   className="h-full"
                 />
               </td>

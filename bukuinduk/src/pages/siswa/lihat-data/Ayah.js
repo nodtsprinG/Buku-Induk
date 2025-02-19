@@ -1,15 +1,12 @@
 import HeaderInput from "../../../components/headerInput";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/profileCard";
+import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalaman";
-import {
-  TextInput,
-  DateInput,
-  IntegerInput,
-  RadioInput,
-} from "../../../components/inputComponent";
+import {TextInput} from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { baseUrl } from "../../../utils/constan";
 
 //Date issues
 
@@ -31,92 +28,51 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 */
 
 const Ayah = () => {
-  const navigate = useNavigate();
-  const params = useParams();
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
 
-  const [tanggallahir, setTanggallahir] = useState(new Date());
-  const [nama, setNama] = useState("");
-  const [tempatlahir, setTempatlahir] = useState("");
-  const [agama, setAgama] = useState("");
-  const [kewarganegaraan, setKewarganegaraan] = useState("");
-  const [pendidikan, setPendidikan] = useState("");
-  const [pekerjaan, setPekerjaan] = useState("");
-  const [pengeluaran, setPengeluaran] = useState("");
-  const [alamatdantelpon, setAlamatdantelpon] = useState("");
-  const [status, setStatus] = useState("");
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
   useEffect(() => {
-    console.log("Di cek dulu...");
-    console.log()
-    if (localStorage.getItem("ayah-nama"))
-      setNama(localStorage.getItem("ayah-nama"));
-    if (localStorage.getItem("ayah-tempatlahir"))
-      setTempatlahir(localStorage.getItem("ayah-tempatlahir"));
-    if (localStorage.getItem("ayah-tanggallahir"))
-      setTanggallahir(localStorage.getItem("ayah-tanggallahir"));
-    if (localStorage.getItem("ayah-agama"))
-      setAgama(localStorage.getItem("ayah-agama"));
-    if (localStorage.getItem("ayah-kewarganegaraan"))
-      setKewarganegaraan(localStorage.getItem("ayah-kewarganegaraan"));
-    if (localStorage.getItem("ayah-pendidikan"))
-      setPendidikan(localStorage.getItem("ayah-pendidikan"));
-    if (localStorage.getItem("ayah-pekerjaan"))
-      setPekerjaan(localStorage.getItem("ayah-pekerjaan"));
-    if (localStorage.getItem("ayah-pengeluaran"))
-      setPengeluaran(localStorage.getItem("ayah-pengeluaran"));
-    if (localStorage.getItem("ayah-alamatdantelpon"))
-      setAlamatdantelpon(localStorage.getItem("ayah-alamatdantelpon"));
-    if (localStorage.getItem("ayah-status"))
-      setStatus(localStorage.getItem("ayah-status"));
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
+
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${params.id}/pendidikan`);
-  };
-
+    navigate("/siswa/lihat-data/pendidikan")
+  }
   const nextButton = () => {
-    console.log(
-      nama,
-      tempatlahir,
-      tanggallahir,
-      agama,
-      kewarganegaraan,
-      pendidikan,
-      pekerjaan,
-      pengeluaran,
-      alamatdantelpon,
-      status
-    );
-    if (
-      nama &&
-      tempatlahir &&
-      tanggallahir &&
-      agama &&
-      kewarganegaraan &&
-      pendidikan &&
-      pekerjaan &&
-      pengeluaran &&
-      alamatdantelpon &&
-      status
-    ) {
-      if (params.action === "upload") {
-        localStorage.setItem("ayah-nama", nama);
-        localStorage.setItem("ayah-tempatlahir", tempatlahir);
-        localStorage.setItem("ayah-tanggallahir", tanggallahir);
-        localStorage.setItem("ayah-agama", nama);
-        localStorage.setItem("ayah-kewarganegaraan", kewarganegaraan);
-        localStorage.setItem("ayah-pendidikan", pendidikan);
-        localStorage.setItem("ayah-pekerjaan", pekerjaan);
-        localStorage.setItem("ayah-pengeluaran", pengeluaran);
-        localStorage.setItem("ayah-alamatdantelpon", alamatdantelpon);
-        localStorage.setItem("ayah-status", status);
-      }
+    navigate("/siswa/lihat-data/ibu")
+  }
 
-      navigate(`/admin/audit/${params.id}/ibu`);
-    } else {
-      alert("Semua data belum terisi");
-    }
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
@@ -125,7 +81,7 @@ const Ayah = () => {
       <HeaderInput
         title={"Ayah"}
         word={"E"}
-        form={"admin"}
+        form={"siswa"}
       />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
@@ -136,8 +92,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={nama}
-                  onChange={(e) => setNama(e.target.value)}
+                  value={siswa.ayah_kandung.nama}
                   className="h-full"
                 />
               </td>
@@ -148,8 +103,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={tempatlahir}
-                  onChange={(e) => setTempatlahir(e.target.value)}
+                  value={siswa.ayah_kandung.tempat_lahir}
                   className="h-full"
                 />
               </td>
@@ -160,13 +114,9 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
               <DatePicker
-                  selected={tanggallahir}
-                  onChange={(date) => setTanggallahir(date)}
-                  scrollableMonthYearDropdown
-                  showYearDropdown
+                  selected={siswa.ayah_kandung.tanggal_lahir}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
-                  maxDate={new Date()}
                 />
               </td>
             </tr>
@@ -176,8 +126,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={agama}
-                  onChange={(e) => setAgama(e.target.value)}
+                  value={siswa.ayah_kandung.agama}
                   className="h-full"
                 />
               </td>
@@ -188,8 +137,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={kewarganegaraan}
-                  onChange={(e) => setKewarganegaraan(e.target.value)}
+                  value={siswa.ayah_kandung.kewarganegaraan}
                   className="h-full"
                 />
               </td>
@@ -200,8 +148,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pendidikan}
-                  onChange={(e) => setPendidikan(e.target.value)}
+                  value={siswa.ayah_kandung.pendidikan}
                   className="h-full"
                 />
               </td>
@@ -212,8 +159,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pekerjaan}
-                  onChange={(e) => setPekerjaan(e.target.value)}
+                  value={siswa.ayah_kandung.pekerjaan}
                   className="h-full"
                 />
               </td>
@@ -224,8 +170,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={pengeluaran}
-                  onChange={(e) => setPengeluaran(e.target.value)}
+                  value={siswa.ayah_kandung.pengeluaran_per_bulan}
                   className="h-full"
                 />
               </td>
@@ -236,8 +181,7 @@ const Ayah = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={alamatdantelpon}
-                  onChange={(e) => setAlamatdantelpon(e.target.value)}
+                  value={siswa.ayah_kandung.alamat_dan_no_telepon}
                   className="h-full"
                 />
               </td>
@@ -247,16 +191,12 @@ const Ayah = () => {
                 <label className="py-1">Masih Hidup/ Meninggal Dunia</label>
               </td>
               <td className="w-[37%] h-full">
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                <TextInput
+                  value={siswa.ayah_kandung.status}
                   className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                 >
-                  <option value="default">Pilih</option>
-                  <option value={"masih hidup"}>Masih Hidup</option>
-                  <option value={"meninggal"}>Meninggal Dunia</option>
-                </select>
+                </TextInput>
               </td>
             </tr>
           </tbody>

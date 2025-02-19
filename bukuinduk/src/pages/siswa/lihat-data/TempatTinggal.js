@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import HeaderInput from "../../../components/headerInput";
-import Profil from "../../../components/profileCard";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import HeaderInput from "../../../components/headerInputV2";
+import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalaman";
 import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
+import { baseUrl } from "../../../utils/constan";
+import axios from "axios";
 
 /* 
 =====================================================================================================
@@ -15,58 +18,60 @@ import Nextbefore from "../../../components/nextbefore";
 */
 
 const TempatTinggal = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const [siswa, setSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
 
-  const [data, setData] = useState({
-    alamat: "",
-    telp: "",
-    tinggal: "",
-    jarak: "",
-  });
+  // Ambil ID dari localStorage
+  const siswaId = localStorage.getItem("akun-id");
 
-  // Load data dari localStorage
   useEffect(() => {
-    const storedData = {
-      alamat: localStorage.getItem("tempattinggal-alamat") || "",
-      telp: localStorage.getItem("tempattinggal-telp") || "",
-      tinggal: localStorage.getItem("tempattinggal-tinggal") || "",
-      jarak: localStorage.getItem("tempattinggal-jarak") || "",
-    };
-    setData(storedData);
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (!siswaId) {
+          setError("ID tidak ditemukan di localStorage");
+          setLoading(false);
+          return;
+        }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData({ ...data, [name]: value });
-  };
+        // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        setSiswa(response.data);
+      } catch (err) {
+        console.log(err)
+        setError("Gagal mengambil data siswa", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [siswaId]);
 
   const backButton = () => {
-    navigate(`/admin/audit/${id}/biodata`);
-  };
-
+    navigate("/siswa/lihat-data/biodata")
+  }
   const nextButton = () => {
-    const { alamat, telp, tinggal, jarak } = data;
-    if (alamat.trim() && telp.trim() && tinggal.trim() && jarak.trim()) {
-      // Simpan data ke localStorage
-      localStorage.setItem("tempattinggal-alamat", alamat);
-      localStorage.setItem("tempattinggal-telp", telp);
-      localStorage.setItem("tempattinggal-tinggal", tinggal);
-      localStorage.setItem("tempattinggal-jarak", jarak);
-      navigate(`/admin/audit/${id}/kesehatan`);
-    } else {
-      alert("Semua data belum terisi");
-    }
-  };
+    navigate("/siswa/lihat-data/kesehatan")
+  }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       {/* Profil dan Header */}
       <div className="my-10 w-full">
         <Profil />
       </div>
       <InputHalaman />
-      <HeaderInput title="Tempat Tinggal" word="B" form="admin" />
+      <HeaderInput title="Tempat Tinggal" word="B" form="siswa" />
 
       {/* Form Input */}
       <div className="bg-white p-6 flex items-center justify-center">
@@ -79,8 +84,7 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="alamat"
-                  value={data.alamat}
-                  onChange={handleChange}
+                  value={siswa.tempat_tinggal.alamat}
                 />
               </td>
             </tr>
@@ -91,8 +95,7 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="telp"
-                  value={data.telp}
-                  onChange={handleChange}
+                  value={siswa.tempat_tinggal.no_telepon}
                 />
               </td>
             </tr>
@@ -101,18 +104,12 @@ const TempatTinggal = () => {
                 <label className="py-1">Tinggal Dengan</label>
               </td>
               <td className="w-[63%]">
-                <select
+                <TextInput
                   name="tinggal"
-                  value={data.tinggal}
-                  onChange={handleChange}
+                  value={siswa.tempat_tinggal.tinggal_dengan}
                   className="w-full bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                 >
-                  <option value="" hidden>Pilih</option>
-                  <option value="ortu">Orang Tua</option>
-                  <option value="saudara">Saudara</option>
-                  <option value="lainnya">Lainnya</option>
-                  <option value="wali">Wali</option>
-                </select>
+                </TextInput>
               </td>
             </tr>
             <tr>
@@ -122,8 +119,7 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="jarak"
-                  value={data.jarak}
-                  onChange={handleChange}
+                  value={siswa.tempat_tinggal.jarak_ke_sekolah}
                 />
               </td>
             </tr>
