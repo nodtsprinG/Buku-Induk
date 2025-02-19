@@ -7,8 +7,8 @@ const GenderCharts = ({ maleCount = 20, femaleCount = 40 }) => {
   ];
 
   return (
-    <div className="w-full max-w-5xl h-96 mt-8 bg-white p-6 rounded-xl shadow-lg flex flex-col mx-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Distribusi Siswa</h2>
+    <div className="w-full h-96 mt-8 bg-white p-6 rounded-xl shadow-lg flex flex-col mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Infografi Siswa</h2>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
@@ -19,33 +19,33 @@ const GenderCharts = ({ maleCount = 20, femaleCount = 40 }) => {
           <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
           <XAxis 
             dataKey="name" 
-            tick={{ fontSize: 14, fontWeight: "bold", fill: "#555" }} 
+            tick={{ fontSize: 24, fontWeight: "bold", fill: "#555" }} 
           />
           <YAxis 
             allowDecimals={false} 
             domain={[0, Math.max(maleCount, femaleCount) + 5]} 
-            tick={{ fontSize: 14, fontWeight: "bold", fill: "#555" }} 
+            tick={{ fontSize: 24, fontWeight: "bold", fill: "#555" }} 
           />
           <Tooltip 
             contentStyle={{ backgroundColor: "rgba(0, 0, 0, 0.8)", color: "#fff", borderRadius: 8 }} 
             cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} 
           />
           <Legend 
-            wrapperStyle={{ fontSize: 14, fontWeight: "bold", color: "#555" }} 
+            wrapperStyle={{ fontSize: 24, fontWeight: "bold", color: "#555" }} 
           />
           <Bar 
             dataKey="laki" 
             fill="url(#colorMale)" 
             name="Laki-laki" 
-            barSize={60} 
-            radius={[8, 8, 0, 0]}
+            barSize={200} 
+            radius={[2, 2, 0, 0]}
           />
           <Bar 
             dataKey="perempuan" 
             fill="url(#colorFemale)" 
             name="Perempuan" 
-            barSize={60} 
-            radius={[8, 8, 0, 0]}
+            barSize={200} 
+            radius={[2, 2, 0, 0]}
           />
           <defs>
             <linearGradient id="colorMale" x1="0" y1="0" x2="0" y2="1">
