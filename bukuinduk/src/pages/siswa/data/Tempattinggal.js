@@ -104,7 +104,7 @@ const TempatTinggal = () => {
                 </label>
               </td>
               <td className="w-[63%] h-full">
-                <TextInput value={jarak} onChange={(e) => setJarak(e.target.value)} className="h-full" />
+                <IntegerInput value={jarak} onChange={(e) => setJarak(e.target.value)} className="h-full" />
               </td>
             </tr>
           </tbody>

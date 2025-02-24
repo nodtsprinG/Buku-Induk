@@ -176,7 +176,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     window.URL.revokeObjectURL(url);
   };
   
-  const totalCols = ButtonList.some((t) => t.b === "perkembangansiswa" || t.b === "selesaipend") ? "grid-cols-10" : "grid-cols-10";
+  const totalCols = ButtonList.some((t) => t.b === "perkembangansiswa" || t.b === "selesaipend") ? "grid grid-cols-10" : "grid grid-cols-10";
 
   return (
     <div className="pt-5">

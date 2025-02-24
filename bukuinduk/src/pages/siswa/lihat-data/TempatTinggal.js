@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import HeaderInput from "../../../components/headerInputV2";
 import Profil from "../../../components/lihatprofil";
-import InputHalaman from "../../../components/pilihHalaman";
+import InputHalaman from "../../../components/pilihHalamanV2";
 import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { baseUrl } from "../../../utils/constan";

@@ -105,7 +105,6 @@ import {
           sebelumnya_tanggal_skhun_dan_: localStorage.getItem("pendidikan-skhun"),
           pindahan_dari_sekolah: localStorage.getItem("pendidikan-darisekolah"),
           pindahan_alasan: localStorage.getItem("pendidikan-alasan"),
-          sebelumnya_lama_belajar: localStorage.getItem("pendidikan-sebelumnyalamabelajar"),
           diterima_di_bidang_keahlian: localStorage.getItem(
             "pendidikan-bidangkeahlian"
           ),
@@ -136,7 +135,7 @@ import {
             akhir_pendidikan_tamat_belajar_lulus_tahun:localStorage.getItem("perkembangan-akhirpendidikan")
         }
       };
-      return axios.put(baseUrl + "/admin/data-diri/" + id, data, {
+      return axios.put(baseUrl + "/admin/akun/" + id, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

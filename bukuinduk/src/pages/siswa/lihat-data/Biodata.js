@@ -3,14 +3,14 @@ import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../../utils/constan";
 import Profil from "../../../components/lihatprofil"
-import InputHalaman from "../../../components/pilihHalaman"
+import InputHalaman from "../../../components/pilihHalamanV2"
 import {
   TextInput,
   IntegerInput,
   RadioInput,
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import HeaderInput from "../../../components/headerInputV2";
+import HeaderInput from "../../../components/headerInput";
 import DatePicker from "react-datepicker";
 import toast from "react-hot-toast";
 

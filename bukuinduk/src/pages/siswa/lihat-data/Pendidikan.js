@@ -1,7 +1,7 @@
 import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
 import Profil from "../../../components/lihatprofil";
-import InputHalaman from "../../../components/pilihHalaman"
+import InputHalaman from "../../../components/pilihHalamanV2"
 import {
   TextInput,
   IntegerInput,

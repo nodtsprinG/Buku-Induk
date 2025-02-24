@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import HeaderInput from "../../../components/headerInput";
 import Profil from "../../../components/profileCard";
 import InputHalaman from "../../../components/pilihHalaman";
-import { TextInput } from "../../../components/inputComponent";
+import { IntegerInput, TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 
 /* 
@@ -80,7 +80,7 @@ const TempatTinggal = () => {
       <div className="my-10 w-full">
         <Profil />
       </div>
-      <InputHalaman />
+      <InputHalaman id={params.id}/>
       <HeaderInput title="Tempat Tinggal" word="B" form="admin" />
 
       {/* Form Input */}
@@ -134,12 +134,13 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <label className="py-1">Jarak Tempat Tinggal ke Sekolah (*km)</label>
               </td>
-              <td className="w-[63%]">
-                <TextInput
+              <td className="w-full">
+                <IntegerInput
                   name="jarak"
                   value={jarak}
                   onChange={(e) => setJarak(e.target.value)}
                 />
+                <label className="mx-4 text-semibold">KM</label>
               </td>
             </tr>
           </tbody>

@@ -32,7 +32,7 @@ export const IntegerInput = ({ onChange, value }) => {
       value={value === null ? "" : value}
       onChange={onChange}
       allowNull={true}
-      className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-[10px]"
+      className="bg-[#DEE0E1] py-2 px-2 w-[50%] focus:outline-none rounded-[10px]"
       type="number"
     />
   );

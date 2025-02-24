@@ -1,7 +1,7 @@
-import HeaderInput from "../../../components/headerInput";
+import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
 import Profil from "../../../components/lihatprofil";
-import InputHalaman from "../../../components/pilihHalaman";
+import InputHalaman from "../../../components/pilihHalamanV2";
 import {TextInput} from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { useNavigate } from "react-router";

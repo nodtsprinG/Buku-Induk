@@ -4,6 +4,7 @@ import InputHalaman from "../../../components/pilihHalaman";
 import Profil from "../../../components/profileCard";
 import { baseUrl } from "../../../utils/constan";
 import { useParams } from "react-router";
+import fileDownload from "js-file-download";
 
 const ERaport = () => {
   const [activeSemester, setActiveSemester] = useState(1);
@@ -44,9 +45,9 @@ const ERaport = () => {
         setNilaiList(response.data[`Semester ${activeSemester}`].map((val, index) => {
           return {
             sia : {
-              sakit : val.SIA.sakit ?? 0,
-              izin : val.SIA.izin ?? 0,
-              alpha : val.SIA.alpha ?? 0
+              sakit : val.SIA?.sakit ?? 0,
+              izin : val.SIA?.izin ?? 0,
+              alpha : val.SIA?.alpha ?? 0
             },
             mapel : {
               id : val.mapel_id,
@@ -82,6 +83,20 @@ const ERaport = () => {
     setNilaiList(newNilaiList);
   };
 
+  const exportData = () => {
+    axios.get(`${baseUrl}/admin/export-raport-pdf/${params.id}`, {
+      responseType: 'blob', // Important: indicates that the response should be treated as a Blob
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    })
+      .then((response) => {
+        fileDownload(response.data, 'nilai-siswa.pdf');
+      })
+      .catch((error) => {
+        console.error('Download error:', error);
+      });
+  }
 
   const handleSIAChange = (field, value) => {
 
@@ -136,7 +151,7 @@ const ERaport = () => {
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
       <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
+      <div><InputHalaman id={params.id} /></div>
       <h1 className="text-2xl font-bold my-4">E - Raport (Semester {activeSemester})</h1>
 
       <div className="flex gap-2 mb-4 flex-wrap">
@@ -150,7 +165,7 @@ const ERaport = () => {
           </button>
         ))}
         <button onClick={handleSave} className="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
-        <button className="bg-red-500 text-white px-4 py-2 rounded-md">Impor</button>
+        <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={exportData}>Expor</button>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
@@ -161,7 +176,7 @@ const ERaport = () => {
                 <td className="border p-2">MATA PELAJARAN</td>
                 <td className="border p-2">NILAI</td>
                 <td className="border p-2">KETERANGAN</td>
-                <td className="border p-2">ACTION</td>
+                <td className="border p-2">AKSI</td>
               </tr>
             </thead>
             <tbody>
@@ -206,7 +221,7 @@ const ERaport = () => {
                     />
                   </td>
                   <td className="border p-2 flex items-center ">
-                    <button onClick={(e) => {deleteNilai(index)}} className="bg-red-700 p-2 text-white">Delete</button>
+                    <button onClick={(e) => {deleteNilai(index)}} className="bg-red-700 p-2 text-white">Hapus</button>
                   </td>
                 </tr>
               ))}
@@ -219,11 +234,11 @@ const ERaport = () => {
 
         <div>
         {
-          nilaiList[0]?.sia && (
+           (
             <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-gray-200 p-2 font-header font-normal text-[24px] text-center">
-                <td className="border p-2">FIELD</td>
+                <td className="border p-2">KETERANGAN</td>
                 <td className="border p-2">HARI</td>
               </tr>
             </thead>

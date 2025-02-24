@@ -113,7 +113,7 @@ const DataSiswa = () => {
     e.preventDefault();
 
     if (!file) {
-      alert('Please select a file');
+      alert('PILIH DATA TERLEBIH DAHULU');
       return;
     }
 
@@ -145,32 +145,19 @@ const DataSiswa = () => {
         </h1>
         <header className="flex flex-auto gap-2 mb-5">
           <div className="w-full mt-8 flex justify-end space-x-4">
-            <button onClick={() => navigate('/tambah/upload/akun')} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm w-full">
+            {/* <button onClick={() => navigate('/tambah/upload/akun')} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm w-full">
               Tambah Siswa
-            </button>
-            <button onClick={() => { exportData() }} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-sm w-full">
+            </button> */}
+            <button onClick={() => { exportData() }} className=" bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-2 rounded-sm w-full">
               Unduh Excel
             </button>
-            <button onClick={() => { exportDataPDF() }} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-sm w-full">
+            <button onClick={() => { exportDataPDF() }} className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-2 rounded-sm w-full">
               Unduh PDF
             </button>
           </div>
-          <form onSubmit={handleSubmit} className="bg-white mt-4 grid grid-cols-2 items-center gap-2">
-            <div className="w-full mt-3 py-2 px-4">
-              <input
-                type="file"
-                onChange={(e) => importhandleFileChange(e)}
-                className="w-full text-sm text-gray-700 file:rounded-sm file:border-0 file:py-2 file:px-4 file:text-sm file:bg-gray-300 file:text-black"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mt-3 bg-blue-500 text-white font-medium py-2 px-4 rounded-sm"
-            >
-              Ekspor Excel
-            </button>
-          </form>
+          <div>
+            
+          </div>
         </header>
         <hr className="border-black border-2" />
         <div className="w-full flex gap-4 justify-between mt-6">
@@ -178,7 +165,7 @@ const DataSiswa = () => {
             <input
               onChange={(e) => setSearchkey(e.target.value)}
               type="search"
-              placeholder="Search"
+              placeholder="Cari.."
               name="search"
               className="input-field p-2 border w-full border-gray-400 rounded-lg hover:border-black pl-10"
             />
