@@ -80,7 +80,7 @@ const TempatTinggal = () => {
       <div className="my-10 w-full">
         <Profil />
       </div>
-      <InputHalaman id={params.id}/>
+      <InputHalaman id={params.id} />
       <HeaderInput title="Tempat Tinggal" word="B" form="admin" />
 
       {/* Form Input */}
@@ -134,14 +134,15 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <label className="py-1">Jarak Tempat Tinggal ke Sekolah (*km)</label>
               </td>
-              <td className="w-full">
-                <IntegerInput
+              <td className="w-[37%]">
+                <TextInput
                   name="jarak"
                   value={jarak}
                   onChange={(e) => setJarak(e.target.value)}
+                  style={{ width: '200px' }} // Sesuaikan panjangnya sesuai kebutuhan
                 />
-                <label className="mx-4 text-semibold">KM</label>
               </td>
+              <label className="mx-4 text-semibold">KM</label>
             </tr>
           </tbody>
         </table>

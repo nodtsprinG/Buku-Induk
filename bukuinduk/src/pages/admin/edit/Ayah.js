@@ -121,7 +121,7 @@ const Ayah = () => {
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman id={params.id}/></div>
+      <div><InputHalaman id={params.id} /></div>
       <HeaderInput
         title={"Ayah"}
         word={"E"}
@@ -159,7 +159,7 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
+                <DatePicker
                   selected={tanggallahir}
                   onChange={(date) => setTanggallahir(date)}
                   scrollableMonthYearDropdown
@@ -220,13 +220,14 @@ const Ayah = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">h. Pengeluaran per Bulan (*Rp)</label>
+                <label className="py-1">h. Pengeluaran per Bulan</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[50%] h-full flex items-center">
+                <span className="mr-2 text-black font-normal">Rp.</span>
                 <TextInput
                   value={pengeluaran}
                   onChange={(e) => setPengeluaran(e.target.value)}
-                  className="h-full"
+                  className="h-full w-full border rounded px-2"
                 />
               </td>
             </tr>

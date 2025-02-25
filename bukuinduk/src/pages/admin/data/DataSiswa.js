@@ -156,7 +156,22 @@ const DataSiswa = () => {
             </button>
           </div>
           <div>
-            
+            <form onSubmit={handleSubmit} className="bg-white mt-4 grid grid-cols-2 items-center gap-2">
+              <div className="w-full mt-3 py-2 px-4">
+                <input
+                  type="file"
+                  onChange={(e) => importhandleFileChange(e)}
+                  className="w-full text-sm text-gray-700 file:rounded-sm file:border-0 file:py-2 file:px-4 file:text-sm file:bg-gray-300 file:text-black"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full mt-3 bg-blue-500 text-white font-medium py-2 px-4 rounded-sm"
+              >
+                Ekspor Excel
+              </button>
+            </form>
           </div>
         </header>
         <hr className="border-black border-2" />

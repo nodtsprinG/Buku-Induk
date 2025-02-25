@@ -146,6 +146,10 @@ const ERaport = () => {
       alert("Terjadi kesalahan saat menyimpan data.");
     }
   };
+
+  const mapel = () => {
+    axios.get(baseUrl+ "/admin/mapel")
+  }
   
 
   return (
@@ -176,10 +180,15 @@ const ERaport = () => {
                 <td className="border p-2">MATA PELAJARAN</td>
                 <td className="border p-2">NILAI</td>
                 <td className="border p-2">KETERANGAN</td>
-                <td className="border p-2">AKSI</td>
+                {/* <td className="border p-2">AKSI</td> */}
               </tr>
             </thead>
             <tbody>
+                <tr>
+                  <td>{mapel.nama}</td>
+                </tr>
+            </tbody>
+            {/* <tbody>
               {nilaiList.map((item, index) => (
                 <tr key={index}>
                   <td className="border p-2">
@@ -225,7 +234,7 @@ const ERaport = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
+            </tbody> */}
           </table>
           <button onClick={handleAddRow} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
             Tambah Nilai

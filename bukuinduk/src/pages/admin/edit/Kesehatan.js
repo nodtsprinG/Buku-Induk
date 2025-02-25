@@ -87,7 +87,7 @@ const Kesehatan = () => {
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman id={params.id}/></div>
+      <div><InputHalaman id={params.id} /></div>
       <HeaderInput title={"Kesehatan"} word={"C"} form={"admin"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4">
@@ -155,26 +155,28 @@ const Kesehatan = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1">Tinggi Badan (*cm)</label>
+                <label className="py-1">Tinggi Badan</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%] h-full flex items-center">
                 <TextInput
                   value={tinggi}
                   onChange={(e) => setTinggi(e.target.value)}
-                  className="h-full"
+                  className="h-full w-full border rounded px-2"
                 />
+                <span className="ml-2 text-black font-normal">CM</span>
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1">Berat Badan (*kg)</label>
+                <label className="py-1">Berat Badan</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%] h-full flex items-center">
                 <TextInput
                   value={berat}
                   onChange={(e) => setBerat(e.target.value)}
-                  className="h-full"
+                  className="h-full w-full border rounded px-2"
                 />
+                <span className="ml-2 text-black font-normal">KG</span>
               </td>
             </tr>
           </tbody>

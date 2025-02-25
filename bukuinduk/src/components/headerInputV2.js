@@ -176,7 +176,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
     window.URL.revokeObjectURL(url);
   };
   
-  const totalCols = ButtonList.some((t) => t.b === "perkembangansiswa" || t.b === "selesaipend") ? "grid-cols-10" : "grid-cols-10";
+  const totalCols = ButtonList.some((t) => t.b === "perkembangansiswa" || t.b === "selesaipend") ? "grid-cols-8" : "grid-cols-8";
 
   return (
     <div className="pt-5">
@@ -208,7 +208,7 @@ const HeaderInput = ({ title, word, form, lastpage }) => {
           ) : null}
         </div>
       </div>
-      <div className={`grid md:${totalCols} border text-2xl`}>
+      <div className={`grid md:${totalCols} border`}>
         {ButtonList.map((t, i) => {
           if (t.c && form !== "admin") return null;
           return (
