@@ -1,12 +1,15 @@
 import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/lihatprofil";
-import InputHalaman from "../../../components/pilihHalamanV2";
-import { TextInput } from "../../../components/inputComponent";
+import Profil from "../../../components/profileCard";
+import InputHalaman from "../../../components/pilihHalamanV2"
+import {
+  TextInput,
+  IntegerInput,
+} from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
 import axios from "axios";
 import { baseUrl } from "../../../utils/constan";
+import toast from "react-hot-toast";
 
 //Date issues
 
@@ -14,20 +17,21 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css//
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import { useNavigate, useParams } from "react-router";
 
 /* 
 
 =====================================================================================================
-                    D A T A _ I B U _ K A N D U N G _ S I S W A
+                    D A T A _ P E N D I D I K A N _ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
 
-[#] Note : Mengikuti desain
+[!] Warning : Dilarang mengganti sembarangan pada bagian ini
 
 =====================================================================================================
 
 */
 
-const Ibu = () => {
+const Pendidikan = () => {
   const [siswa, setSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -35,7 +39,7 @@ const Ibu = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
-
+  const {id} = useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +50,7 @@ const Ibu = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -65,10 +69,10 @@ const Ibu = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/ayah")
+    navigate(`/admin/lihat/${id}/kesehatan`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/ayah`)
   }
 
   if (loading) return <p>Loading...</p>;
@@ -78,39 +82,42 @@ const Ibu = () => {
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Ibu"} word={"F"} form={"siswa"} />
+      <HeaderInput title={"Pendidikan"} word={"D"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
             <tr>
+              <td>1. Keterangan Sebelumnya</td>
+            </tr>
+            <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">a. Nama Lengkap</label>
+                <label className="py-1 ">a. Tamatan Dari</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.nama || "Tidak ada data"}
+                  value={siswa.pendidikan.sebelumnya_tamatan_dari}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">b. Tempat Lahir</label>
+                <label className="py-1 ">b. Sebelumnya Lama Belajar</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.tempat_lahir || "Tidak ada data"}
+                  value={siswa.pendidikan.sebelumnya_lama_belajar}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">c. Tanggal Lahir</label>
+                <label className="py-1 ">c. Tanggal Ijazah</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <DatePicker
-                  selected={siswa.ibu_kandung?.tanggal_lahir || new Date()}
+                  value={siswa.pendidikan.sebelumnya_tanggal_ijazah}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
                 />
@@ -118,90 +125,130 @@ const Ibu = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">d. Agama</label>
+                <label className="py-1 ">d. Nomor Ijazah</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.agama || "Tidak ada data"}
+                  value={siswa.pendidikan.sebelumnya_no_ijazah}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">e. Kewarganegaraan</label>
+                <label className="py-1 ">e. Tanggal SKHUN</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
+                <DatePicker
+                  name="skhun"
+                  value={siswa.pendidikan.sebelumnya_tanggal_skhun}
+                  dateFormat={"dd-MM-yyyy"}
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">f. Nomor SKHUN</label>
+              </td>
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.kewarganegaraan || "Tidak ada data"}
+                  name="skhun"
+                  value={siswa.pendidikan.sebelumnya_no_skhun}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>2. Pindahan</td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">a. Dari Sekolah</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  value={siswa.pendidikan.pindahan_dari_sekolah}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">f. Pendidikan</label>
+                <label className="py-1 ">b. Alasan</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pendidikan || "Tidak ada data"}
+                  value={siswa.pendidikan.pindahan_alasan}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>3. Diterima Disekolah Ini</td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">a. Kelas</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <IntegerInput
+                  value={siswa.pendidikan.diterima_di_kelas}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">g. Pekerjaan</label>
+                <label className="py-1 ">b. Bidang Keahlian</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pekerjaan || "Tidak ada data"}
+                  value={siswa.pendidikan.diterima_di_bidang_keahlian}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">h. Pengeluaran per Bulan (*Rp)</label>
+                <label className="py-1 ">c. Program Keahlian</label>
               </td>
-              <td className="w-[50%] h-full flex items-center">
-                <span className="mr-2 text-black font-normal">Rp.</span>
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pengeluaran_per_bulan || "Tidak ada data"}
+                  value={siswa.pendidikan.diterima_di_program_keahlian}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">i. Alamat Rumah/Telpon</label>
+                <label className="py-1 ">d. Paket Keahlian</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.alamat_dan_no_telepon || "Tidak ada data"}
+                  value={siswa.pendidikan.diterima_di_paket_keahlian}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1">Masih Hidup/ Meninggal Dunia</label>
+                <label className="py-1 ">e. Tanggal Diterima</label>
               </td>
-              <td className="w-[37%] h-full">
-                <TextInput
-                  value={siswa.ibu_kandung?.status || "Tidak ada data"}
-                  className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
-                  defaultValue={"default"}
-                >
-                </TextInput>
+              <td className="w-[63%] h-full">
+                <DatePicker
+                  selected={siswa.pendidikan.diterima_tanggal}
+                  dateFormat={"dd-MM-yyyy"}
+                  className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
+                />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      {/* tambahan */}
       <Nextbefore next={nextButton} back={backButton} />
     </div>
   );
 };
-export default Ibu;
+
+export default Pendidikan;

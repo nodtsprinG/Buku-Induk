@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../../utils/constan";
-import Profil from "../../../components/lihatprofil"
+import Profil from "../../../components/profileCard"
 import InputHalaman from "../../../components/pilihHalamanV2"
 import {
   TextInput,
@@ -10,7 +10,7 @@ import {
   RadioInput,
 } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import HeaderInput from "../../../components/headerInputV2";
+import HeaderInput from "../../../components/headerInput";
 import DatePicker from "react-datepicker";
 import toast from "react-hot-toast";
 
@@ -20,20 +20,19 @@ const Biodata = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate()
 
-  // Ambil ID dari localStorage
-  const siswaId = localStorage.getItem("akun-id");
+  const {id} = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!siswaId) {
+        if (!id) {
           setError("ID tidak ditemukan di localStorage");
           setLoading(false);
           return;
         }
-
+        console.log(id)
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
             Authorization : `Bearer ${localStorage.getItem("token")}`
           }
@@ -49,14 +48,14 @@ const Biodata = () => {
     };
 
     fetchData();
-  }, [siswaId]);
+  }, [id]);
 
   const backButton = () => {
     localStorage.removeItem("token")
-    navigate("/siswa")
+    navigate("/admin/datasiswa")
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/tempattinggal")
+    navigate(`/admin/lihat/${id}/tempattinggal`)
   }
 
   if (loading) return <p>Loading...</p>;

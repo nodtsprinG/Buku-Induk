@@ -118,10 +118,11 @@ const Kesehatan = () => {
                 <label className="py-1">Tinggi Badan (*cm)</label>
               </td>
               <td className="w-[63%] h-full">
-                <TextInput
+                <IntegerInput
                   value={siswa.kesehatan.tinggi}
                   className="h-full"
                 />
+                <label className="ml-4 text-normal">CM</label>
               </td>
             </tr>
             <tr>
@@ -129,10 +130,11 @@ const Kesehatan = () => {
                 <label className="py-1">Berat Badan (*kg)</label>
               </td>
               <td className="w-[63%] h-full">
-                <TextInput
+                <IntegerInput
                   value={siswa.kesehatan.berat_badan}
                   className="h-full"
                 />
+                <label className="ml-4 text-normal">KG</label>
               </td>
             </tr>
           </tbody>

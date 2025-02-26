@@ -2,7 +2,7 @@ import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
 import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalamanV2";
-import {TextInput} from "../../../components/inputComponent";
+import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -48,7 +48,7 @@ const Ayah = () => {
         // Panggil API untuk mendapatkan data siswa
         const response = await axios.get(baseUrl + `/siswa/data-diri`, {
           headers: {
-            Authorization : `Bearer ${localStorage.getItem("token")}`
+            Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         });
 
@@ -75,7 +75,7 @@ const Ayah = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
       <HeaderInput
@@ -113,7 +113,7 @@ const Ayah = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-              <DatePicker
+                <DatePicker
                   selected={siswa.ayah_kandung.tanggal_lahir}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
@@ -168,7 +168,8 @@ const Ayah = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1 ">h. Pengeluaran per Bulan (*Rp)</label>
               </td>
-              <td className="w-[37%] h-full">
+              <td className="w-[50%] h-full flex items-center">
+                <span className="mr-2 text-black font-normal">Rp.</span>
                 <TextInput
                   value={siswa.ayah_kandung.pengeluaran_per_bulan}
                   className="h-full"

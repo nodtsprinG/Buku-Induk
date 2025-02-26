@@ -4,7 +4,7 @@ import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalamanV2";
 import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { baseUrl } from "../../../utils/constan";
 
@@ -35,7 +35,7 @@ const Ibu = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
-
+  const {id} = useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +46,7 @@ const Ibu = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -65,17 +65,17 @@ const Ibu = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/ayah")
+    navigate(`/admin/lihat/${id}/ayah`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/wali`)
   }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
       <HeaderInput title={"Ibu"} word={"F"} form={"siswa"} />
@@ -164,8 +164,7 @@ const Ibu = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1 ">h. Pengeluaran per Bulan (*Rp)</label>
               </td>
-              <td className="w-[50%] h-full flex items-center">
-                <span className="mr-2 text-black font-normal">Rp.</span>
+              <td className="w-[37%] h-full">
                 <TextInput
                   value={siswa.ibu_kandung?.pengeluaran_per_bulan || "Tidak ada data"}
                   className="h-full"

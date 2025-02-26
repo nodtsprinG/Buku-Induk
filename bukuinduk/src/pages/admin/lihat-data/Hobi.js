@@ -4,7 +4,7 @@ import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalamanV2";
 import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { baseUrl } from "../../../utils/constan";
 
@@ -33,6 +33,7 @@ const Hobi = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
+  const {id} = useParams()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +45,7 @@ const Hobi = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -63,16 +64,16 @@ const Hobi = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/wali`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/perkembangan")
+    navigate(`/admin/datasiswa`)
   }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
       <HeaderInput title={"Hobi"} word={"H"} form={"siswa"}/>

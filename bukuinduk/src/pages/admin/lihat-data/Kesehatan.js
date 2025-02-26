@@ -1,31 +1,30 @@
 import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/lihatprofil";
-import InputHalaman from "../../../components/pilihHalamanV2";
-import { TextInput } from "../../../components/inputComponent";
+import Profil from "../../../components/profileCard"
+import InputHalaman from "../../../components/pilihHalaman"
+import {
+  TextInput,
+  IntegerInput,
+  RadioInput,
+} from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { baseUrl } from "../../../utils/constan";
-
-//Date issues
-import "react-datepicker/dist/react-datepicker.css";
-// CSS Modules, react-datepicker-cssmodules.css//
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
-
 /* 
 
 =====================================================================================================
-                    D A T A _ H O B I _ S I S W A
+                    D A T A _ K E S E H A T A N _ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
 
-[#] Note : Mengikuti desain
+[!] Warning : Dilarang mengganti sembarangan pada bagian ini
 
 =====================================================================================================
 
 */
 
-const Hobi = () => {
+const Kesehatan = () => {
   const [siswa, setSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -33,7 +32,7 @@ const Hobi = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
-
+  const {id} = useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,9 +43,9 @@ const Hobi = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization : `Bearer ${localStorage.getItem("token")}`
           }
         });
 
@@ -63,62 +62,75 @@ const Hobi = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/tempattinggal`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/perkembangan")
+    navigate(`/admin/lihat/${id}/pendidikan`)
   }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
+
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll h-min:h-screen text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Hobi"} word={"H"} form={"siswa"}/>
+      <HeaderInput title={"Kesehatan"} word={"C"} form={"siswa"} />
       <div className="bg-white p-6 flex items-center justify-center">
-        <table className="w-3/4 font-body border-separate border-spacing-4 ">
+        <table className="w-3/4 font-body border-separate border-spacing-4">
           <tbody>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Kesenian</label>
+              <td className="w-[63%] h-full">
+                <label className="py-1">Golongan Darah</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.hobi_siswa?.kesenian}
+                  value={siswa.kesehatan.gol_darah}
+                  className="w-full bg-[#E3E5E6] text-black p-2 rounded"
+                >
+                </TextInput>
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">Penyakit Yang Pernah Diderita</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  value={siswa.kesehatan.penyakit_pernah_diderita}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Olahraga</label>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">Kelainan Jasmani</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.hobi_siswa?.olahraga}
+                  value={siswa.kesehatan.kelainan_jasmani}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Organisasi/Kemasyarakatan</label>
+              <td className="w-[63%] h-full">
+                <label className="py-1">Tinggi Badan (*cm)</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.hobi_siswa?.organisasi}
+                  value={siswa.kesehatan.tinggi}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Lain-lain</label>
+              <td className="w-[63%] h-full">
+                <label className="py-1">Berat Badan (*kg)</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.hobi_siswa?.lain_lain || "Tidak ada"}
+                  value={siswa.kesehatan.berat_badan}
                   className="h-full"
                 />
               </td>
@@ -126,8 +138,9 @@ const Hobi = () => {
           </tbody>
         </table>
       </div>
-      <Nextbefore next={nextButton} back={backButton} lastpage={true} />
+      <Nextbefore next={nextButton} back={backButton} />
     </div>
   );
 };
-export default Hobi;
+
+export default Kesehatan;

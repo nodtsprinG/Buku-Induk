@@ -1,10 +1,10 @@
 import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/lihatprofil";
+import Profil from "../../../components/profileCard";
 import InputHalaman from "../../../components/pilihHalamanV2";
-import { TextInput } from "../../../components/inputComponent";
+import {TextInput} from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { baseUrl } from "../../../utils/constan";
 
@@ -18,7 +18,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 /* 
 
 =====================================================================================================
-                    D A T A _ I B U _ K A N D U N G _ S I S W A
+                    D A T A _ A Y A H _ K A N D U N G _ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
 
 [#] Note : Mengikuti desain
@@ -27,7 +27,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 */
 
-const Ibu = () => {
+const Ayah = () => {
   const [siswa, setSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -35,7 +35,7 @@ const Ibu = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
-
+  const {id} = useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,9 +46,9 @@ const Ibu = () => {
         }
 
         // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization : `Bearer ${localStorage.getItem("token")}`
           }
         });
 
@@ -65,10 +65,10 @@ const Ibu = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/ayah")
+    navigate(`/admin/lihat/${id}/pendidikam`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/ibu`)
   }
 
   if (loading) return <p>Loading...</p>;
@@ -78,7 +78,11 @@ const Ibu = () => {
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
-      <HeaderInput title={"Ibu"} word={"F"} form={"siswa"} />
+      <HeaderInput
+        title={"Ayah"}
+        word={"E"}
+        form={"siswa"}
+      />
       <div className="bg-white p-6 flex items-center justify-center">
         <table className="w-3/4 font-body border-separate border-spacing-4 ">
           <tbody>
@@ -88,7 +92,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.nama || "Tidak ada data"}
+                  value={siswa.ayah_kandung.nama}
                   className="h-full"
                 />
               </td>
@@ -99,7 +103,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.tempat_lahir || "Tidak ada data"}
+                  value={siswa.ayah_kandung.tempat_lahir}
                   className="h-full"
                 />
               </td>
@@ -109,8 +113,8 @@ const Ibu = () => {
                 <label className="py-1 ">c. Tanggal Lahir</label>
               </td>
               <td className="w-[37%] h-full">
-                <DatePicker
-                  selected={siswa.ibu_kandung?.tanggal_lahir || new Date()}
+              <DatePicker
+                  selected={siswa.ayah_kandung.tanggal_lahir}
                   dateFormat={"dd-MM-yyyy"}
                   className="bg-[#DEE0E1] py-2 px-2 w-full focus:outline-none rounded-lg"
                 />
@@ -122,7 +126,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.agama || "Tidak ada data"}
+                  value={siswa.ayah_kandung.agama}
                   className="h-full"
                 />
               </td>
@@ -133,7 +137,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.kewarganegaraan || "Tidak ada data"}
+                  value={siswa.ayah_kandung.kewarganegaraan}
                   className="h-full"
                 />
               </td>
@@ -144,7 +148,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pendidikan || "Tidak ada data"}
+                  value={siswa.ayah_kandung.pendidikan}
                   className="h-full"
                 />
               </td>
@@ -155,7 +159,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pekerjaan || "Tidak ada data"}
+                  value={siswa.ayah_kandung.pekerjaan}
                   className="h-full"
                 />
               </td>
@@ -164,10 +168,9 @@ const Ibu = () => {
               <td className="w-[63%] h-full">
                 <label className="py-1 ">h. Pengeluaran per Bulan (*Rp)</label>
               </td>
-              <td className="w-[50%] h-full flex items-center">
-                <span className="mr-2 text-black font-normal">Rp.</span>
+              <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.pengeluaran_per_bulan || "Tidak ada data"}
+                  value={siswa.ayah_kandung.pengeluaran_per_bulan}
                   className="h-full"
                 />
               </td>
@@ -178,7 +181,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.alamat_dan_no_telepon || "Tidak ada data"}
+                  value={siswa.ayah_kandung.alamat_dan_no_telepon}
                   className="h-full"
                 />
               </td>
@@ -189,7 +192,7 @@ const Ibu = () => {
               </td>
               <td className="w-[37%] h-full">
                 <TextInput
-                  value={siswa.ibu_kandung?.status || "Tidak ada data"}
+                  value={siswa.ayah_kandung.status}
                   className="w-[50%] bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                   defaultValue={"default"}
                 >
@@ -204,4 +207,4 @@ const Ibu = () => {
     </div>
   );
 };
-export default Ibu;
+export default Ayah;

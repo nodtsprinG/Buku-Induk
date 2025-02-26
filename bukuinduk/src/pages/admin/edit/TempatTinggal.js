@@ -135,14 +135,14 @@ const TempatTinggal = () => {
                 <label className="py-1">Jarak Tempat Tinggal ke Sekolah (*km)</label>
               </td>
               <td className="w-[37%]">
-                <TextInput
+                <IntegerInput
                   name="jarak"
                   value={jarak}
                   onChange={(e) => setJarak(e.target.value)}
-                  style={{ width: '200px' }} // Sesuaikan panjangnya sesuai kebutuhan
                 />
+                <label className="text-normal">KM</label>
               </td>
-              <label className="mx-4 text-semibold">KM</label>
+
             </tr>
           </tbody>
         </table>

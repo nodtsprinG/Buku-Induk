@@ -155,7 +155,7 @@ const Pendidikan = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">c. Nomor Ijazah</label>
+                <label className="py-1 ">c. Tanggal Ijazah</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
@@ -167,12 +167,36 @@ const Pendidikan = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">d. Nomor SKHUN</label>
+                <label className="py-1 ">d. Nomor Ijazah</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  value={nomorijazah}
+                  onChange={(e) => setNomorijazah(e.target.value)}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">e. Tanggal SKHUN</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
                   value={skhun}
                   onChange={(e) => setSkhun(e.target.value)}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">f. Nomor Ijazah</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  value={nomorijazah}
+                  onChange={(e) => setNomorijazah(e.target.value)}
                   className="h-full"
                 />
               </td>

@@ -79,7 +79,7 @@ const Pendidikan = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll">
+    <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       <div className="my-10 w-full"><Profil /></div>
       <div><InputHalaman /></div>
       <HeaderInput title={"Pendidikan"} word={"D"} form={"siswa"} />
@@ -113,23 +113,46 @@ const Pendidikan = () => {
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">c. Tanggal dan Nomor Ijazah</label>
+                <label className="py-1 ">c. Tanggal Ijazah</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
-                  value={siswa.pendidikan.sebelumnya_tanggal_dan_ijazah}
+                  value={siswa.pendidikan.sebelumnya_tanggal_ijazah}
                   className="h-full"
                 />
               </td>
             </tr>
             <tr>
               <td className="w-[63%] h-full">
-                <label className="py-1 ">d. Tanggal dan Nomor SKHUN</label>
+                <label className="py-1 ">d. Nomor Ijazah</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  value={siswa.pendidikan.sebelumnya_no_ijazah}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">e. Tanggal SKHUN</label>
               </td>
               <td className="w-[63%] h-full">
                 <TextInput
                   name="skhun"
-                  value={siswa.pendidikan.sebelumnya_tanggal_skhun_dan_}
+                  value={siswa.pendidikan.sebelumnya_tanggal_skhun}
+                  className="h-full"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[63%] h-full">
+                <label className="py-1 ">f. Tanggal SKHUN</label>
+              </td>
+              <td className="w-[63%] h-full">
+                <TextInput
+                  name="skhun"
+                  value={siswa.pendidikan.sebelumnya_no_skhun}
                   className="h-full"
                 />
               </td>

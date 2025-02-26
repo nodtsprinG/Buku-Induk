@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import HeaderInput from "../../../components/headerInputV2";
 import Profil from "../../../components/lihatprofil";
 import InputHalaman from "../../../components/pilihHalamanV2";
-import { TextInput } from "../../../components/inputComponent";
+import { IntegerInput, TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
 import { baseUrl } from "../../../utils/constan";
 import axios from "axios";
@@ -64,6 +64,15 @@ const TempatTinggal = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+  const mappingTinggalDengan = {
+    ortu: "Orang Tua",
+    saudara: "Saudara",
+    lainnya: "Lainnya",
+    wali: "Wali",
+  };
+
+  const tinggalDengan = mappingTinggalDengan[siswa.tempat_tinggal.tinggal_dengan] || "Tidak Diketahui";
+
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
       {/* Profil dan Header */}
@@ -106,7 +115,7 @@ const TempatTinggal = () => {
               <td className="w-[63%]">
                 <TextInput
                   name="tinggal"
-                  value={siswa.tempat_tinggal.tinggal_dengan}
+                  value={tinggalDengan}
                   className="w-full bg-[#DEE0E1] text-black p-2 rounded shadow-md"
                 >
                 </TextInput>
@@ -117,10 +126,11 @@ const TempatTinggal = () => {
                 <label className="py-1">Jarak Tempat Tinggal ke Sekolah (*km)</label>
               </td>
               <td className="w-[63%]">
-                <TextInput
+                <IntegerInput
                   name="jarak"
                   value={siswa.tempat_tinggal.jarak_ke_sekolah}
                 />
+                <label className="ml-4 text-normal">KM</label>
               </td>
             </tr>
           </tbody>

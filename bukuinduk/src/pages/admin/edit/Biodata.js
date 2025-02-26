@@ -9,6 +9,7 @@ import Nextbefore from "../../../components/nextbefore";
 import InputHalaman from "../../../components/pilihHalaman"
 import Profil from "../../../components/profileCard"
 import { useNavigate, useParams } from "react-router";
+import axios from "axios";
 
 //Date issues
 
@@ -16,6 +17,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css//
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import { baseUrl } from "../../../utils/constan";
 
 /* 
 
@@ -82,54 +84,42 @@ const Biodata = () => {
       setBahasa(localStorage.getItem("biodata-bahasa"));
   }, []);
 
-  const nextButton = () => {
-    console.log(
-      nama,
-      panggilan,
-      jeniskelamin,
-      tempatlahir,
-      tanggallahir,
-      agama,
-      kewarganegaraan,
-      anakke,
-      kandung,
-      angkat,
-      tiri,
-      status,
-      bahasa
-    );
-    if (
-      nama &&
-      panggilan &&
-      jeniskelamin &&
-      tempatlahir &&
-      tanggallahir &&
-      agama &&
-      kewarganegaraan &&
-      anakke &&
-      status &&
-      bahasa
-    ) {
-      if (true) {
-        localStorage.setItem("biodata-nama", nama);
-        localStorage.setItem("biodata-panggilan", panggilan);
-        localStorage.setItem("biodata-jeniskelamin", jeniskelamin);
-        localStorage.setItem("biodata-tempatlahir", tempatlahir);
-        localStorage.setItem("biodata-tanggallahir", tanggallahir);
-        localStorage.setItem("biodata-agama", agama);
-        localStorage.setItem("biodata-kewarganegaraan", kewarganegaraan);
-        localStorage.setItem("biodata-anakke", anakke);
-        localStorage.setItem("biodata-kandung", kandung || "");
-        localStorage.setItem("biodata-angkat", angkat || "");
-        localStorage.setItem("biodata-tiri", tiri || "");
-        localStorage.setItem("biodata-status", status);
-        localStorage.setItem("biodata-bahasa", bahasa);
-      }
+  const nextButton = async () => {
+    // if (!nama || !panggilan || !jeniskelamin || !tempatlahir || !tanggallahir || !agama || !kewarganegaraan || !anakke || !status || !bahasa) {
+    //   alert("Semua data harus diisi!");
+    //   return;
+    // }
 
+    // const updatedData = {
+    //   nama_lengkap: nama,
+    //   nama_panggilan: panggilan,
+    //   jenis_kelamin: jeniskelamin,
+    //   tempat_lahir: tempatlahir,
+    //   tanggal_lahir: tanggallahir,
+    //   agama: agama,
+    //   kewarganegaraan: kewarganegaraan,
+    //   anak_ke: parseInt(anakke),
+    //   jml_saudara_kandung: kandung ? parseInt(kandung) : null,
+    //   jml_saudara_tiri: tiri ? parseInt(tiri) : null,
+    //   jml_saudara_angkat: angkat ? parseInt(angkat) : null,
+    //   kelengkapan_ortu: status,
+    //   bahasa_sehari_hari: bahasa
+    // };
+
+    try {
+      await axios.put(`${baseUrl}/admin/akun/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    
+      alert("Biodata berhasil diperbarui!");
+      // console.log(updatedData)
       navigate(`/admin/audit/${params.id}/tempattinggal`);
-    } else {
-      alert("Semua data belum terisi");
-    }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Terjadi kesalahan saat menyimpan data!");
+    }    
   };
 
   return (

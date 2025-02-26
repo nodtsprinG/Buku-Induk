@@ -65,7 +65,7 @@ const Dashboard = () => {
         <hr className="border-t-2 mt-4 bg-black-600"></hr>
 
         {/* Grid Statistik */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-8">
           {/* Total Siswa */}
           <StatCard icon={<FaUser size={40} />} title="Total Siswa" value={dashboard.count_siswa} />
 

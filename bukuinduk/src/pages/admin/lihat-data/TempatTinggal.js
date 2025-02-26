@@ -1,31 +1,23 @@
-import HeaderInput from "../../../components/headerInputV2";
 import { useState, useEffect } from "react";
-import Profil from "../../../components/lihatprofil";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import HeaderInput from "../../../components/headerInputV2";
+import Profil from "../../../components/profileCard";
 import InputHalaman from "../../../components/pilihHalamanV2";
 import { TextInput } from "../../../components/inputComponent";
 import Nextbefore from "../../../components/nextbefore";
-import { useNavigate } from "react-router";
-import axios from "axios";
 import { baseUrl } from "../../../utils/constan";
-
-//Date issues
-import "react-datepicker/dist/react-datepicker.css";
-// CSS Modules, react-datepicker-cssmodules.css//
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import axios from "axios";
 
 /* 
-
 =====================================================================================================
-                    D A T A _ H O B I _ S I S W A
+                D A T A _ T E M P A T _ T I N G G A L_ S I S W A
   >> Documented and Edited By. Ananda Eka & Nataniel || Developed By. Kelompok 2 <<
-
-[#] Note : Mengikuti desain
-
+! Warning : Dilarang mengganti sembarangan pada bagian ini
 =====================================================================================================
-
 */
 
-const Hobi = () => {
+const TempatTinggal = () => {
   const [siswa, setSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -33,7 +25,7 @@ const Hobi = () => {
 
   // Ambil ID dari localStorage
   const siswaId = localStorage.getItem("akun-id");
-
+  const {id} = useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,10 +35,10 @@ const Hobi = () => {
           return;
         }
 
-        // Panggil API untuk mendapatkan data siswa
-        const response = await axios.get(baseUrl + `/siswa/data-diri`, {
+          // Panggil API untuk mendapatkan data siswa
+        const response = await axios.get(baseUrl + `/admin/akun/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            Authorization : `Bearer ${localStorage.getItem("token")}`
           }
         });
 
@@ -63,71 +55,80 @@ const Hobi = () => {
   }, [siswaId]);
 
   const backButton = () => {
-    navigate("/siswa/lihat-data/wali")
+    navigate(`/admin/lihat/${id}/biodata`)
   }
   const nextButton = () => {
-    navigate("/siswa/lihat-data/perkembangan")
+    navigate(`/admin/lihat/${id}/kesehatan`)
   }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
+
   return (
     <div className="bg-[#dee0e1d6] w-screen px-10 pb-6 h-screen overflow-y-scroll text-[24px]">
+      {/* Profil dan Header */}
       <div className="my-10 w-full"><Profil /></div>
-      <div><InputHalaman /></div>
-      <HeaderInput title={"Hobi"} word={"H"} form={"siswa"}/>
+      <InputHalaman />
+      <HeaderInput title="Tempat Tinggal" word="B" form="siswa" />
+
+      {/* Form Input */}
       <div className="bg-white p-6 flex items-center justify-center">
-        <table className="w-3/4 font-body border-separate border-spacing-4 ">
+        <table className="w-3/4 font-body border-separate border-spacing-4">
           <tbody>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Kesenian</label>
+              <td className="w-[63%]">
+                <label className="py-1">Alamat</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%]">
                 <TextInput
-                  value={siswa.hobi_siswa?.kesenian}
-                  className="h-full"
+                  name="alamat"
+                  value={siswa.tempat_tinggal.alamat}
                 />
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Olahraga</label>
+              <td className="w-[63%]">
+                <label className="py-1">No Telp/HP</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%]">
                 <TextInput
-                  value={siswa.hobi_siswa?.olahraga}
-                  className="h-full"
+                  name="telp"
+                  value={siswa.tempat_tinggal.no_telepon}
                 />
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Organisasi/Kemasyarakatan</label>
+              <td className="w-[63%]">
+                <label className="py-1">Tinggal Dengan</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%]">
                 <TextInput
-                  value={siswa.hobi_siswa?.organisasi}
-                  className="h-full"
-                />
+                  name="tinggal"
+                  value={siswa.tempat_tinggal.tinggal_dengan}
+                  className="w-full bg-[#DEE0E1] text-black p-2 rounded shadow-md"
+                >
+                </TextInput>
               </td>
             </tr>
             <tr>
-              <td className="w=1/2 h-full">
-                <label className="py-1">Lain-lain</label>
+              <td className="w-[63%]">
+                <label className="py-1">Jarak Tempat Tinggal ke Sekolah (*km)</label>
               </td>
-              <td className="w-[63%] h-full">
+              <td className="w-[63%]">
                 <TextInput
-                  value={siswa.hobi_siswa?.lain_lain || "Tidak ada"}
-                  className="h-full"
+                  name="jarak"
+                  value={siswa.tempat_tinggal.jarak_ke_sekolah}
                 />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <Nextbefore next={nextButton} back={backButton} lastpage={true} />
+
+      {/* Tombol Navigasi */}
+      <Nextbefore back={backButton} next={nextButton} />
     </div>
   );
 };
-export default Hobi;
+
+export default TempatTinggal;

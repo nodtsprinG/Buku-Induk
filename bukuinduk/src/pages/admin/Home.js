@@ -33,6 +33,17 @@ import DataMapel from "./data/DataMapel"
 
 import TambahAkun from "./edit/Main";
 
+import Lbiodata from "./lihat-data/Biodata"
+import LtempatTinggal from "./lihat-data/TempatTinggal"
+import Lkesehatan from "./lihat-data/Kesehatan"
+import Layah from "./lihat-data/Ayah"
+import Libu from "./lihat-data/Ibu"
+import Lwali from "./lihat-data/Wali"
+import Lpendidikan from "./lihat-data/Pendidikan"
+import Lhobi from "./lihat-data/Hobi"
+import Perkembangan from "./lihat-data/perkembangan"
+import LHalamanBelakang from "./lihat-data/halaman-belakang"
+
 import HalamanBelakang from './edit/halaman-belakang'
 
 import { useParams } from "react-router";
@@ -116,6 +127,24 @@ const HomeAdmin = () => {
   );
 };
 
+const LihatData = () => {
+  return (
+    <Routes>
+      <Route exact path="/biodata" element={<Lbiodata />} />
+      <Route exact path="/tempattinggal" element={<LtempatTinggal />} />
+      <Route exact path="/kesehatan" element={<Lkesehatan />} />
+      <Route exact path="/pendidikan" element={<Lpendidikan />} />
+      <Route exact path="/ayah" element={<Layah />} />
+      <Route exact path="/ibu" element={<Libu />} />
+      <Route exact path="/wali" element={<Lwali />} />
+      <Route exact path="/hobi" element={<Lhobi />} />
+      <Route exact path="/perkembangan" element={<Lhobi />} />
+      <Route exact path="/hobi" element={<Perkembangan />} />
+      <Route exact path="/halaman-belakang" element={<HalamanBelakang />} />
+    </Routes>
+  );
+}
+
 const AdminRouting = () => {
   return (
     <Routes>
@@ -126,6 +155,7 @@ const AdminRouting = () => {
       <Route exact path="/auth/verification/:code" element={<Verify />} />
       {/* [#] Halaman Input Data */}
       <Route exact path="/audit/:id/*" element={<AuditSystem />} />
+      <Route exact path="/lihat/:id/*" element={<LihatData />} />
       {/* [#] Data Jurusan */}
       <Route exact path="/datajurusan" element={<DataJurusan />} />
       <Route exact path="/datasiswa" element={<DataSiswa />} />

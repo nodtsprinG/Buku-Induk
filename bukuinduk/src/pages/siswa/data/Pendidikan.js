@@ -35,8 +35,10 @@ const Pendidikan = () => {
   const [tanggal, setTanggal] = useState(new Date());
 
   const [tamatan, setTamatan] = useState("");
+  const [ijazah, setIjazah] = useState("")
   const [nomorijazah, setNomorijazah] = useState("");
   const [skhun, setSkhun] = useState("");
+  const [nomorskhun, setNomorSKHUN] = useState("")
   const [darisekolah, setDarisekolah] = useState("");
   const [alasan, setAlasan] = useState("");
   const [bidangkeahlian, setBidangkeahlian] = useState("");
@@ -49,12 +51,22 @@ const Pendidikan = () => {
     console.log("Di cek dulu...");
     if (localStorage.getItem("pendidikan-tanggal"))
       setTanggal(localStorage.getItem("pendidikan-tanggal"));
+
     if (localStorage.getItem("pendidikan-tamatan"))
       setTamatan(localStorage.getItem("pendidikan-tamatan"));
+
+    if (localStorage.getItem("pendidikan-ijazah"))
+      setIjazah(localStorage.getItem("pendidikan-nomorijazah"));
+
     if (localStorage.getItem("pendidikan-nomorijazah"))
       setNomorijazah(localStorage.getItem("pendidikan-nomorijazah"));
+
+    if (localStorage.getItem("pendidikan-nomorskhun"))
+      setNomorSKHUN(localStorage.getItem("pendidikan-nomorskhun"));
+
     if (localStorage.getItem("pendidikan-skhun"))
       setSkhun(localStorage.getItem("pendidikan-skhun"));
+
     if (localStorage.getItem("pendidikan-darisekolah") !== "null")
       setDarisekolah(localStorage.getItem("pendidikan-darisekolah"));
     if (localStorage.getItem("pendidikan-alasan") !== "null")
@@ -79,8 +91,10 @@ const Pendidikan = () => {
       tanggal,
       tamatan,
       lamabelajar,
+      ijazah,
       nomorijazah,
       skhun,
+      nomorskhun,
       darisekolah,
       alasan,
       bidangkeahlian,
@@ -92,8 +106,10 @@ const Pendidikan = () => {
       tanggal &&
       tamatan &&
       lamabelajar &&
+      ijazah &&
       nomorijazah &&
       skhun &&
+      nomorskhun &&
       bidangkeahlian &&
       programkeahlian &&
       paketkeahlian &&
@@ -101,8 +117,10 @@ const Pendidikan = () => {
     ) {
       localStorage.setItem("pendidikan-tanggal", tanggal);
       localStorage.setItem("pendidikan-tamatan", tamatan);
+      localStorage.setItem("pendidikan-ijazah", ijazah);
       localStorage.setItem("pendidikan-nomorijazah", nomorijazah);
       localStorage.setItem("pendidikan-skhun", skhun);
+      localStorage.setItem("pendidikan-nomorskhun", nomorskhun);
       localStorage.setItem("pendidikan-darisekolah", darisekolah ? darisekolah : null);
       localStorage.setItem("pendidikan-alasan", alasan ? alasan : null);
       localStorage.setItem("pendidikan-bidangkeahlian", bidangkeahlian);
